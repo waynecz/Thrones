@@ -20,7 +20,7 @@ app.set('views', path.join(__dirname, 'views'));
 //引入模板
 var template = require('art-template')
 //模板拓展
-require('./modules/art_template_helper')(template)
+// require('./modules/art_template_helper')(template)
 template.config('extname','.html')
 //设置模板引擎
 app.engine('.html',template.__express)
@@ -36,8 +36,24 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+//数据库中间件
+var models = require('./dbmodel/db');
+app.use(function(req,res,next){
+  models(function (err, db) {
+      if (err){
+        return next(err);
+      }
+      req.models = db.models;
+      req.db = db;
+      return next();
+  }); 
+});
+
+
 app.use('/', routes);
 app.use('/users', users);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -69,6 +85,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;

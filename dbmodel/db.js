@@ -4,7 +4,7 @@ var settings = require('./jdbc');
 var connection = null;
 
 function setup(db, cb) {
-  require('./info')(orm, db);
+  require('./user')(orm, db);
   return cb(null, db);
 }
 

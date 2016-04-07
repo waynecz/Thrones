@@ -5,14 +5,17 @@ module.exports = function (orm, db) {
         id : Number,
         username : String,
         password : String,
-        money : Number,
-        create_time : Date
+        name : String,
+        mobile : String,
+        dept : String,
+        pid : Number,
+        gmt_create : Date
   },
   {
     collection: "user",
     hooks: {
       beforeValidation: function () {
-        this.create_time = new Date();
+        this.gmt_create = new Date();
       }
     },
     validations: {
@@ -24,8 +27,12 @@ module.exports = function (orm, db) {
     			id : this.id,
     			username : this.username,
           password : this.password,
-    			money : this.money,
-    			create_time : this.create_time.toString()        
+          name : this.name,
+          mobile : this.mobile,
+          password : this.password,
+          dept : this.dept,
+    			pid : this.pid,
+    			gmt_create : this.gmt_create.toString()        
         }
       }
     }

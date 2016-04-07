@@ -37,18 +37,24 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-//数据库中间件
-var models = require('./dbmodel/db');
-app.use(function(req,res,next){
-  models(function (err, db) {
-      if (err){
-        return next(err);
-      }
-      req.models = db.models;
-      req.db = db;
-      return next();
-  }); 
-});
+var useDb = true;
+
+if(useDb){
+  //数据库中间件
+  var models = require('./dbmodel/db');
+  app.use(function(req,res,next){
+    models(function (err, db) {
+        if (err){
+          return next(err);
+        }
+        req.models = db.models;
+        req.db = db;
+        return next();
+    }); 
+  });
+
+}
+
 
 
 app.use('/', routes);

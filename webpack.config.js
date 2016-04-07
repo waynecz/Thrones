@@ -1,5 +1,6 @@
 var path       = require('path');
-var $          = require('jquery')
+var autoprefixer = require('autoprefixer');
+
 //定义了一些文件夹的路径
 var ROOT_PATH  = path.resolve(__dirname);
 var SRC_PATH   = path.resolve(ROOT_PATH, 'src');
@@ -19,5 +20,8 @@ module.exports = {
                 include: SRC_PATH
             }
         ]
+    },
+    postcss: function () {
+        return [autoprefixer];
     }
 };

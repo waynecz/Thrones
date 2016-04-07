@@ -3,7 +3,6 @@
 *.iws
 *.ids
 .idea/
-bin/
 node_modules/
 source/
 gulpfile.js

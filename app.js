@@ -8,11 +8,25 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+
+
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+
+
+
+//引入模板
+var template = require('art-template')
+//模板拓展
+require('./modules/art_template_helper')(template)
+template.config('extname','.html')
+//设置模板引擎
+app.engine('.html',template.__express)
+app.set('view engine', 'html')
+
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

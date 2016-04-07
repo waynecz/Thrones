@@ -3,7 +3,6 @@
 *.iws
 *.ids
 .idea/
-bin/
 node_modules/
 source/
 gulpfile.js
@@ -12,3 +11,4 @@ nbproject/
 nbactions.xml
 nb-configuration.xml
 .recommenders/
+.DS_Store

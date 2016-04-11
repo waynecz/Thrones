@@ -1,0 +1,392 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'install' ]
+2 info using npm@3.6.0
+3 info using node@v5.6.0
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly install normalizeTree
+8 silly loadCurrentTree Finishing
+9 silly loadIdealTree Starting
+10 silly install loadIdealTree
+11 silly cloneCurrentTree Starting
+12 silly install cloneCurrentTreeToIdealTree
+13 silly cloneCurrentTree Finishing
+14 silly loadShrinkwrap Starting
+15 silly install loadShrinkwrap
+16 silly loadShrinkwrap Finishing
+17 silly loadAllDepsIntoIdealTree Starting
+18 silly install loadAllDepsIntoIdealTree
+19 silly fetchNamedPackageData auto-refresher
+20 silly mapToRegistry name auto-refresher
+21 silly mapToRegistry using default registry
+22 silly mapToRegistry registry https://registry.npmjs.org/
+23 silly mapToRegistry uri https://registry.npmjs.org/auto-refresher
+24 silly fetchNamedPackageData gulp-nodemon
+25 silly mapToRegistry name gulp-nodemon
+26 silly mapToRegistry using default registry
+27 silly mapToRegistry registry https://registry.npmjs.org/
+28 silly mapToRegistry uri https://registry.npmjs.org/gulp-nodemon
+29 verbose request uri https://registry.npmjs.org/auto-refresher
+30 verbose request no auth needed
+31 info attempt registry request try #1 at 10:52:35
+32 verbose request id d1058331b46d703b
+33 http request GET https://registry.npmjs.org/auto-refresher
+34 verbose request uri https://registry.npmjs.org/gulp-nodemon
+35 verbose request no auth needed
+36 info attempt registry request try #1 at 10:52:35
+37 http request GET https://registry.npmjs.org/gulp-nodemon
+38 http 200 https://registry.npmjs.org/auto-refresher
+39 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+39 verbose headers   etag: '"AVH05QLD8DAPDXS12U5G7CXE8"',
+39 verbose headers   'content-type': 'application/json',
+39 verbose headers   'content-encoding': 'gzip',
+39 verbose headers   'cache-control': 'max-age=300',
+39 verbose headers   'content-length': '921',
+39 verbose headers   'accept-ranges': 'bytes',
+39 verbose headers   date: 'Mon, 11 Apr 2016 02:52:32 GMT',
+39 verbose headers   via: '1.1 varnish',
+39 verbose headers   age: '0',
+39 verbose headers   connection: 'keep-alive',
+39 verbose headers   'x-served-by': 'cache-nrt6129-NRT',
+39 verbose headers   'x-cache': 'MISS',
+39 verbose headers   'x-cache-hits': '0',
+39 verbose headers   'x-timer': 'S1460343152.397732,VS0,VE505',
+39 verbose headers   vary: 'Accept-Encoding' }
+40 silly get cb [ 200,
+40 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+40 silly get     etag: '"AVH05QLD8DAPDXS12U5G7CXE8"',
+40 silly get     'content-type': 'application/json',
+40 silly get     'content-encoding': 'gzip',
+40 silly get     'cache-control': 'max-age=300',
+40 silly get     'content-length': '921',
+40 silly get     'accept-ranges': 'bytes',
+40 silly get     date: 'Mon, 11 Apr 2016 02:52:32 GMT',
+40 silly get     via: '1.1 varnish',
+40 silly get     age: '0',
+40 silly get     connection: 'keep-alive',
+40 silly get     'x-served-by': 'cache-nrt6129-NRT',
+40 silly get     'x-cache': 'MISS',
+40 silly get     'x-cache-hits': '0',
+40 silly get     'x-timer': 'S1460343152.397732,VS0,VE505',
+40 silly get     vary: 'Accept-Encoding' } ]
+41 verbose get saving auto-refresher to /Users/qiangzi/.npm/registry.npmjs.org/auto-refresher/.cache.json
+42 verbose correctMkdir /Users/qiangzi/.npm correctMkdir not in flight; initializing
+43 silly resolveWithNewModule auto-refresher@0.0.1 checking installable status
+44 silly cache add args [ 'auto-refresher@0.0.1', null ]
+45 verbose cache add spec auto-refresher@0.0.1
+46 silly cache add parsed spec Result {
+46 silly cache add   raw: 'auto-refresher@0.0.1',
+46 silly cache add   scope: null,
+46 silly cache add   name: 'auto-refresher',
+46 silly cache add   rawSpec: '0.0.1',
+46 silly cache add   spec: '0.0.1',
+46 silly cache add   type: 'version' }
+47 silly addNamed auto-refresher@0.0.1
+48 verbose addNamed "0.0.1" is a plain semver version for auto-refresher
+49 silly mapToRegistry name auto-refresher
+50 silly mapToRegistry using default registry
+51 silly mapToRegistry registry https://registry.npmjs.org/
+52 silly mapToRegistry uri https://registry.npmjs.org/auto-refresher
+53 verbose addNameVersion registry:https://registry.npmjs.org/auto-refresher not in flight; fetching
+54 verbose get https://registry.npmjs.org/auto-refresher not expired, no request
+55 silly mapToRegistry name auto-refresher
+56 silly mapToRegistry using default registry
+57 silly mapToRegistry registry https://registry.npmjs.org/
+58 silly mapToRegistry uri https://registry.npmjs.org/auto-refresher
+59 verbose addRemoteTarball https://registry.npmjs.org/auto-refresher/-/auto-refresher-0.0.1.tgz not in flight; adding
+60 verbose addRemoteTarball [ 'https://registry.npmjs.org/auto-refresher/-/auto-refresher-0.0.1.tgz',
+60 verbose addRemoteTarball   '567ad0d5122ba6cae3ff5fd68a79d492638d6ba8' ]
+61 info retry fetch attempt 1 at 10:52:40
+62 info attempt registry request try #1 at 10:52:40
+63 http fetch GET https://registry.npmjs.org/auto-refresher/-/auto-refresher-0.0.1.tgz
+64 http 200 https://registry.npmjs.org/gulp-nodemon
+65 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+65 verbose headers   etag: '"EXBT3F280U3Y0OGQUVSFS7QVY"',
+65 verbose headers   'content-type': 'application/json',
+65 verbose headers   'cache-control': 'max-age=300',
+65 verbose headers   'content-length': '27562',
+65 verbose headers   'accept-ranges': 'bytes',
+65 verbose headers   date: 'Mon, 11 Apr 2016 02:52:33 GMT',
+65 verbose headers   via: '1.1 varnish',
+65 verbose headers   age: '0',
+65 verbose headers   connection: 'keep-alive',
+65 verbose headers   'x-served-by': 'cache-nrt6120-NRT',
+65 verbose headers   'x-cache': 'MISS',
+65 verbose headers   'x-cache-hits': '0',
+65 verbose headers   'x-timer': 'S1460343152.403637,VS0,VE737',
+65 verbose headers   vary: 'Accept-Encoding' }
+66 silly get cb [ 200,
+66 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+66 silly get     etag: '"EXBT3F280U3Y0OGQUVSFS7QVY"',
+66 silly get     'content-type': 'application/json',
+66 silly get     'cache-control': 'max-age=300',
+66 silly get     'content-length': '27562',
+66 silly get     'accept-ranges': 'bytes',
+66 silly get     date: 'Mon, 11 Apr 2016 02:52:33 GMT',
+66 silly get     via: '1.1 varnish',
+66 silly get     age: '0',
+66 silly get     connection: 'keep-alive',
+66 silly get     'x-served-by': 'cache-nrt6120-NRT',
+66 silly get     'x-cache': 'MISS',
+66 silly get     'x-cache-hits': '0',
+66 silly get     'x-timer': 'S1460343152.403637,VS0,VE737',
+66 silly get     vary: 'Accept-Encoding' } ]
+67 verbose get saving gulp-nodemon to /Users/qiangzi/.npm/registry.npmjs.org/gulp-nodemon/.cache.json
+68 verbose correctMkdir /Users/qiangzi/.npm correctMkdir not in flight; initializing
+69 silly resolveWithNewModule gulp-nodemon@2.0.6 checking installable status
+70 silly cache add args [ 'gulp-nodemon@^2.0.6', null ]
+71 verbose cache add spec gulp-nodemon@^2.0.6
+72 silly cache add parsed spec Result {
+72 silly cache add   raw: 'gulp-nodemon@^2.0.6',
+72 silly cache add   scope: null,
+72 silly cache add   name: 'gulp-nodemon',
+72 silly cache add   rawSpec: '^2.0.6',
+72 silly cache add   spec: '>=2.0.6 <3.0.0',
+72 silly cache add   type: 'range' }
+73 silly addNamed gulp-nodemon@>=2.0.6 <3.0.0
+74 verbose addNamed ">=2.0.6 <3.0.0" is a valid semver range for gulp-nodemon
+75 silly addNameRange { name: 'gulp-nodemon', range: '>=2.0.6 <3.0.0', hasData: false }
+76 silly mapToRegistry name gulp-nodemon
+77 silly mapToRegistry using default registry
+78 silly mapToRegistry registry https://registry.npmjs.org/
+79 silly mapToRegistry uri https://registry.npmjs.org/gulp-nodemon
+80 verbose addNameRange registry:https://registry.npmjs.org/gulp-nodemon not in flight; fetching
+81 verbose get https://registry.npmjs.org/gulp-nodemon not expired, no request
+82 silly addNameRange number 2 { name: 'gulp-nodemon', range: '>=2.0.6 <3.0.0', hasData: true }
+83 silly addNameRange versions [ 'gulp-nodemon',
+83 silly addNameRange   [ '0.0.1',
+83 silly addNameRange     '0.0.2',
+83 silly addNameRange     '0.0.3',
+83 silly addNameRange     '0.1.0',
+83 silly addNameRange     '0.1.1',
+83 silly addNameRange     '0.1.2',
+83 silly addNameRange     '1.0.0',
+83 silly addNameRange     '1.0.1',
+83 silly addNameRange     '1.0.2',
+83 silly addNameRange     '1.0.3',
+83 silly addNameRange     '1.0.4',
+83 silly addNameRange     '1.0.5',
+83 silly addNameRange     '2.0.0',
+83 silly addNameRange     '2.0.1',
+83 silly addNameRange     '2.0.2',
+83 silly addNameRange     '2.0.3',
+83 silly addNameRange     '2.0.4',
+83 silly addNameRange     '2.0.5',
+83 silly addNameRange     '2.0.6' ] ]
+84 silly addNamed gulp-nodemon@2.0.6
+85 verbose addNamed "2.0.6" is a plain semver version for gulp-nodemon
+86 silly mapToRegistry name gulp-nodemon
+87 silly mapToRegistry using default registry
+88 silly mapToRegistry registry https://registry.npmjs.org/
+89 silly mapToRegistry uri https://registry.npmjs.org/gulp-nodemon
+90 verbose addRemoteTarball https://registry.npmjs.org/gulp-nodemon/-/gulp-nodemon-2.0.6.tgz not in flight; adding
+91 verbose addRemoteTarball [ 'https://registry.npmjs.org/gulp-nodemon/-/gulp-nodemon-2.0.6.tgz',
+91 verbose addRemoteTarball   '26c055b8d3e931e445712b7f1988473380dfb72e' ]
+92 info retry fetch attempt 1 at 10:52:41
+93 info attempt registry request try #1 at 10:52:41
+94 http fetch GET https://registry.npmjs.org/gulp-nodemon/-/gulp-nodemon-2.0.6.tgz
+95 http fetch 200 https://registry.npmjs.org/gulp-nodemon/-/gulp-nodemon-2.0.6.tgz
+96 silly fetchAndShaCheck shasum 26c055b8d3e931e445712b7f1988473380dfb72e
+97 verbose addTmpTarball /var/folders/x7/rbv_v6c53xqfct53sx0xjfzc0000gn/T/npm-45667-36ee8a0a/registry.npmjs.org/gulp-nodemon/-/gulp-nodemon-2.0.6.tgz not in flight; adding
+98 verbose addTmpTarball already have metadata; skipping unpack for gulp-nodemon@2.0.6
+99 verbose correctMkdir /Users/qiangzi/.npm correctMkdir not in flight; initializing
+100 silly cache afterAdd gulp-nodemon@2.0.6
+101 verbose afterAdd /Users/qiangzi/.npm/gulp-nodemon/2.0.6/package/package.json not in flight; writing
+102 verbose correctMkdir /Users/qiangzi/.npm correctMkdir not in flight; initializing
+103 verbose afterAdd /Users/qiangzi/.npm/gulp-nodemon/2.0.6/package/package.json written
+104 http fetch 200 https://registry.npmjs.org/auto-refresher/-/auto-refresher-0.0.1.tgz
+105 silly fetchAndShaCheck shasum 567ad0d5122ba6cae3ff5fd68a79d492638d6ba8
+106 verbose addTmpTarball /var/folders/x7/rbv_v6c53xqfct53sx0xjfzc0000gn/T/npm-45667-36ee8a0a/registry.npmjs.org/auto-refresher/-/auto-refresher-0.0.1.tgz not in flight; adding
+107 verbose addTmpTarball already have metadata; skipping unpack for auto-refresher@0.0.1
+108 verbose correctMkdir /Users/qiangzi/.npm correctMkdir not in flight; initializing
+109 silly cache afterAdd auto-refresher@0.0.1
+110 verbose afterAdd /Users/qiangzi/.npm/auto-refresher/0.0.1/package/package.json not in flight; writing
+111 verbose correctMkdir /Users/qiangzi/.npm correctMkdir not in flight; initializing
+112 verbose afterAdd /Users/qiangzi/.npm/auto-refresher/0.0.1/package/package.json written
+113 silly fetchNamedPackageData socket.io
+114 silly mapToRegistry name socket.io
+115 silly mapToRegistry using default registry
+116 silly mapToRegistry registry https://registry.npmjs.org/
+117 silly mapToRegistry uri https://registry.npmjs.org/socket.io
+118 silly fetchNamedPackageData ejs
+119 silly mapToRegistry name ejs
+120 silly mapToRegistry using default registry
+121 silly mapToRegistry registry https://registry.npmjs.org/
+122 silly mapToRegistry uri https://registry.npmjs.org/ejs
+123 verbose request uri https://registry.npmjs.org/socket.io
+124 verbose request no auth needed
+125 info attempt registry request try #1 at 10:52:41
+126 verbose etag "6M3XEDNXO4GN3FZJE7KBQGF5L"
+127 http request GET https://registry.npmjs.org/socket.io
+128 verbose request uri https://registry.npmjs.org/ejs
+129 verbose request no auth needed
+130 info attempt registry request try #1 at 10:52:41
+131 verbose etag "7O8IH2G6JISIGUR5NDBDHE8Y"
+132 http request GET https://registry.npmjs.org/ejs
+133 http 200 https://registry.npmjs.org/socket.io
+134 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+134 verbose headers   etag: '"5FLK1UNFEV6PVA9JYWARJHNJO"',
+134 verbose headers   'content-type': 'application/json',
+134 verbose headers   'content-encoding': 'gzip',
+134 verbose headers   'cache-control': 'max-age=300',
+134 verbose headers   'content-length': '19084',
+134 verbose headers   'accept-ranges': 'bytes',
+134 verbose headers   date: 'Mon, 11 Apr 2016 02:52:34 GMT',
+134 verbose headers   via: '1.1 varnish',
+134 verbose headers   age: '64',
+134 verbose headers   connection: 'keep-alive',
+134 verbose headers   'x-served-by': 'cache-nrt6125-NRT',
+134 verbose headers   'x-cache': 'HIT',
+134 verbose headers   'x-cache-hits': '1',
+134 verbose headers   'x-timer': 'S1460343154.269369,VS0,VE0',
+134 verbose headers   vary: 'Accept-Encoding' }
+135 silly get cb [ 200,
+135 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+135 silly get     etag: '"5FLK1UNFEV6PVA9JYWARJHNJO"',
+135 silly get     'content-type': 'application/json',
+135 silly get     'content-encoding': 'gzip',
+135 silly get     'cache-control': 'max-age=300',
+135 silly get     'content-length': '19084',
+135 silly get     'accept-ranges': 'bytes',
+135 silly get     date: 'Mon, 11 Apr 2016 02:52:34 GMT',
+135 silly get     via: '1.1 varnish',
+135 silly get     age: '64',
+135 silly get     connection: 'keep-alive',
+135 silly get     'x-served-by': 'cache-nrt6125-NRT',
+135 silly get     'x-cache': 'HIT',
+135 silly get     'x-cache-hits': '1',
+135 silly get     'x-timer': 'S1460343154.269369,VS0,VE0',
+135 silly get     vary: 'Accept-Encoding' } ]
+136 verbose get saving socket.io to /Users/qiangzi/.npm/registry.npmjs.org/socket.io/.cache.json
+137 verbose correctMkdir /Users/qiangzi/.npm correctMkdir not in flight; initializing
+138 silly resolveWithNewModule socket.io@1.0.4 checking installable status
+139 silly cache add args [ 'socket.io@1.0.4', null ]
+140 verbose cache add spec socket.io@1.0.4
+141 silly cache add parsed spec Result {
+141 silly cache add   raw: 'socket.io@1.0.4',
+141 silly cache add   scope: null,
+141 silly cache add   name: 'socket.io',
+141 silly cache add   rawSpec: '1.0.4',
+141 silly cache add   spec: '1.0.4',
+141 silly cache add   type: 'version' }
+142 silly addNamed socket.io@1.0.4
+143 verbose addNamed "1.0.4" is a plain semver version for socket.io
+144 silly mapToRegistry name socket.io
+145 silly mapToRegistry using default registry
+146 silly mapToRegistry registry https://registry.npmjs.org/
+147 silly mapToRegistry uri https://registry.npmjs.org/socket.io
+148 verbose addNameVersion registry:https://registry.npmjs.org/socket.io not in flight; fetching
+149 verbose get https://registry.npmjs.org/socket.io not expired, no request
+150 silly mapToRegistry name socket.io
+151 silly mapToRegistry using default registry
+152 silly mapToRegistry registry https://registry.npmjs.org/
+153 silly mapToRegistry uri https://registry.npmjs.org/socket.io
+154 verbose addRemoteTarball https://registry.npmjs.org/socket.io/-/socket.io-1.0.4.tgz not in flight; adding
+155 verbose addRemoteTarball [ 'https://registry.npmjs.org/socket.io/-/socket.io-1.0.4.tgz',
+155 verbose addRemoteTarball   '103cb555e2c730f4447ed93a22d915d4f45b149a' ]
+156 info retry fetch attempt 1 at 10:52:42
+157 info attempt registry request try #1 at 10:52:42
+158 http fetch GET https://registry.npmjs.org/socket.io/-/socket.io-1.0.4.tgz
+159 http 200 https://registry.npmjs.org/ejs
+160 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+160 verbose headers   etag: '"EPSEWEH0KUIDLYY2D9C6YFWY0"',
+160 verbose headers   'content-type': 'application/json',
+160 verbose headers   'cache-control': 'max-age=300',
+160 verbose headers   'content-length': '52516',
+160 verbose headers   'accept-ranges': 'bytes',
+160 verbose headers   date: 'Mon, 11 Apr 2016 02:52:34 GMT',
+160 verbose headers   via: '1.1 varnish',
+160 verbose headers   age: '155',
+160 verbose headers   connection: 'keep-alive',
+160 verbose headers   'x-served-by': 'cache-nrt6124-NRT',
+160 verbose headers   'x-cache': 'HIT',
+160 verbose headers   'x-cache-hits': '2',
+160 verbose headers   'x-timer': 'S1460343154.337249,VS0,VE0',
+160 verbose headers   vary: 'Accept-Encoding' }
+161 silly get cb [ 200,
+161 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+161 silly get     etag: '"EPSEWEH0KUIDLYY2D9C6YFWY0"',
+161 silly get     'content-type': 'application/json',
+161 silly get     'cache-control': 'max-age=300',
+161 silly get     'content-length': '52516',
+161 silly get     'accept-ranges': 'bytes',
+161 silly get     date: 'Mon, 11 Apr 2016 02:52:34 GMT',
+161 silly get     via: '1.1 varnish',
+161 silly get     age: '155',
+161 silly get     connection: 'keep-alive',
+161 silly get     'x-served-by': 'cache-nrt6124-NRT',
+161 silly get     'x-cache': 'HIT',
+161 silly get     'x-cache-hits': '2',
+161 silly get     'x-timer': 'S1460343154.337249,VS0,VE0',
+161 silly get     vary: 'Accept-Encoding' } ]
+162 verbose get saving ejs to /Users/qiangzi/.npm/registry.npmjs.org/ejs/.cache.json
+163 verbose correctMkdir /Users/qiangzi/.npm correctMkdir not in flight; initializing
+164 silly resolveWithNewModule ejs@1.0.0 checking installable status
+165 silly cache add args [ 'ejs@1.0.0', null ]
+166 verbose cache add spec ejs@1.0.0
+167 silly cache add parsed spec Result {
+167 silly cache add   raw: 'ejs@1.0.0',
+167 silly cache add   scope: null,
+167 silly cache add   name: 'ejs',
+167 silly cache add   rawSpec: '1.0.0',
+167 silly cache add   spec: '1.0.0',
+167 silly cache add   type: 'version' }
+168 silly addNamed ejs@1.0.0
+169 verbose addNamed "1.0.0" is a plain semver version for ejs
+170 silly mapToRegistry name ejs
+171 silly mapToRegistry using default registry
+172 silly mapToRegistry registry https://registry.npmjs.org/
+173 silly mapToRegistry uri https://registry.npmjs.org/ejs
+174 verbose addNameVersion registry:https://registry.npmjs.org/ejs not in flight; fetching
+175 verbose get https://registry.npmjs.org/ejs not expired, no request
+176 silly mapToRegistry name ejs
+177 silly mapToRegistry using default registry
+178 silly mapToRegistry registry https://registry.npmjs.org/
+179 silly mapToRegistry uri https://registry.npmjs.org/ejs
+180 verbose addRemoteTarball https://registry.npmjs.org/ejs/-/ejs-1.0.0.tgz not in flight; adding
+181 verbose addRemoteTarball [ 'https://registry.npmjs.org/ejs/-/ejs-1.0.0.tgz',
+181 verbose addRemoteTarball   'c9c60a48a46ee452fb32a71c317b95e5aa1fcb3d' ]
+182 info retry fetch attempt 1 at 10:52:42
+183 info attempt registry request try #1 at 10:52:42
+184 http fetch GET https://registry.npmjs.org/ejs/-/ejs-1.0.0.tgz
+185 http fetch 200 https://registry.npmjs.org/ejs/-/ejs-1.0.0.tgz
+186 silly fetchAndShaCheck shasum c9c60a48a46ee452fb32a71c317b95e5aa1fcb3d
+187 verbose addTmpTarball /var/folders/x7/rbv_v6c53xqfct53sx0xjfzc0000gn/T/npm-45667-36ee8a0a/registry.npmjs.org/ejs/-/ejs-1.0.0.tgz not in flight; adding
+188 verbose addTmpTarball already have metadata; skipping unpack for ejs@1.0.0
+189 verbose correctMkdir /Users/qiangzi/.npm correctMkdir not in flight; initializing
+190 http fetch 200 https://registry.npmjs.org/socket.io/-/socket.io-1.0.4.tgz
+191 silly fetchAndShaCheck shasum 103cb555e2c730f4447ed93a22d915d4f45b149a
+192 verbose addTmpTarball /var/folders/x7/rbv_v6c53xqfct53sx0xjfzc0000gn/T/npm-45667-36ee8a0a/registry.npmjs.org/socket.io/-/socket.io-1.0.4.tgz not in flight; adding
+193 verbose addTmpTarball already have metadata; skipping unpack for socket.io@1.0.4
+194 verbose correctMkdir /Users/qiangzi/.npm correctMkdir not in flight; initializing
+195 silly cache afterAdd socket.io@1.0.4
+196 verbose afterAdd /Users/qiangzi/.npm/socket.io/1.0.4/package/package.json not in flight; writing
+197 verbose correctMkdir /Users/qiangzi/.npm correctMkdir not in flight; initializing
+198 verbose afterAdd /Users/qiangzi/.npm/socket.io/1.0.4/package/package.json written
+199 silly rollbackFailedOptional Starting
+200 silly rollbackFailedOptional Finishing
+201 silly runTopLevelLifecycles Starting
+202 silly runTopLevelLifecycles Finishing
+203 silly install printInstalled
+204 verbose stack Error: EACCES: permission denied, mkdir '/Users/qiangzi/.npm/ejs/1.0.0'
+204 verbose stack     at Error (native)
+205 verbose cwd /Users/qiangzi/work/auth/Thrones
+206 error Darwin 15.0.0
+207 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "install"
+208 error node v5.6.0
+209 error npm  v3.6.0
+210 error path /Users/qiangzi/.npm/ejs/1.0.0
+211 error code EACCES
+212 error errno -13
+213 error syscall mkdir
+214 error Error: EACCES: permission denied, mkdir '/Users/qiangzi/.npm/ejs/1.0.0'
+214 error     at Error (native)
+214 error  { [Error: EACCES: permission denied, mkdir '/Users/qiangzi/.npm/ejs/1.0.0']
+214 error   errno: -13,
+214 error   code: 'EACCES',
+214 error   syscall: 'mkdir',
+214 error   path: '/Users/qiangzi/.npm/ejs/1.0.0',
+214 error   parent: 'auto-refresher' }
+215 error Please try running this command again as root/Administrator.
+216 verbose exit [ -13, true ]

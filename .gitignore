@@ -5,6 +5,7 @@
 .idea/
 config/
 node_modules/
+config/
 source/
 gulpfile.js
 target/

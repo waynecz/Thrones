@@ -3,4 +3,11 @@
 	<select id="all">
 		select * from department
 	</select>
+	<insert id="add">
+	    insert into
+	        department(name)
+	    values(
+	        {{name | q}}
+	    )
+	</insert>
 </sql>

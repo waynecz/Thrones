@@ -11,8 +11,6 @@ router.get('/', function(req, res, next) {
 router.get('/data',function(req,res){
 	var param = req.query;
 
-
-
 	//获取table
 	var table = req.query.model;
 	var method = req.query.operation;

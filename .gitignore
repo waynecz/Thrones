@@ -14,3 +14,4 @@ nbactions.xml
 nb-configuration.xml
 .recommenders/
 .DS_Store
+nodemon.json

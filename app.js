@@ -11,7 +11,6 @@ var users = require('./routes/users');
 var app = express();
 
 var webpackDevMiddleware = require("webpack-dev-middleware");
-var webpackHotMiddleware = require("webpack-hot-middleware");
 var webpack = require('webpack');
 var webpackConfig = require('./webpack.config.js');
 var compiler = webpack(webpackConfig);

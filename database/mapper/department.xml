@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql id="department">
+    <select id="all">
+        select * from department
+    </select>
+</sql>

@@ -1,5 +1,5 @@
 var orm = require('orm');
-var querystring = require('querystring');
+var dbutil = require('../modules/dbutil')
 module.exports = function (orm, db) {
   var User = db.define('user', {
         id : Number,
@@ -38,10 +38,10 @@ module.exports = function (orm, db) {
     }
   });
 
-  User.search = function(keyword,callback){
-    this.find({'username':orm.like('%'+keyword+'%')},{limit:1000},callback);
+  User.queryAll = function(param,callback){
+    dbutil.insert(db,"apply","addApply",param,callback);
+      // dbutil.query(db,"user","count",param,callback);
   }
-
 
   User.login = function(username,password,callback){
       this.one({"username":username,"password":password},callback);

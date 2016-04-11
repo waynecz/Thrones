@@ -40,17 +40,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 var useDb = true;
 
 if(useDb){
-  //数据库中间件
-  var models = require('./dbmodel/db');
+  
+  //数据库
+  var mysql = require('./database/mysql');
+  //初始化
+  mysql.init();
   app.use(function(req,res,next){
-    models(function (err, db) {
-        if (err){
-          return next(err);
-        }
-        req.models = db.models;
-        req.db = db;
-        return next();
-    }); 
+    mysql.use(function(err,db){
+      if(err) return next(err);
+      req.models = db.models;
+      return next();
+    });
   });
 
 }

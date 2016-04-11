@@ -5,6 +5,7 @@ var connection = null;
 
 function setup(db, cb) {
   require('./user')(orm, db);
+  require('./department')(orm, db);
   return cb(null, db);
 }
 
@@ -16,6 +17,7 @@ module.exports = function (cb) {
     if (err) return cb(err);
     connection = db;
     db.settings.set('instance.returnAllErrors', true);
+    db.settings.set('connection.debug',true);
     setup(db, cb);
   });
 };

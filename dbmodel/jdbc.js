@@ -5,7 +5,11 @@ var settings = {
     host     : "192.168.6.70",
     database : "test",
     user     : "shine",
-    password : "shine1234"
+    password : "shine1234",
+    debug : true
+  },
+  connection : {
+  	debug : true
   }
 };
 

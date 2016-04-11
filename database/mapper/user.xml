@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql id="user">
+	<!-- 查询所有用户 -->
+	<select id="all">
+		select * from user
+	</select>
+
+	<select id="countAll">
+		select count(1) from user
+	</select>
+
+	<insert id="add">
+		insert into
+			user(username,password,name,dept,mobile,pid,gmt_create)
+		values(
+			{{username | q}},
+			{{password | q}},
+			{{name | q}},
+			{{dept | q}},
+			{{mobile | q}},
+			{{pid | q}},
+			{{gmt_create | dateFormat}}
+		)
+	</insert>
+
+
+	<!-- 判断用户名是否存在 -->
+	<select id="isUnique">
+	    select count(1) from user where username = {{username | q}}
+	</select>
+
+</sql>

@@ -8,14 +8,32 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-
-
 var app = express();
 
+var webpackDevMiddleware = require("webpack-dev-middleware");
+var webpackHotMiddleware = require("webpack-hot-middleware");
+var webpack = require('webpack');
+var webpackConfig = require('./webpack.config.js');
+var compiler = webpack(webpackConfig);
+
+app.use(webpackDevMiddleware(compiler, {
+  hot: true,
+  filename: 'bundle.js',
+  publicPath: webpackConfig.output.publicPath,
+  stats: {
+    colors: true
+  },
+  historyApiFallback: true
+}));
+
+app.use(webpackHotMiddleware(compiler, {
+  log: console.log,
+  path: '/__webpack_hmr',
+  heartbeat: 10 * 1000,
+}));
+
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-
-
+app.set('views', path.join(__dirname, 'views/layout'));
 
 //引入模板
 var template = require('art-template')
@@ -25,8 +43,6 @@ template.config('extname','.html')
 //设置模板引擎
 app.engine('.html',template.__express)
 app.set('view engine', 'html')
-
-
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

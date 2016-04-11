@@ -1,4 +1,6 @@
-
 $(function () {
-    $('h1').css('color', 'red');
+    $('button')
+        .on('click', function () {
+            $.get('/tst');
+        }).css('color', "red" )
 });

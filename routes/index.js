@@ -9,6 +9,16 @@ router.get('/', function(req, res, next) {
 });
 
 
+router.get('/data',function(req,res){
+	var param = req.query;
 
+	//获取table
+	var table = req.query.model;
+	var method = req.query.operation;
+	var param = req.query.param;
+
+	var model = (req.models)[table];
+	model[method](param,res);
+});
 
 module.exports = router;

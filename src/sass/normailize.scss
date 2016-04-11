@@ -1,6 +1,6 @@
 /* normalize start*/
 html {
-  font-family: Tahoma, Arial, "Helvetica Neue", "Hiragino Sans GB", Simsun, sans-self; /* 1 */
+  font-family:  Arial, "Helvetica Neue", "Hiragino Sans GB", Simsun, sans-self; /* 1 */
   -ms-text-size-adjust: 100%; /* 2 */
   -webkit-text-size-adjust: 100%; /* 2 */
 }
@@ -53,8 +53,8 @@ dfn {
 }
 
 h1 {
-  font-size: 2em;
   margin: 0.67em 0;
+  font-size: 2em;
 }
 
 mark {
@@ -67,10 +67,10 @@ small {
 }
 
 sub, sup {
-  font-size: 75%;
-  line-height: 0;
   position: relative;
   vertical-align: baseline;
+  font-size: 75%;
+  line-height: 0;
 }
 
 sup {
@@ -103,14 +103,14 @@ pre {
 }
 
 code, kbd, pre, samp {
-  font-family: monospace, monospace;
   font-size: 1em;
+  font-family: monospace, monospace;
 }
 
 button, input, optgroup, select, textarea {
+  margin: 0;
   color: inherit;
   font: inherit;
-  margin: 0;
 }
 
 button {
@@ -122,8 +122,8 @@ button, select {
 }
 
 button, html input[type="button"], input[type="reset"], input[type="submit"] {
-  -webkit-appearance: button;
   cursor: pointer;
+  -webkit-appearance: button;
 }
 
 button[disabled], html input[disabled] {
@@ -131,8 +131,8 @@ button[disabled], html input[disabled] {
 }
 
 button::-moz-focus-inner, input::-moz-focus-inner {
-  border: 0;
   padding: 0;
+  border: 0;
 }
 
 input {
@@ -149,8 +149,8 @@ input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-o
 }
 
 input[type="search"] {
-  -webkit-appearance: textfield;
   box-sizing: content-box;
+  -webkit-appearance: textfield;
 }
 
 input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webkit-search-decoration {
@@ -158,8 +158,8 @@ input[type="search"]::-webkit-search-cancel-button, input[type="search"]::-webki
 }
 
 input {
-  border: none;
   padding: 0;
+  border: none;
 }
 
 input:focus {
@@ -167,14 +167,14 @@ input:focus {
 }
 
 fieldset {
-  border: none;
   margin: 0 2px;
   padding: 0.35em 0.625em 0.75em;
+  border: none;
 }
 
 legend {
-  border: 0;
   padding: 0;
+  border: 0;
 }
 
 textarea {
@@ -186,8 +186,8 @@ optgroup {
 }
 
 table {
-  border-collapse: collapse;
   border-spacing: 0;
+  border-collapse: collapse;
 }
 
 td, th {
@@ -196,6 +196,7 @@ td, th {
 
 ul {
   padding: 0;
+  margin: 0;
 }
 
 li {

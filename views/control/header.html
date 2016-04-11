@@ -3,5 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>{{titles}}</title>
+    <script>
+        !function () {
+            function a() {
+                var clientWidth = document.documentElement.clientWidth;
+                clientWidth <= 720
+                        ? document.documentElement.style.fontSize = (clientWidth / 20) + 'px'
+                        : document.documentElement.style.fontSize = 16 + 'px';
+            }
+
+            var b = null;
+            window.addEventListener("resize", function () {
+                clearTimeout(b);
+                b = setTimeout(a, 300)
+            }, !1);
+            a();
+        }(window);
+    </script>
     <script src="javascripts/bundle.js"></script>
 </head>

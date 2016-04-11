@@ -1,0 +1,21 @@
+.layout {
+	display: flex;
+	&.col {
+		flex-flow: column nowrap;
+	}
+	&.row {
+		flex-flow: row nowrap;
+	}
+	>* {
+		box-sizing: border-box;
+	}
+}
+@for $i from 0 through 100 {
+  @if $i % 5 == 0 {
+    .flex-#{$i} {
+    	flex: 0 1 1% * $i; 
+    	max-width: 100%;
+	    box-sizing: border-box;
+    }
+  }  
+}

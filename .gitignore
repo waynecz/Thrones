@@ -4,6 +4,7 @@
 *.ids
 .idea/
 node_modules/
+config/
 source/
 gulpfile.js
 target/

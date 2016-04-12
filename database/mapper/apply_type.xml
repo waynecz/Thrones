@@ -1,12 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sql id="apply_type">
-    <select id="getFirstType">
-        select * from apply_type where type = 0
+
+    <insert id="add">
+        insert into
+            apply_type(name,pid,type)
+        values(
+            {{name | q}},
+            {{pid | q}},
+            {{type | q}}
+        )
+    </insert>
+    <delete id="delete">
+        delete from
+            apply_type
+        where
+            id = {{id | q}}
+    </delete>
+    <select id="listByType">
+        select
+            *
+        from
+            apply_type
+        where
+            type = {{type | q}}
     </select>
 
     <select id="listByPid">
         select
-            *
+            id,name
         from
             apply_type
         where

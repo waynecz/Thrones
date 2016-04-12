@@ -8,9 +8,9 @@ module.exports = {
 			this.success(res,data);
 		}
 	},
-	failure : function(res,err){
+	failure : function(res,err,code){
 		var result = {
-			code : 500,
+			code : code || 500,
 			errCode : "ERROR",
 			message : "服务器错误，请联系开发人员"
 		};

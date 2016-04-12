@@ -1,25 +1,32 @@
 var express = require('express');
 var router = express.Router();
-
+var ajax = require('../modules/ajax')
 /* GET home page. */
 router.get('/', function(req, res, next) {
-
 	res.render('index', { title: 'Express' });
 });
 
-
-router.get('/data',function(req,res){
-	var param = req.query;
-
+function cb(req,res){
+    var method = req.method;
+    var param = req.query;
+    if(!param.model && method == "POST"){
+        param = req.body;
+    }
 	//获取table
-	var table = req.query.model;
-	var method = req.query.operation;
+	var _table = param.model;
+	var _method = param.operation;
+	var model = (req.models)[_table];
+    if(!model){
+        return ajax.failure(res,"非法model");
+    }
+    if(!model[_method]){
+        return ajax.failure(res,"非法operation");
+    }
+	model[_method](param,res);
+}
+router.post("/data",cb);
+router.get("/data",cb);
 
-	var param = req.query.param;
-
-	var model = (req.models)[table];
-	model[method](param,res);
-});
 
 module.exports = router;
 

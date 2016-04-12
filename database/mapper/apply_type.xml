@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql id="apply_type">
+    <select id="getFirstType">
+        select * from apply_type where type = 0
+    </select>
+
+    <select id="listByPid">
+        select
+            *
+        from
+            apply_type
+        where
+            pid = {{pid | q}}
+    </select>
+</sql>

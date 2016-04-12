@@ -10,26 +10,31 @@ var users = require('./routes/users');
 
 var app = express();
 
-var webpackDevMiddleware = require("webpack-dev-middleware");
-var webpack = require('webpack');
-var webpackConfig = require('./webpack.config.js');
-var compiler = webpack(webpackConfig);
+var useWebpack = true;
+if(useWebpack){
+  var webpackDevMiddleware = require("webpack-dev-middleware");
+  var webpackHotMiddleware = require("webpack-hot-middleware");
+  var webpack = require('webpack');
+  var webpackConfig = require('./webpack.config.js');
+  var compiler = webpack(webpackConfig);
 
-app.use(webpackDevMiddleware(compiler, {
-  hot: true,
-  filename: 'bundle.js',
-  publicPath: webpackConfig.output.publicPath,
-  stats: {
-    colors: true
-  },
-  historyApiFallback: true
-}));
+  app.use(webpackDevMiddleware(compiler, {
+    hot: true,
+    filename: 'bundle.js',
+    publicPath: webpackConfig.output.publicPath,
+    stats: {
+      colors: true
+    },
+    historyApiFallback: true
+  }));
 
-app.use(webpackHotMiddleware(compiler, {
-  log: console.log,
-  path: '/__webpack_hmr',
-  heartbeat: 10 * 1000,
-}));
+  app.use(webpackHotMiddleware(compiler, {
+    log: console.log,
+    path: '/__webpack_hmr',
+    heartbeat: 10 * 1000,
+  }));
+}
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views/layout'));

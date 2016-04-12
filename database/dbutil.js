@@ -7,7 +7,6 @@ var ajax = require('../modules/ajax');
 var settings = require('../config/jdbc');
 var util = {
 	exec : function(db,model,method,param,cb,res,deal){
-		console.log(res);
 		var key = model + "." + method;
 		//先读缓存
 		var cacheSql = cache.get(key);
@@ -36,6 +35,10 @@ var util = {
 			console.log("DEBUG:模板SQL");
 			console.log(presql);
 		}
+		if(settings.debug){
+			console.log("传入参数:");
+			console.log(param);
+		}
 		var sql = template.compile(presql,{compress:true,escape:false})(param);
 		if(settings.debug && settings.showSql){
 			console.log("DEBUG:执行SQL");
@@ -59,7 +62,12 @@ var util = {
 				console.log("执行结果:")
 				console.log(data)
 			}
-			data = deal(data);
+            try{
+                data = deal(data,method);
+            }catch (e){
+                return ajax.failure(res,e);
+            }
+
 			if(settings.debug){
 				console.log("处理结果:")
 				console.log(data)
@@ -81,16 +89,13 @@ var util = {
 		});
 	},
 	query : function(){
-		console.log(arguments[0])
-		console.log(arguments[1])
-		console.log(arguments[2])
-		console.log(arguments[3])
-		console.log(arguments[4])
-		console.log(arguments[5])
-		util.exec.apply(util,util.getArgs(arguments,function(data){
+		util.exec.apply(util,util.getArgs(arguments,function(data,method){
 			if(data.length == 1 && util.countEle(data[0]) == 1){
 				data = util.getFirstEle(data[0]);
 			}
+            else if(data.length == 1 && util.contains(method,"get,load,findone")){
+                data = data[0];
+            }
 			return data;
 		}));
 	},
@@ -102,10 +107,13 @@ var util = {
 	},
 	update : function(){
 		util.exec.apply(util,util.getArgs(arguments,function(data){
-			if(data.length == 1 && util.countEle(data[0]) == 1){
-				data = util.getFirstEle(data[0]);
-			}
-			return data;
+            var affected = data.affectedRows;
+            if(affected>1){
+                return 1;
+            }
+            else{
+                throw new Error("更新失败");
+            }
 		}));
 	},
 	countEle : function(o){
@@ -119,7 +127,6 @@ var util = {
 		return -1;
 	},
 	getFirstEle : function(o){
-		console.log(o);
 		if(typeof o == "object"){
 			for(var i in o){
 				return o[i];
@@ -136,6 +143,22 @@ var util = {
 			arr.push(other);
 		}
 		return arr;
-	}
+	},
+    contains : function(s1,s2){
+        if(util.contain(s2,",")){
+            ms = s2.split(",");
+            var flag = false;
+            for(var i in ms){
+                if(util.contain(s1,ms[i])){
+                    return true;
+                }
+            }
+            return false;
+        }
+        return util.contain(s1,s2);
+    },
+    contain : function(s1,s2){
+        return s1.toLowerCase().indexOf(s2.toLowerCase()) > -1;
+    }
 }
 module.exports = util;

@@ -6,15 +6,15 @@
 		insert into
 		user(username,password,name,dept,mobile,pid,role,status,gmt_create)
 		values(
-		{{username | q}},
-		{{password | q}},
-		{{name | q}},
-		{{dept | q}},
-		{{mobile | q}},
-		{{pid | q}},
-		{{role | q}},
-		{{status | q}},
-		{{gmt_create | dateFormat}}
+            {{username | q}},
+            {{password | q}},
+            {{name | q}},
+            {{dept | q}},
+            {{mobile | q}},
+            {{pid | q}},
+            {{role | q}},
+            {{status | q}},
+            {{gmt_create | dateFormat}}
 		)
 	</insert>
 	
@@ -86,4 +86,34 @@
 	    where 
 	        id = {{id | q}}
 	</update>
+
+    <select id="get">
+        select
+            *
+        from
+            user
+        where
+            id = {{id | q}}
+    </select>
+
+    <select id="isUnique">
+        select
+            count(1)
+        from
+            user
+        where
+            username = {{username | q}}
+        {{if id}}
+            id != {{id}}
+        {{/if}}
+    </select>
+
+    <delete id="delete">
+        delete from
+            user
+        where
+            id = {{id | q}}
+    </delete>
+
+
 </sql>

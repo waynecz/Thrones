@@ -8,12 +8,12 @@ module.exports = {
 			this.success(res,data);
 		}
 	},
-	failure : function(res,err){
+	failure : function(res,err,code){
 		var result = {
-			code : 500,
+			code : code || 500,
 			errCode : "ERROR",
-			success : 0,
-			message : "服务器错误，请联系开发人员"
+			message : "服务器错误，请联系开发人员",
+			success : 0
 		};
 		var errCodes = ["ER_BAD_NULL_ERROR","ER_DUP_ENTRY"];
 		var errMsg = ["信息不全","相关信息重复"];
@@ -40,15 +40,12 @@ module.exports = {
 		var result = {
 			code : 200,
 			data : data,
-			success : 1,
-			message : "操作成功"
+			message : "操作成功",
+			success : 1
 		};
 		if(typeof data == "string"){
 			result.message = data;
 		}
 		res.json(result);
-	},
-	page : function(res,page,data){
-		res.render(page,data);
 	}
 }

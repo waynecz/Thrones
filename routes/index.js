@@ -7,16 +7,17 @@ router.get('/', function(req, res, next) {
 });
 
 function cb(req,res){
+
 	//获取table
 	var _table = req.params.model;
 	var _method = req.params.operation;
 
 	var model = (req.models)[_table];
     if(!model){
-        return ajax.failure(res,"非法model");
+        return ajax.failure(res,"非法请求");
     }
     if(!model[_method]){
-        return ajax.failure(res,"非法operation");
+        return ajax.failure(res,"非法请求");
     }
     var param = req.query;
     if(req.method == "POST"){

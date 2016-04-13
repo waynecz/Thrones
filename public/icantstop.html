@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我停不下来了</title>
+</head>
+<style>
+    html {
+        overflow: hidden;
+        touch-action: none;
+        content-zooming: none;
+    }
+    body {
+        margin:0;
+        padding:0;
+        background:#000;
+        position:absolute;
+        width:100%;
+        height:100%;
+    }
+    #screen {
+        position:absolute;
+        width:100%;
+        height:100%;
+    }
+    #screen .img{
+        position:absolute;
+        cursor:pointer;
+        width:100%;
+        height:100%;
+        -webkit-user-select:none;
+        -moz-user-select:none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    #screen .frame {
+        position:absolute;
+        width:50%;
+        height:50%;
+    }
+    #images {
+        display:none;
+    }
+</style>
+<body>
+<div id="screen"></div>
+<div id="images">
+    <img src="http://www.dhteumeuleu.com/images/frame.jpg">
+    <img src="http://www.dhteumeuleu.com/images/frame.jpg">
+    <img src="http://www.dhteumeuleu.com/images/frame.jpg">
+    <img src="http://www.dhteumeuleu.com/images/frame0.jpg">
+</div>
+</body>
+<script>
+    window.addEventListener('load', function () {
+    var src = document.getElementById("images").getElementsByTagName("img"),
+    img = function (el,x,y) {
+    var d = document.createElement("div");
+    d.className     = "frame";
+    d.style.left    = 50 * x + "%";
+    d.style.top     = 50 * y + "%";
+    var img         = document.createElement("img");
+    img.className   = "img";
+    img.src         = src[Math.floor(Math.random()*src.length)].src;
+    img.onmousedown = function () {
+    div(this.parentNode);
+    this.parentNode.removeChild(this);
+    }
+    d.appendChild(img);
+    el.appendChild(d);
+    },
+    div = function (el) {
+    img(el,0,0);
+    img(el,1,0);
+    img(el,0,1);
+    img(el,1,1);
+    };
+    div(document.getElementById("screen"));
+    window.ondragstart = function() { return false; }
+    }, false);
+</script>
+</html>

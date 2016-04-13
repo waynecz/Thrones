@@ -7,13 +7,6 @@ router.get('/', function(req, res, next) {
 });
 
 function cb(req,res){
-
-    var param = req.query;
-    // if(!param. && method == "POST"){
-    //     param = req.body;
-    // }
-
-    console.log(req.params);
 	//获取table
 	var _table = req.params.model;
 	var _method = req.params.operation;
@@ -24,6 +17,10 @@ function cb(req,res){
     }
     if(!model[_method]){
         return ajax.failure(res,"非法operation");
+    }
+    var param = req.query;
+    if(req.method == "POST"){
+        param = req.body;
     }
 	model[_method](param,res);
 }

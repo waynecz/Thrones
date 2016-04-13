@@ -5,87 +5,98 @@ var fs = require('fs');
 var cache = require('memory-cache');
 var ajax = require('../modules/ajax');
 var settings = require('../config/jdbc');
+var print = require('../modules/print')
 var util = {
-	exec : function(db,model,method,param,cb,res,deal){
+	exec : function(db,model,method,param,resolve,reject,res,deal){
 		var key = model + "." + method;
 		//先读缓存
 		var cacheSql = cache.get(key);
 		if(settings.debug){
-			console.log("读取模板" + key)
+			print.info("读取模板" + key)
 		}
 		var presql = cacheSql;
 		if(!cacheSql){
 			var path = 'database/mapper/'+ model+'.xml';
 			if(!fs.existsSync(path)){
-				cb(new Error("mapper不存在"),0);
-				return;
+				return reject("mapper不存在");
 			}
 			var presqlfile = fs.readFileSync(path,{encoding:"utf-8"});
 			var document = new xmldoc.XmlDocument(presqlfile);
 			var methodEle = document.childWithAttribute("id",method);
 			if(!methodEle || !methodEle.val){
-				cb(new Error(model+"的"+method+"方法未定义"),0);
-				return;
+				return reject(model+"的"+method+"方法未定义");
 			}
 			var presql = document.childWithAttribute("id",method).val;
 			//写入缓存
 			cache.put(key,presql,1000 * 60 * 5);
 		}
 		if(settings.debug && settings.showTemplateSql){
-			console.log("DEBUG:模板SQL");
-			console.log(presql);
+			print.info("DEBUG:模板SQL");
+			print.info(presql);
 		}
 		if(settings.debug){
-			console.log("传入参数:");
-			console.log(param);
+			print.info("传入参数:");
+			print.info(param);
 		}
-		var sql = template.compile(presql,{compress:true,escape:false})(param);
+		var sql = '';
+		try{
+			sql = template.compile(presql,{compress:true,escape:false})(param);
+		}
+		catch(e){
+			print.info("SQL模板编译出错");
+			print.info(presql);
+			return reject(e);
+		}
+		
 		if(settings.debug && settings.showSql){
-			console.log("DEBUG:执行SQL");
-			console.log(sql);
+			print.info("DEBUG:执行SQL");
+			print.info(sql);
 		}
 		db.query(sql,function(err,data){
 			//查询失败
 			if(err){
 				if(settings.debug){
-					console.log("数据操作失败");
-					console.log(err);
+					print.info("数据操作失败");
+					print.info(err);
 				}
-				if(res){
-					return ajax.return(err,null,res);
-				}
-				return cb(err);
+				return reject(err);
 			}
 
 			//调用回调方法处理MYSQL返回结果
 			if(settings.debug){
-				console.log("执行结果:")
-				console.log(data)
+				print.info("执行结果:")
+				print.info(data)
 			}
             try{
                 data = deal(data,method);
             }catch (e){
-                return ajax.failure(res,e);
+            	if(res){
+            		console.log(res);
+            		return ajax.failure(res,e);
+            	}
+                return reject(e);
             }
 
 			if(settings.debug){
-				console.log("处理结果:")
-				console.log(data)
+				print.info("处理结果:")
+				print.info(data)
 			}
 			if(method == "isUnique" && data > 0){
 				var msg = param.unique_msg||"存在相同记录";
 				if(res){
-					return ajax.return(msg,null,res);
+					return ajax.failure(res,msg);
 				}
-				return cb(msg)
+				return reject(msg);
 			}
+			else if(method == "isUnique" && data == 0){
+				return resolve(0);
+			}
+
 			if(res){
-				if(method == "isUnique" && data == 0){
-					return cb(null);//继续执行添加操作
-				}
-				return ajax.return(null,data,res);
+				return ajax.success(res,data);
 			}
-			return cb(null,data);
+
+			return resolve(data);
 		});
 	},
 	query : function(){
@@ -101,6 +112,7 @@ var util = {
 	},
 	insert : function(){
 		util.exec.apply(util,util.getArgs(arguments,function(data){
+			console.log(data);
 			var id = data.insertId || -1;
 			return id;
 		}));
@@ -108,11 +120,22 @@ var util = {
 	update : function(){
 		util.exec.apply(util,util.getArgs(arguments,function(data){
             var affected = data.affectedRows;
-            if(affected>1){
+            if(affected>0){
                 return 1;
             }
             else{
                 throw new Error("更新失败");
+            }
+		}));
+	},
+	delete : function(){
+		util.exec.apply(util,util.getArgs(arguments,function(data){
+            var affected = data.affectedRows;
+            if(affected>0){
+                return 1;
+            }
+            else{
+                throw new Error("删除失败");
             }
 		}));
 	},

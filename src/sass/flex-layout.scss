@@ -6,6 +6,12 @@
 	&.row {
 		flex-flow: row nowrap;
 	}
+	&.col-wp {
+		flex-flow: column wrap;
+	}
+	&.row-wp {
+		flex-flow: row wrap;
+	}
 	>* {
 		box-sizing: border-box;
 	}

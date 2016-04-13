@@ -1,0 +1,58 @@
+.in-view {
+	animation: MODALIN .2s .3s ease-out forwards;
+	& + #list {
+		transform: translate3d(0, 100%, 0);
+		animation: LISTOUT .2s ease-out forwards;
+	}
+}
+.out-view {
+	animation: MODALOUT .2s  ease-out forwards;
+	& + #list {
+		transform: translate3d(0, 100%, 0);
+		animation: LISTIN .2s .3s ease-out forwards;
+	}
+}
+.pull {
+	
+}
+
+@keyframes MODALIN {
+	0% {
+		transform: translate3d(-100%, 0,0);
+		opacity: 0;
+	}
+	100% {
+		transform: translate3d(0, 0,0);
+		opacity: 1;
+	}
+}
+@keyframes MODALOUT {
+	0% {
+		transform: translate3d(0, 0,0);
+		opacity: 1;
+	}
+	100% {
+		transform: translate3d(-100%, 0,0);
+		opacity: 0;
+	}
+}
+@keyframes LISTIN {
+	0% {
+		transform: translate3d(0, 100%,0);
+		opacity: 0;
+	}
+	100% {
+		transform: translate3d(0, 0,0);
+		opacity: 1;
+	}
+}
+@keyframes LISTOUT {
+	0% {
+		transform: translate3d(0, 0,0);
+		opacity: 1;
+	}
+	100% {
+		transform: translate3d(0, 100%,0);
+		opacity: 0;
+	}
+}

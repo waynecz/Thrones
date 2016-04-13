@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var login = require('./routes/login');
 
 var app = express();
 
@@ -78,6 +79,7 @@ if (useDb) {
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/login', login);
 
 
 // catch 404 and forward to error handler

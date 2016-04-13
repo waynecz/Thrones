@@ -79,7 +79,7 @@
                             if(value===''){
                                 continue;
                             }
-                            var item = '<li class="ui-select-item' + disabled + '" data-value="' + value + '" data-type="' + type + '">' + escapeHtml(dataList[i].text) + '</li>';
+                            var item = '<li class="ui-select-item' + disabled + '" data-value="' + value + '" data-type="' + type + '">' + dataList[i].text + '</li>';
                             fragArr.push(item);
                             if (dataList[i].selected) {
                                 selectIndex = i;

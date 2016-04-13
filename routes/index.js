@@ -3,15 +3,15 @@ var router = express.Router();
 var ajax = require('../modules/ajax')
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	res.render('index', { title: 'Express' });
+	res.render('index', { title: 'thrones' });
 });
 
 function cb(req,res){
 
     var param = req.query;
-    // if(!param. && method == "POST"){
-    //     param = req.body;
-    // }
+    if(req.method == "POST"){
+        param = req.body;
+    }
 
     console.log(req.params);
 	//获取table

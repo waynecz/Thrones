@@ -7,14 +7,17 @@ router.get('/', function(req, res, next) {
 });
 
 function cb(req,res){
-    var method = req.method;
+
     var param = req.query;
-    if(!param.model && method == "POST"){
-        param = req.body;
-    }
+    // if(!param. && method == "POST"){
+    //     param = req.body;
+    // }
+
+    console.log(req.params);
 	//获取table
-	var _table = param.model;
-	var _method = param.operation;
+	var _table = req.params.model;
+	var _method = req.params.operation;
+
 	var model = (req.models)[_table];
     if(!model){
         return ajax.failure(res,"非法model");
@@ -24,8 +27,8 @@ function cb(req,res){
     }
 	model[_method](param,res);
 }
-router.post("/data",cb);
-router.get("/data",cb);
+router.post("/data/:model/:operation",cb);
+router.get("/data/:model/:operation",cb);
 
 
 module.exports = router;

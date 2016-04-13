@@ -12,7 +12,8 @@ module.exports = {
 		var result = {
 			code : code || 500,
 			errCode : "ERROR",
-			message : "服务器错误，请联系开发人员"
+			message : "服务器错误，请联系开发人员",
+			success : 0
 		};
 		var errCodes = ["ER_BAD_NULL_ERROR","ER_DUP_ENTRY"];
 		var errMsg = ["信息不全","相关信息重复"];
@@ -39,7 +40,8 @@ module.exports = {
 		var result = {
 			code : 200,
 			data : data,
-			message : "操作成功"
+			message : "操作成功",
+			success : 1
 		};
 		if(typeof data == "string"){
 			result.message = data;

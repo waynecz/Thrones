@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sql id="apply_type">
-
     <insert id="add">
         insert into
             apply_type(name,pid,type)

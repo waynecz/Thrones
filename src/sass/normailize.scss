@@ -202,5 +202,25 @@ ul {
 li {
   list-style: none;
 }
-
+::selection {
+background:#333; 
+color:#fff;
+}
+::-moz-selection {
+background:#333;
+color:#fff;
+}
+::-webkit-selection {
+background:#333;
+color:#fff;
+} 
+::-webkit-input-placeholder {
+  color: #ddd;
+}
+:-moz-placeholder {
+  color: #ddd;
+}
+::-moz-placeholder {
+  color: #ddd;
+}
 /* normalize end*/

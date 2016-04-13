@@ -1,0 +1,120 @@
+
+
+
+.form-unit {
+  flex: 0 1 aut;
+  margin-right: 5%;
+  padding-bottom: 80px;
+  h5 {
+    font-size: 16px;
+    font-weight: 100;
+    text-align: center;
+  }
+  .input {
+    width: 200px;
+    height: 40px;
+    color: #444;
+    border: none;
+      border-bottom: 2px #333 solid;
+      background: transparent;
+      text-align: center;
+      text-indent: -13px;
+      letter-spacing: 1px;
+      line-height: 40px;
+  }
+}
+/* ui-select start*/
+.ui-select {
+  position: relative;
+  display: inline-block;
+  width: 200px;
+  height: 40px;
+  color: #444;
+  vertical-align: middle;
+  font-weight: 100;
+  font-size: 14px;
+  transition:.2s ease-out;
+
+  .ui-select-input {
+    display: block;
+
+    input {
+      width: 100%;
+      border: none;
+      border-bottom: 2px #333 solid;
+      background: transparent;
+      text-align: center;
+      text-indent: -13px;
+      letter-spacing: 1px;
+      line-height: 40px;
+    }
+    &:after {
+      position: absolute;
+      top: 50%;
+      right: 0px;
+      margin-top: -4px;
+      width: 7px;
+      height: 7px;
+      background: #333;
+      content: '';
+      transition:transform .2s ease-out;
+      will-change: transform;
+    }
+  }
+  .ui-select-content {
+    position: absolute;
+    z-index: 10;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+    max-height: 200px;
+    width: 100%;
+
+    opacity: 0;
+    transition: .2s ease-out;
+    transform: translateY(-100%);
+    border-left: 2px #333 solid;
+    border-right: 2px #333 solid;
+    border-bottom: 2px #333 solid;
+
+
+    .ui-select-item {
+      box-sizing: border-box;
+      // margin-top: 10px;
+      border-bottom: 2px transparent solid;
+      color: #444;
+      text-align: center;
+      text-indent: -13px;
+      line-height: 40px;
+      cursor: pointer;
+      transition: .2s ease-out;
+      will-change: transform;
+      background: #fafafa;
+
+      &:hover {
+        // border-bottom: 2px #333 solid;
+        background: #333;
+        color:#fafafa;
+      }
+    }
+  }
+  &.ui-select-down {
+    input {
+      border-color: transparent;
+    }
+    .ui-select-input:after {
+      background: $gr;
+      transform: rotate(135deg);
+    }
+    .ui-select-content{
+      opacity: 1;
+      transform: translateY(0);
+
+      &.top {
+        transform: translateY(-100%);
+      }
+    }
+  }
+}
+
+/* ui-select end*/

@@ -1,11 +1,104 @@
 body.login {
 	padding: 30px;
+	background: $gr;
 }
+
 .login-wraper {
+	position: relative;
 	flex: 1 0 100%;
-	background: url(/images/l_dot.png);
+	align-items: center;
+	justify-content: flex-end;
+	background-image: url(/images/l_dot.png);
+	&::after {
+		content: '';
+		position: absolute;
+		top: 0;left: 0;right: 30%;bottom: 0;
+		background: linear-gradient(to right, rgba(58,181,74,1), rgba(58,181,74,.0));
+	}
+}
+.main-title {
+	z-index: 10;
+	flex: 0 1 44%;
+	padding-left: 4%;
+	padding-top: 30vh;
+	align-self: flex-start;
+	// background: url(/images/logo_sword.png) no-repeat right center;
+	h1 {
+		font-size: 90px;
+		margin: 0px 0;
+		line-height: 1;
+		// color: transparent;
+	}
+	p {
+		font-size: 50px;
+		margin: 0px 0;
+		color: #fafafa;
+		text-indent: 8px;
+	}
+	// text-align: center;
 }
 .panel {
-	flex: 0 1 50%;
-	// background: rgba(240,240,240,.6);
+	z-index: 10;
+	position: relative;
+	flex: 0 1 55%;
+	padding: 10vh 25px;
+	margin-right: 30px;
+	height: 70vh;
+	background: #fafafa;
+	border: 3px #333 solid;
+	overflow: hidden;
+	.login-form {
+		flex: 1 1 100%;
+		justify-content: center;
+	}
+	.button-wraper {
+		position: absolute;
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: center;
+		bottom: 5vh;
+		width: 100%;
+		left: 50%;
+		transform: translateX(-50%);
+		button {
+			position: relative;
+			border: 0 none;
+			outline: none;
+			background: transparent;
+			color: #333;
+			padding: 10px 50px;
+			margin-right: 20px;
+			border: 2px transparent solid;
+			&.active {
+				background: $gr;
+				border: 2px #3bb449 solid;
+				color: #fafafa;
+				&.ok {
+					border: 2px #333 solid;
+					&::after {
+						display: block;
+					}
+				}
+			}
+			&:hover {
+				border: 2px #333 solid;
+				&::after {
+					display: block;
+				}
+			}
+			&::after {
+				display: none;
+				content: '';
+				position: absolute;
+				top: -67px;
+				left: 50%;
+				margin-left: -10px;
+				width: 21px;
+				height: 60px;
+				background: url(/images/logo_ver.png) no-repeat center;
+				background-size: 100% auto; 
+				animation: FLOATING .8s ease-out infinite;
+			}
+		}
+	}
 }

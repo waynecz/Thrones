@@ -1,26 +1,47 @@
 <section class="login-wraper layout row">
-    <div id="signUpForm" class="sign-up panel layout row-wp modal-form">
-        <div class="form-unit">
-            <h5>用户名</h5>
-            <input type="text" class="input" id="username"/>
-        </div>
-        <div class="form-unit">
-            <h5>密码</h5>
-            <input type="text" class="input" id="password"/>
-        </div>
-        <div class="form-unit">
-            <h5>姓名</h5>
-            <input type="text" class="input" id="name"/>
-        </div>
-        <div class="form-unit">
-            <h5>部门</h5>
-            <div class="ui-select" id="dept">
-                <a href="javascript:void(0)" class="ui-select-trigger"><span></span></a>
-                <ul class="ui-select-content">
-                </ul>
+    <div class="main-title">
+        <h1>THRONES</h1>
+        <p>AUTHORITY</p>
+    </div>
+    <div id="signUpForm" class="panel layout row-wp">
+        <!-- 注册-->
+        <div class="sign-up layout row-wp login-form">
+            <div class="form-unit sign">
+                <h5>用户名</h5>
+                <input type="text" class="input" id="username"/>
+            </div>
+            <div class="form-unit sign">
+                <h5>密码</h5>
+                <input type="text" class="input" id="password"/>
+            </div>
+            <div class="form-unit sign">
+                <h5>姓名</h5>
+                <input type="text" class="input" id="name"/>
+            </div>
+            <div class="form-unit sign">
+                <h5>部门</h5>
+                <div class="ui-select" id="dept">
+                    <a href="javascript:void(0)" class="ui-select-trigger"><span></span></a>
+                    <ul class="ui-select-content">
+                    </ul>
+                </div>
             </div>
         </div>
+        <!-- 登录-->
+        <div class="sign-in layout row-wp login-form">
+            <div class="form-unit sign">
+                <h5>用户名</h5>
+                <input type="text" class="input" id="loginusername"/>
+            </div>
+            <div class="form-unit sign">
+                <h5>密码</h5>
+                <input type="text" class="input" id="loginpassword"/>
+            </div>
+        </div>
+        <div class="button-wraper">
+            <button id="dosSignIn">SIGN IN</button>
+            <button id="doSignUp" class="active">SIGN UP</button>
+        </div>
 
-        <button id="signUp">1</button>
     </div>
 </section>

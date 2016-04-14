@@ -243,7 +243,7 @@ var xhrCtrl = [];
                 prefixer   = '',
                 targetAttr = '';
 
-            if (target.hasClass('modal-form')) {
+            if (target.hasClass('modal-form') || target.hasClass('login-form')) {
                 prefixer      = '';
                 targetAttr    = 'id';
                 dataContainer = $('.form-unit', target)

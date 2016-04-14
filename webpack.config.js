@@ -2,7 +2,7 @@ var path         = require('path');
 var autoprefixer = require('autoprefixer');
 var webpack      = require('webpack');
 
-//定义了一些文件夹的路径
+//一些文件夹的路径
 var ROOT_PATH  = path.resolve(__dirname);
 var SRC_PATH   = path.resolve(ROOT_PATH, 'src');
 var MODULE_PATH = path.resolve(ROOT_PATH, './node_modules');

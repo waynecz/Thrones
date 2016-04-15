@@ -2,7 +2,7 @@
   flex: 0 1 auto;
   margin-right: 5%;
   padding-bottom: 80px;
-  &.sign {
+  &.sign-up-unit {
     height: auto;
     flex: 0 1 40%;
     margin-right:0;
@@ -11,6 +11,17 @@
     .input,.ui-select {
       display: block;
       margin: 0 auto;
+    }
+  }
+  &.sign-in-unit {
+    flex: 0 1 45%;
+    align-items: center;
+    margin-right:0;
+    padding-bottom: 30px;
+    .input,.ui-select {
+      display: block;
+      margin: 0 auto;
+      width: 70%;
     }
   }
   h5 {

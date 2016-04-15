@@ -1,5 +1,5 @@
 body.login {
-	padding: 30px;
+	padding: 50px;
 	background: $gr;
 }
 
@@ -12,28 +12,32 @@ body.login {
 	&::after {
 		content: '';
 		position: absolute;
-		top: 0;left: 0;right: 30%;bottom: 0;
-		background: linear-gradient(to right, rgba(58,181,74,1), rgba(58,181,74,.0));
+		top: 0;left: 0;right: 00%;bottom: 0;
+		background: linear-gradient(to left, rgba(58,181,74,1), rgba(58,181,74,.0)),
+					linear-gradient(to top, rgba(58,181,74,.8), rgba(58,181,74,.0));
 	}
 }
 .main-title {
 	z-index: 10;
 	flex: 0 1 44%;
 	padding-left: 4%;
-	padding-top: 30vh;
+	padding-top: 31vh;
 	align-self: flex-start;
+	font-family: 'Press Start 2P', cursive;
+	// letter-spacing: 5px;
 	// background: url(/images/logo_sword.png) no-repeat right center;
 	h1 {
-		font-size: 90px;
+		font-size: 60px;
 		margin: 0px 0;
-		line-height: 1;
+		line-height: 1.8;
 		// color: transparent;
 	}
 	p {
-		font-size: 50px;
+		font-size: 35px;
 		margin: 0px 0;
 		color: #fafafa;
-		text-indent: 8px;
+		text-indent: 20px;
+
 	}
 	// text-align: center;
 }
@@ -45,43 +49,56 @@ body.login {
 	margin-right: 30px;
 	height: 70vh;
 	background: #fafafa;
-	border: 3px #333 solid;
+	border-style: solid;
+	border-color: #333;
+	border-width: 13px 15px;
 	overflow: hidden;
+
 	.login-form {
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 7vh;
+		bottom: 10vh;
 		flex: 1 1 100%;
 		justify-content: center;
+		&.sign-in {
+			justify-content: flex-start;
+		}
 	}
 	.button-wraper {
 		position: absolute;
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: center;
-		bottom: 5vh;
+		bottom: 4vh;
 		width: 100%;
 		left: 50%;
 		transform: translateX(-50%);
 		button {
 			position: relative;
+			font-family: 'Press Start 2P', cursive;
+			font-size: 13px;
 			border: 0 none;
 			outline: none;
 			background: transparent;
 			color: #333;
 			padding: 10px 50px;
 			margin-right: 20px;
-			border: 2px transparent solid;
+			border: 4px transparent solid;
 			&.active {
 				background: $gr;
-				border: 2px #3bb449 solid;
+				border: 4px #3bb449 solid;
 				color: #fafafa;
-				&.ok {
-					border: 2px #333 solid;
+				&.ready {
+					border: 4px #333 solid;
 					&::after {
 						display: block;
 					}
 				}
 			}
 			&:hover {
-				border: 2px #333 solid;
+				border: 4px #333 solid;
 				&::after {
 					display: block;
 				}

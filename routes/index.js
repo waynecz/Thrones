@@ -3,11 +3,18 @@ var router = express.Router();
 var ajax = require('../modules/ajax');
 var md5 = require('../modules/md5');
 var Promise = require('bluebird');
+var cookie = require('../modules/cookie');
 /* GET home page. */
 router.get('/', function(req, res) {
 	res.render('index', { title: 'Express' });
 });
 
+
+router.get('/cookie',function(req,res){
+    console.log(req.headers.cookie);
+    cookie.setCookie(res,{"username":"zhangsan2","password":"123456"});
+    res.render("index")
+});
 
 router.post('/login',function(req,res){
     md5.resetRequestPassword(req);
@@ -17,7 +24,7 @@ router.post('/login',function(req,res){
             if(user == null){
                 return ajax.failure(res,"用户名或密码错误");
             }
-            doLogin(user);
+            doLogin(user,res);
             return ajax.success(res,"登陆成功");
         });
 });
@@ -45,8 +52,8 @@ router.post('/regist',function(req,res){
             return ajax.failure(res, "用户注册失败,请联系管理员");
         });
 });
-function doLogin(user){
-
+function doLogin(user,res){
+    res.setHeader('Set-Cookie','test_cookie="001","language=javascript";')
 }
 
 

@@ -104,9 +104,12 @@ var util = {
 			if(data.length == 1 && util.countEle(data[0]) == 1){
 				data = util.getFirstEle(data[0]);
 			}
-            else if(data.length == 1 && util.contains(method,"get,load,findone")){
+            else if(data.length == 1 && method.indexOf("query") < 0){
                 data = data[0];
             }
+			else if(data.length == 0){
+				return null;
+			}
 			return data;
 		}));
 	},

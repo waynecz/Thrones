@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sql id="department">
+	<!-- 添加信息 -->
+	<insert id="add">
+		insert into
+			department(name)
+		value(
+			{{name | q}}
+		)
+	</insert>
+
 	<select id="all">
 		select * from department
 	</select>
@@ -10,4 +19,12 @@
 	        {{name | q}}
 	    )
 	</insert>
+	<select id="get">
+	    select
+	        *
+	    from
+	        department
+	    where
+	        id = {{id | q}}
+	</select>
 </sql>

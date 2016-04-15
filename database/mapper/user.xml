@@ -16,7 +16,18 @@
             {{gmt_create | dateFormat}}
 		)
 	</insert>
-	
+
+	<!--登陆 -->
+	<select id="login">
+	    select
+	        *
+	    from
+	        user
+	    where
+	        username = {{username | q}}
+			and
+			password = {{password | q}}
+	</select>
 	<!-- 查询用户 -->
 	<select id="query">
 		select 

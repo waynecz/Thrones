@@ -1,10 +1,18 @@
-
-
-
 .form-unit {
-  flex: 0 1 aut;
+  flex: 0 1 auto;
   margin-right: 5%;
   padding-bottom: 80px;
+  &.sign {
+    height: auto;
+    flex: 0 1 40%;
+    margin-right:0;
+    align-items: center;
+    padding-bottom: 30px;
+    .input,.ui-select {
+      display: block;
+      margin: 0 auto;
+    }
+  }
   h5 {
     font-size: 16px;
     font-weight: 100;

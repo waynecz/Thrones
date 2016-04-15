@@ -3,6 +3,7 @@ require('./thrones');
 require('./pop-msg');
 require('../node_modules/art-template/dist/template');
 $(function () {
+
     var action = {
         doCreateApply: function () {
 
@@ -72,6 +73,7 @@ $(function () {
             })
         })
 });
+
 function log(p) {
     console.log(p)
 }

@@ -18,7 +18,7 @@ gulp.task('browser-sync', ['nodemon'], function() {
 // the real stuff
 gulp.task('default', ['browser-sync'], function () {
     // gulp.watch('./views/**/*.html', bs.reload);
-    gulp.watch(['./routes/**/*.js', './app.js', './bin/www','./views/**/*.html'], ['bs-delay']);
+    gulp.watch(['./routes/**/*.js','./modules/*','./database/*', './app.js', './bin/www','./views/**/*.html'], ['bs-delay']);
 });
 
 // give nodemon time to restart

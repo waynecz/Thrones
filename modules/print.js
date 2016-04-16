@@ -24,6 +24,17 @@ module.exports = {
 	info : function(data){
 		console.log(this.getString(data).blue);
 	},
+	ps : function(data,tag){
+        tag = tag || '*';
+        var i = 0;
+        while(i<3){
+            tag += tag+'';
+            i++;
+        }
+		this.warn(tag);
+		this.warn(data);
+		this.warn(tag);
+	},
 	getString : function(data){
 		if(data instanceof(Error)){
 			data = data.message;

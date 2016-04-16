@@ -3,7 +3,6 @@ require('./thrones');
 require('./pop-msg');
 require('../node_modules/art-template/dist/template');
 $(function () {
-
     var action = {
         doCreateApply: function () {
 
@@ -38,8 +37,11 @@ $(function () {
         })
 });
 
+//**************************************************************************************************************************************************************************
+
+//注册登录页私有
 $(function () {
-    var action = {
+    var Wayne = {
         getDepartment: function () {
             if ($('#dept.ui-select').length) {
                 $.jax({
@@ -56,21 +58,72 @@ $(function () {
                 })
             }
         },
-    };
-//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    action.getDepartment();
-    $('#signUp')
-        .on('click', function (e) {
-            var postData           = $.generatePostData('signUpForm');
-            postData['unique_msg'] = '存在相同用户名';
-            $.jax({
-                url   : '/data/user/add',
-                type  : 'post',
-                data  : postData,
-                errmsg: 'aaaa'
-            }).done(function (res) {
+        switchSign   : function (targetBtn, targetFormId) {
+            targetBtn.siblings('button').removeClass('active ready');
+            targetBtn.addClass('active');
+            Wayne.resetForm(targetFormId)
+            $(targetFormId).siblings('.login-form').addClass('shadow');
+            $(targetFormId).removeClass('shadow');
+        },
+        checkBeforePost: function (targetFormId) {
+            var fields = $('.form-unit', targetFormId),
+                flag = false,
+                total = fields.length,
+                count = total,
+                tipMsg = '';
+            fields.each(function (e) {
+                var ele = $(e),
+                    select = ele.find('.ui-select'),
+                    text = ele.find('.input'),
+                    content = '';
 
+                if (select.length) {
+                    content = select.selectValue();
+                } else if (text.length) {
+                    content = text.val();
+                }
+                
+                if (content == '') {
+                    count --;
+                }
+
+                return (count == total);
             })
+            
+        },
+        resetForm: function (targetFormId) {
+            var tgt = $(targetFormId);
+            tgt.find('.input').val('');
+            tgt.find('.ui-select').each(function (e) {
+                $(e).selectIndex(-1);
+            });
+        },
+        doSignUp: function () {
+            var flag = Wayne.checkBeforePost('#'+operation);
+            if (!flag) {
+                return false;
+            }
+            var postData = {};
+            $.jax({
+                url: '/data/user/add',
+                data: postData
+            }).done(function (res) {
+                log(res)
+            })
+        }
+    };
+//-------------------------------------------------------------------------------------------------------------------------------------------------
+    Wayne.getDepartment();
+
+    $('#dosSignIn, #doSignUp')
+        .on('click', function () {
+            var me        = $(this),
+                operation = me.attr('data-operation');
+            if (me.hasClass('active')) {
+                operation == 'add' ? Wayne.doSignUp() : Wayne.doSignIn();
+            } else {
+                Wayne.switchSign(me, '#'+operation)
+            }
         })
 });
 

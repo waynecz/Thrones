@@ -1,6 +1,6 @@
 
 
 
-exports.list = function(){
-    
+exports.list = function(req,res){
+    res.renderPage("department");
 }

@@ -1,0 +1,63 @@
+@charset "utf-8";
+/* CSS Document */
+
+.mypage{
+    text-align:center;
+    margin-top:10px;
+}
+.mypage ul {
+    list-style-type: none;
+    margin:0;
+    padding:0;
+    display:inline-block;
+}
+.mypage ul>li {
+    float: left;
+    margin: 0 4px;
+    line-height: 1.44;
+}
+.mypage ul>li>a,.mypage ul>li>span {
+    display:inline-block;
+    line-height: 40px;
+    height:40px;
+    text-align:center;
+    text-decoration: none;
+    font-size: 14px;
+    background-color: #FFFFFF;
+    border:1px solid #DDDDDD;
+    border-radius:2px;
+    color:#2ea5ff;
+}
+.mypage>ul>li.word>a,.mypage>ul>li.word>span{
+    width:auto;
+}
+.mypage >ul>li.word.prev span,.mypage >ul>li.word.next span,.mypage >ul>li.word.prev a,.mypage >ul>li.word.next a{
+    padding:0 10px;
+}
+.mypage >ul>li.active span{
+    background-color: #2ea5ff;
+    border:1px solid #2ea5ff;
+    color:white;
+    font-weight:bold;   
+}
+.mypage>ul>li.disabled span{
+    cursor:not-allowed;
+    color:#999999;
+}
+.mypage-li.num.disabled{
+    background-color:inherit;
+}
+.mypage ul>li>a:hover{
+    color:white;
+    background-color: #2ea5ff;
+    cursor:pointer;
+    border:1px solid #2ea5ff;
+}
+.mypage ul>li>input.go{
+    border:1px solid #EEEEEE;
+    padding-left:3px;
+    padding-right:3px;
+}
+.mypage ul>li>input.go:focus{
+    border-color:#2ea5ff;
+}

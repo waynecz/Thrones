@@ -16,6 +16,13 @@
             role
     </select>
 
+    <select id="byselect2">
+        select
+            code as id,name as text
+        from
+            role
+    </select>
+
     <select id="get">
         select
             *

@@ -8,6 +8,10 @@ module.exports = function(template){
 		return "'%" + (val || "") + "'";
 	});
 
+	template.helper('t',function(){
+		return "'" + new Date().getTime() + "'";
+	});
+
 	template.helper('dateFormat',function(val,format){
 		if(typeof val == "undefined"){
 			val = new Date();

@@ -2,50 +2,21 @@
 <html lang="zh-CN-Hans">
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <title>{{page}}</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="/stylesheets/admin.css">
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_1460787240_0293655.css">
-    <script src="/scripts/jquery.js" />
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1460787240_0293655.css" />
+    <link rel="stylesheet" href="/lib/select2/select2.min.css" />
+    <link rel="stylesheet" href="/lib/select2/select2.thrones.css" />
+    <link rel="stylesheet" href="/lib/pagination/mypage.css" />
+    <script src="/lib/require.js"></script>
+    <script src="/lib/require_config.js?v=2"></script>
+    <script type="text/javascript">
+        require(['jquery']);
+    </script>
 </head>
 <body>
     <div id="containers">
-        <nav id="nav">
-            <dl>
-                <dt class="nav">
-                    <i class="iconfont icon-xitong"></i>系统管理
-                </dt>
-                <dd class="subnav">
-                    <ul>
-                        <li>系统信息</li>
-                        <li>角色管理</li>
-                        <li>今日申请</li>
-                    </ul>
-                </dd>
-            </dl>
-            <dl>
-                <dt class="nav">
-                    <i class="iconfont icon-yonghu"></i>用户管理
-                </dt>
-                <dd class="subnav">
-                    <ul>
-                        <li>用户列表</li>
-                        <li>角色管理</li>
-                        <li>部门管理</li>
-                    </ul>
-                </dd>
-            </dl>
-            <dl>
-                <dt class="nav">
-                    <i class="iconfont icon-shenqingjilu"></i>申请管理
-                </dt>
-                <dd class="subnav">
-                    <ul>
-                        <li>今日申请</li>
-                        <li>待处理</li>
-                        <li>已处理</li>
-                    </ul>
-                </dd>
-            </dl>
-        </nav>
+        {{include './nav'}}
         <div id="contents">
 

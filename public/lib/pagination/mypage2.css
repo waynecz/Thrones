@@ -1,0 +1,72 @@
+@charset "utf-8";
+/* CSS Document */
+
+.mypage{
+	text-align:center;
+	margin-top:10px;
+}
+.mypage ul {
+	list-style-type: none;
+	margin:0;
+	padding:0;
+	display:inline-block;
+}
+.mypage ul>li {
+	float: left;
+	margin: 0 4px;
+}
+.mypage ul>li>a,.mypage ul>li>span {
+	display:inline-block;
+	line-height: 40px;
+	height:40px;
+	text-align:center;
+	text-decoration: none;
+	font-size: 14px;
+	background-image:-moz-linear-gradient(left top,#FFFFFF,#EAEFED);
+	background-image:-webkit-linear-gradient(left top,#FFFFFF,#EAEFED);
+	background-image:-o-linear-gradient(left top,#DBD9D9,#A7A7A7);	
+	background-image:-ms-linear-gradient(left top,#FFFFFF,#EAEFED);
+	border-radius:3px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	color:#3399FF;
+	box-shadow:0 0 0 1px #EEEEEE;
+}
+.mypage>ul>li.word>a,.mypage>ul>li.word>span{
+	width:auto;
+	padding:0 10px;
+}
+.mypage >ul>li.active span{
+	background-image:-moz-linear-gradient(left top,#5394BC,#4BA5D8);
+	background-image:-webkit-linear-gradient(left top,#5394BC,#4BA5D8);
+	background-image:-o-linear-gradient(left top,#5394BC,#4BA5D8);
+	background-image:-ms-linear-gradient(left top,#5394BC,#4BA5D8);
+	color:white;
+	font-weight:bold;	
+}
+.mypage>ul>li.disabled span{
+	background-image:-moz-linear-gradient(left top,#DBD9D9,#A7A7A7);	
+	background-image:-webkit-linear-gradient(left top,#DBD9D9,#A7A7A7);	
+	background-image:-o-linear-gradient(left top,#DBD9D9,#A7A7A7);	
+	background-image:-ms-linear-gradient(left top,#DBD9D9,#A7A7A7);	
+	cursor:not-allowed;
+	color:white;
+}
+.mypage ul>li>a:hover{
+	color:white;
+	background-image:-moz-linear-gradient(left top,#5394BC,#4BA5D8);
+	background-image:-webkit-linear-gradient(left top,#5394BC,#4BA5D8);
+	background-image:-o-linear-gradient(left top,#5394BC,#4BA5D8);
+	background-image:-ms-linear-gradient(left top,#5394BC,#4BA5D8);
+	cursor:pointer;
+}
+.mypage ul>li>input.go{
+	border-radius:3px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border:1px solid #EEEEEE;
+	padding:0;
+}
+.mypage ul>li>input.go:focus{
+	border:1px solid #3399FF;
+}

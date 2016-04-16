@@ -47,19 +47,19 @@ exports.renderFilter = function(req,res,next){
     else{
         layout = "home";
     }
-    res.renderPage = function(page,data,extra,selfLayout){
-        print.warn('请求页面:' + page);
-        data = data || {};
-        extra = extra || {};
-        if(typeof extra == 'string'){
-            layout = extra;
-            extra = {};
+    res.renderPage = function(screenPage,screeData,extraDataOrLayout,selfLayout){
+        print.warn('请求页面:' + screenPage);
+        var data = screeData || {};
+        extra = extraDataOrLayout || {};
+        if(typeof extraDataOrLayout == 'string'){
+            layout = extraDataOrLayout;
+            extraDataOrLayout = {};
         }
         else if(selfLayout){
             layout = selfLayout;
         }
         var basedir = 'views/screen';
-        page = page.slicePrefix("/admin/","/admin",'/');
+        var page = screenPage.slicePrefix("/admin/","/admin",'/');
         var checkfile = basedir + '/' + layout + '/' + page;
         var file =  checkfile + ".html";
         fs.stat(file,function(err){
@@ -71,8 +71,8 @@ exports.renderFilter = function(req,res,next){
             if(contents.startsWith("{Template Error}")){
                 return res.redirect("/500");
             }
-
-            res.render(layout,{'contents':contents,'extra':extra});
+            print.ps("layout:?,page:?".format(layout,page));
+            res.render(layout,{'contents':contents,'extra':extraDataOrLayout,'page':page});
         });
     }
     next();

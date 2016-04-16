@@ -1,0 +1,17 @@
+<script id="temp_user_list" type="text/html">
+    [[each users as user]]
+    <tr>
+        <td>[[user.name]]</td>
+        <td>[[user.username]]</td>
+        <td>[[user.department_name]]</td>
+        <td>-</td>
+        <td>100</td>
+        <td>[[user.role_name]]</td>
+        <td>[[user.gmt_create]]</td>
+        <td>
+            <a href="#" class="item_update_info">重置信息</a>
+            <a href="#" class="item_update_password">重置密码</a>
+        </td>
+    </tr>
+    [[/each]]
+</script>

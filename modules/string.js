@@ -83,12 +83,12 @@ String.prototype.slicePrefix = function(prefix) {
     if (this.startsWith(prefix)) {
         return this.slice(prefix.length);
     }
-    return this;
+    return this.toString();
 }
 
 String.prototype.format = function(){
     var args = arguments;
-    var i = 0;
+    var i = -1;
     return this.replace(/\?|(\{\})/g,function(match,index,oldstr){
         i++;
         return args[i] || '?';

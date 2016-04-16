@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>我的下拉框</title>
+	<link rel="stylesheet" type="text/css" href="select2.min.css">
+	<link rel="stylesheet" type="text/css" href="select2.extend.css">
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="select2.min.js"></script>
+	<script type="text/javascript" src="casecade.js"></script>
+</head>
+<body>
+
+		
+	<select  id="province" class="province myselect select2">
+		<option value="0">选择省</option>
+	</select>
+	
+	<select  id="city" class="city myselect select2">
+		<option value="0">选择市</option>
+	</select>
+
+	<select  id="district" class="district myselect select2">
+		<option value="0">选择区</option>
+	</select>
+
+	
+	
+
+	
+	<input type="button" id="button" value="取得数据" />
+	<input type="button" id="button2" value="初始化" />
+
+
+	<select  id="province" class="province myselect select2">
+		<option value="0">选择省</option>
+	</select>
+	
+	<select  id="city" class="city myselect select2">
+		<option value="0">选择市</option>
+	</select>
+
+	<select  id="district" class="district myselect select2">
+		<option value="0">选择区</option>
+	</select>
+
+	<script type="text/javascript">
+		$(".myselect").select2({
+		  	placeholder: "Select a state",
+		  	allowClear: false,
+		  	minimumResultsForSearch: Infinity
+		});
+	</script>
+
+
+
+	<script type="text/javascript">
+		//同步的方式加载数据
+		var data;
+		$.ajax({
+			url : "city.json",
+			type : "get",
+			async : false,
+			dataType : "json",
+			success : function(returnData){
+				data = returnData;
+			}
+		});
+
+		var area;
+		$(".province").each(function(index){
+			area = $(this).casecadeSelect({
+				"data" : data,
+				"length" : 3,
+				"objs" : [".city:eq("+index+")",".district:eq("+index+")"],
+				"selectedItems" : [3,39,433]
+			});
+		});
+
+
+		$("#button").click(function(){
+
+			var context = $(".province:eq(0)");
+            var id = context.select2("val");
+            var text = context.find("option:selected").text();
+
+            console.log(id+"---"+text);
+
+			// var data1 = area.getDatas(0);
+			// var data2 = area.getDatas(1);
+			// var data3 = area.getDatas(2);
+
+			// console.log(data1);
+			// console.log(data2);
+			// console.log(data3);
+		});
+
+		$("#button2").click(function(){
+			area.init([3,39,433]);
+		});
+	</script>
+
+
+	
+</body>
+</html>

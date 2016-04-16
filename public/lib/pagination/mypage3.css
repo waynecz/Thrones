@@ -1,0 +1,78 @@
+@charset "utf-8";
+/* CSS Document */
+
+.mypage{
+    text-align:center;
+    margin-top:10px;
+    font-family: "微软雅黑";
+    font-size:8px;
+}
+.mypage ul {
+    list-style-type: none;
+    margin:0;
+    padding:0;
+    display:inline-block;
+}
+.mypage ul>li {
+    float: left;
+    border:1px solid #DDDDDD;
+}
+.mypage ul>li>a,.mypage ul>li>span {
+    display:inline-block;
+    line-height: 40px;
+    height:40px;
+    text-align:center;
+    text-decoration: none;
+    font-size: 14px;
+    color:#3399FF;
+}
+.mypage ul>li.num{
+    border-right:none;
+}
+.mypage ul>li.prev{
+    border-right: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.mypage ul>li.next{
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.mypage ul>li.goinput{
+    border-left:none;
+    border-right: none;
+}
+.mypage>ul>li.word>a,.mypage>ul>li.word>span{
+    width:auto;
+    padding:0 10px;
+}
+.mypage >ul>li.active span{
+    background-color: #428BCA;
+    color:white;
+    font-weight:bold;  
+ 
+}
+.mypage >ul>li.active{
+    border-top-color:#428BCA; 
+    border-bottom-color:#428BCA;  
+}
+
+.mypage>ul>li.disabled span{
+    cursor:not-allowed;
+    color:#333333;
+}
+.mypage ul>li>a:hover{
+    color:white;
+    background-color: #DDDDDD;
+    cursor:pointer;
+}
+.mypage ul>li>input.go{
+    border:none;
+    padding:0;
+}
+.mypage ul>li>input.go:focus{
+    border-color:#428BCA;
+}
+li.all{
+    margin-left:10px;
+}

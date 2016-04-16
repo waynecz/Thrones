@@ -196,7 +196,7 @@ var xhrCtrl = [];
                         if (assetOwnersMap[assetowner] == undefined) {
                             rst += '';
                         } else {
-                            rst += '<p class="kk">' + assetOwnersMap[assetowner] + '</p>'
+                            rst += '<p class="other">' + assetOwnersMap[assetowner] + '</p>'
                         }
                     });
                     rst == '' ? rst = '-' : rst = rst;

@@ -27,3 +27,17 @@
 		}
 	}
 }();
+
+
+
+
+require(['jquery'],function($){
+	//菜单操作
+	var title = document.title;
+	var link = $(".subnav a[data-page='" + title + "']");
+	link.addClass('active');
+	link.parents("dd").prev("dt").addClass("active");
+	document.title = "Thrones-" + (link.text() || '后台管理中心');
+});
+
+

@@ -12,6 +12,14 @@
 	<select id="all">
 		select * from department
 	</select>
+
+	<select id="byselect2">
+		select
+			id,name as text
+		from
+			department
+	</select>
+	
 	<insert id="add">
 	    insert into
 	        department(name)

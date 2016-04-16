@@ -27,26 +27,28 @@ module.exports = function(app){
     //后台管理路由:
     app.get('/admin/user/list',User.list);
     app.get('/admin/role/list',Role.list);
-    app.get('/admin/dept/list',Department.list);
+    app.get('/admin/department/list',Department.list);
     app.get('/admin/os',Role.list);
     app.get('/admin/me',Role.list);
-    app.get('/admin/apply/todaylist',Apply.todaylist);
-    app.get('/admin/apply/todolist',Apply.todolist);
-    app.get('/admin/apply/list',Apply.list);
+    app.get('/admin/apply/leaderlist',Apply.leaderlist);
+    app.get('/admin/apply/safelist',Apply.safelist);
+    app.get('/admin/apply/operationlist',Apply.operationlist);
+    app.get('/admin/apply/applylist',Apply.applylist);
 
     //全局数据请求
     app.post("/data/:model/:operation",Api.data);
     // router.get("/data/:model/:operation",Api.data);
 
 
-
-
     //错误页面
     app.get('/404',Index.page404);
     app.get('/500',Index.page500);
 
-
+    // app.get('/kk',function(req,res){
+    //     res.renderPage("kk");   //渲染screen/home下的kk.html
+    //     res.renderPage("kk",{},"other");  //渲染other(layout)下的kk.html
+    // });
 
     //自动渲染
-    app.get(['/admin/:homePage','/:homePage'],Index.auto);
+    // app.get(['/admin/:homePage','/:homePage'],Index.auto);
 }

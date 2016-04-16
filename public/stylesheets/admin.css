@@ -2,43 +2,63 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    font-family: "helvetica neue", "Microsoft YaHei", arial, sans-serif;
 }
 
-
+a{
+    text-decoration: none;
+    color: #2ea5ff;
+}
 #containers{
     min-width: 800px;
     position: relative;
 }
 #nav{
     width:200px;
-    background: #444;
+    background: rgb(249,249,249);
     height: 800px;
     font-size:14px;
 }
 #nav dl{
-    color: #DDD;
+    color: #000;
 }
-.nav{
-    line-height:40px;
-    padding-left:20px;
-    background: #333;
+.iconfont{
+    color:#666;
+    margin-right:10px;
 }
 
+.nav{
+    line-height:52px;
+    padding-left:20px;
+    background: #FFF;
+    color: #000;
+    font-size:15px;
+}
+.nav.active .iconfont,
+.nav.active{
+    color:#2ea5ff;
+}
 .subnav{
     margin-bottom: 5px;
 }
 
 .subnav ul li {
-    line-height: 36px;
     list-style-type: none;
-    padding-left:50px;
-    transition:background-color 1s;
+    transition:color 1s;
     cursor: pointer;
 }
-.subnav ul li:hover{
-    background-color: #666;
+.subnav ul li a{
+    padding-left:50px;
+    display: block;
+    line-height: 46px;
+    text-decoration: none;
+    color: #000;
 }
-
+.subnav ul li a:hover,
+.subnav ul li a.active{
+    color:#ff6601;
+}
 #contents{
     position: absolute;
     top:0;
@@ -46,15 +66,98 @@
     right:0;
     height: 800px;
     background: #eee;
-    min-width:500px;
+    min-width:800px;
+    padding:20px;
 }
 
+
+/* 表单样式 */
+input,
+textarea,
+select{
+    outline: none;
+}
+
+.minput{
+    width:200px;
+    height:36px;
+    border:1px solid #D4D4D4;
+    
+    background: none;
+    background-color: #fff;
+    padding:none;
+    padding-left: 5px;
+    font-size:12px;
+    border-radius: 2px;
+}
+
+/* 搜索样式 */
+.search_section{
+    margin-bottom: 20px;
+    width:100%;
+    font-size:12px;
+    background-color: #fff;
+    padding:20px;
+}
+
+.search_section .search_item{
+    margin-right: 20px;
+    display: inline-block;
+}
+
+#btn_search{
+    display: inline-block;
+    width:80px;
+    text-align: center;
+    line-height: 36px;
+    background-color: #2ea5ff;
+    color:#fff;
+    margin-left: 50px;
+    border:none;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+
+/* 表格样式 */
+
+table {
+    background-color: #fff;
+    width:100%;
+    border-collapse: collapse;
+}
+
+table th{
+    font-weight: normal;
+    color: #666;
+    font-size: 15px;
+    height: 50px;
+    text-align: left;
+}
+
+table tr{
+    height: 48px;
+    font-size: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+table tr th,
+table tr td{
+    padding-left: 8px;
+}
+
+/*分页信息*/
+#pagination{
+    margin-top:20px;
+    background-color: #fff;
+    padding:10px;
+}
 
 #devtime{
     position: fixed;
     border:none;
     right:10px;
-    top:10px;
+    top:210px;
     width:35px;
     height: 35px;
     background-color: #000;
@@ -63,12 +166,6 @@
     line-height: 35px;
     font-size: 12px;
     border-radius: 35px;
-
-
+    z-index : 100;
 }
 
-
-.iconfont{
-    color:#eee;
-    margin-right:4px;
-}

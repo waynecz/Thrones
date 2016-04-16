@@ -43,11 +43,11 @@ exports.signup = function(res,res){
 
 
 
-
-
 //用户列表
 exports.list = function(req,res){
-    res.render('screen/admin/user');
+
+
+    res.renderPage('user');
 }
 //添加用户
 exports.update = function(req,res){

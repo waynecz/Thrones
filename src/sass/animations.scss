@@ -1,15 +1,15 @@
 .in-view {
-	animation: MODALIN .2s .3s ease-out forwards;
+	animation: MODALIN .25s .3s ease-out forwards;
 	& + #list {
 		transform: translate3d(0, 100%, 0);
-		animation: LISTOUT .2s ease-out forwards;
+		animation: LISTOUT .25s ease-out forwards;
 	}
 }
 .out-view {
-	animation: MODALOUT .2s  ease-out forwards;
+	animation: MODALOUT .25s  ease-out forwards;
 	& + #list {
 		transform: translate3d(0, 100%, 0);
-		animation: LISTIN .2s .3s ease-out forwards;
+		animation: LISTIN .25s .3s ease-out forwards;
 	}
 }
 .pull {
@@ -67,3 +67,18 @@
 		transform: translate3d(0, 0%,0);
 	}
 }
+@keyframes INDETERMINATE {
+	0% {
+		left: -35%;
+		right: 100%;
+	}
+	60% {
+		left: 100%;
+		right: -90%;
+	}
+	100% {
+		left: 100%;
+		right: -90%;
+	}
+}
+  

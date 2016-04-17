@@ -1,0 +1,29 @@
+.progress {
+  position: fixed;
+  right: 0;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  display: none;
+  overflow: hidden;
+  width: 100%;
+  height: 5px;
+  border-radius: 2px;
+  background-color: #fefefe;
+  box-shadow: 0 1px 9px rgba(111,111,111,.7);
+
+  .indeterminate {
+    background-color: $bk;
+
+    &:before {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      background-color: inherit;
+      content: '';
+      animation: INDETERMINATE 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+      will-change: left, right;
+    }
+  }
+}

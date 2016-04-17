@@ -4,8 +4,8 @@
  * 依赖 pager art-template ui-select
  * 功能: ajax方法改写 获取各种列表 计算提交数据 刷新按钮及多选框状态 重置表单 删除
  */
-var xhrCtrl = [];
-;(function ($) {
+;window.xhrCtrl = {};
+(function ($) {
     $.extend({
         jax                        : function (options) {
             var requestUrl = location.pathname,
@@ -237,11 +237,11 @@ var xhrCtrl = [];
             return dfd.promise()
         },
         generatePostData           : function (targetId) {
-            var target = $('#' + targetId);
-            var postData   = {},
+            var target        = $(targetId);
+            var postData      = {},
                 dataContainer = [],
-                prefixer   = '',
-                targetAttr = '';
+                prefixer      = '',
+                targetAttr    = '';
 
             if (target.hasClass('modal-form') || target.hasClass('login-form')) {
                 prefixer      = '';
@@ -249,14 +249,16 @@ var xhrCtrl = [];
                 dataContainer = $('.form-unit', target)
             }
 
-            // 用于拼接搜索字段
-
+            if (target.hasClass('generateFormName')) {
+                targetAttr    = 'name';
+            }
+            
             dataContainer.each(function (i, e) {
-                var tony    = $(e);
-                var select  = tony.find('.ui-select:not(.group)');
-                var text    = tony.find('input[type=text]:not(.dataPicker)[placeholder!=请选择]:not(.group), input[type=password]');
-                var check   = tony.find('input[type=checkbox]');
-                var date    = tony.find('input[type=hidden]');
+                var tony   = $(e);
+                var select = tony.find('.ui-select:not(.group)');
+                var text   = tony.find('input[type=text]:not(.dataPicker)[placeholder!=请选择]:not(.group), input[type=password]');
+                var check  = tony.find('input[type=checkbox]');
+                var date   = tony.find('input[type=hidden]');
 
                 if (select.length) {
                     // 下拉框取值
@@ -311,23 +313,40 @@ var xhrCtrl = [];
                 totlaDuck != 0 && livedDuck == totlaDuck ? checkAll.prop('checked', true) : checkAll.prop('checked', false);
             }
         },
-        resetFormInModal           : function (target) {
-            target.find('input, [name=mText_content], textarea').val('');
-            target.find('.del-group').parent().remove();
-            target.find('.ui-select:not(#mIntelligenceTypeOne)').selectIndex(-1);
-            target.find('.details-field').addClass('shadow');
-            if (target.find('textarea[name=mHtml_content]').length) {
-                CodeMirrorList[target.find('[name=mHtml_content]').attr('id')].setValue(' ');
-            }
-            if ($('input.selectized, select.selectized', target).length) {
-                $('input.selectized, select.selectized', target).each(function (i, e) {
-                    $(e)[0].selectize.clear();
-                })
-            }
-            if (target.find('.del-group').length) {
-                target.find('.del-group').parent().remove();
-            }
+        checkBeforePost: function (targetFormId) {
+            var fields = $('.form-unit', targetFormId),
+                total  = fields.length,
+                count  = total,
+                tipMsg = '';
+            fields.each(function (i, e) {
+                var ele     = $(e),
+                    select  = ele.find('.ui-select'),
+                    text    = ele.find('.input'),
+                    content = '';
 
+                if (select.length) {
+                    content = select.selectValue();
+                } else if (text.length) {
+                    content = text.val();
+                }
+
+                if (content == '') {
+                    count--;
+                    ele.addClass('warn');
+                } else {
+                    ele.removeClass('warn');
+                }
+
+            });
+            return (count == total);
+        },
+        resetForm                  : function (targetFormId) {
+            var tgt = $(targetFormId);
+            tgt.find('.form-unit').removeClass('warn');
+            tgt.find('.input').val('');
+            tgt.find('.ui-select').each(function (i, e) {
+                $(e).selectIndex(-1);
+            });
         },
         delete                     : function (operation, options) {
             if (xhrCtrl.delete) {
@@ -407,6 +426,21 @@ var xhrCtrl = [];
                 }, 2000)
 
             });
-        }
+        },
+        getDepartment  : function () {
+            if ($('#dept.ui-select').length) {
+                $.jax({
+                    url: '/data/department/all'
+                }).done(function (res) {
+                    var rst = [];
+                    res.data.map(function (dp) {
+                        rst.push({text: dp.name, value: dp.id});
+                    });
+                    $('#dept.ui-select').selectInit({
+                        dataList: rst
+                    })
+                })
+            }
+        },
     })
 })(jQuery);

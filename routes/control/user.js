@@ -2,10 +2,14 @@ var md5 = require('../../modules/md5');
 var ajax = require('../../modules/ajax');
 exports.showSignup = function(req,res){
     res.renderPage("login",{"page":"signup"});
-}
+};
 exports.showSignin = function(req,res){
     res.renderPage("login",{"page":"signin"});
-}
+};
+
+exports.loginPage = function(req,res){
+    res.renderPage("login",{"page":"login"}, "login");
+};
 exports.signin = function(req,res){
     md5.resetRequestPassword(req);
     //查询
@@ -17,7 +21,11 @@ exports.signin = function(req,res){
             doLogin(user,res);
             return ajax.success(res,"登陆成功");
         });
+<<<<<<< HEAD
 }
+=======
+};
+>>>>>>> 866c12da16fcf0410c9e49d7ef322f10819537e8
 exports.signup = function(req,res){
     md5.resetRequestPassword(req);
     req.body.status = 1; //默认激活

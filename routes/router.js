@@ -26,6 +26,7 @@ module.exports = function(app){
 
     //后台管理路由:
     app.get('/admin/user/list',User.list);
+    app.post('/admin/user/password',User.password);
     app.get('/admin/role/list',Role.list);
     app.get('/admin/department/list',Department.list);
     app.get('/admin/os',Role.list);
@@ -37,7 +38,7 @@ module.exports = function(app){
 
     //全局数据请求
     app.post("/data/:model/:operation",Api.data);
-    // router.get("/data/:model/:operation",Api.data);
+    app.get("/data/:model/:operation",Api.data);
 
 
     //错误页面

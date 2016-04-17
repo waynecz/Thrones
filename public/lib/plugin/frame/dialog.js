@@ -27,13 +27,13 @@ define(['jquery','tool'],function($,tool){
 		var _id = Math.round(Math.random() * 10000000);
 		$(this).data("id",_id);
 		var _this = $(this);
+
 		var Frame = {
 			//初始化
 			init : function() {
 				if(_default.title){
 					_this.find(".mywindow_title").html(_default.title);
 				}
-
 
 				// $(window).scrollTop(–––0);
 				_this.width(_default.width);
@@ -45,7 +45,6 @@ define(['jquery','tool'],function($,tool){
 				var w = window.innerWidth;
 				var l = (w - _default.width) / 2;
 				_this.css("left",l);
-				this.open();
 				var b = window.innerHeight - _this.height();
 				var scrollTop = $(window).scrollTop();
 				if(b>0){
@@ -57,6 +56,9 @@ define(['jquery','tool'],function($,tool){
 				if(_default.hideFoot){
 					_this.find(".mywindow_foot").remove();
 				}
+
+                _this.show();
+
 				//添加遮盖层
 				$("<div class='cover_layer' id='layer"+_id+"'></div>").appendTo("body");
 				//绑定关闭事件

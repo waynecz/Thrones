@@ -4,7 +4,7 @@
 	<!-- 添加用户 --> 
 	<insert id="add">
 		insert into
-		user(username,password,name,department_id,role,status,gmt_create)
+		user(username,password,name,department_id,role,status,gmt_create,gmt_update)
 		values(
             {{username | q}},
             {{password | q}},
@@ -12,7 +12,8 @@
             {{department_id | q}},
             {{role | q}},
             {{status | q}},
-            {{gmt_create | dateFormat}}
+            {{gmt_create | d}},
+            {{gmt_update | d}}
 		)
 	</insert>
 
@@ -23,35 +24,27 @@
 	    from
 	        user
 	    where
-	        username = {{username | q}}
+	        {{username | eq:'username'}}
 			and
-			password = {{password | q}}
+			{{password | eq:'password'}}
 	</select>
 	<!-- 查询用户 -->
 	<select id="pageQuery">
 		select 
-			*,unix_timestamp(gmt_create) as gmt_create_timestamp
+			*,t2.auth_num
 		from
 			view_user t1
+        left join
+            (select user_id uid,count(1) auth_num from apply where state = 3 group by user_id) t2
+        on
+            t1.id = t2.uid
 		where 1 = 1
-			{{if status}}
-				and	t1.status = {{status | p}}
-			{{/if}}
-			{{if name}}
-				and	(t1.name like {{name | p}} or t1.username like {{name | p}})
-			{{/if}}
-			{{if department}}
-				and t1.department_id = {{department | q}}
-			{{/if}}
-			{{if role}}
-				and t1.role = {{role | q}}
-			{{/if}}
-			{{if sort}}
-				order by {{sort}}
-			{{/if}}
-			{{if pageSize}}
-				limit {{offset}},{{pageSize}}
-			{{/if}}
+            {{status | and:'t1.status'}}
+            {{role | and:'t1.role'}}
+            {{department_id | and:'t1.department_id'}}
+            {{name | and:'t1.name,t1.username','like'}}
+            {{sort | orderby}}
+            {{offset | limit:pageSize}}
 	</select>
 	
 	<!-- 查询数量 -->
@@ -61,18 +54,10 @@
         from
             view_user t1
         where 1 = 1
-            {{if status}}
-                and	t1.status = {{status | p}}
-            {{/if}}
-            {{if name}}
-                and	(t1.name like {{name | p}} or t1.username like {{name | p}})
-            {{/if}}
-            {{if department}}
-                and t1.department_id = {{department | q}}
-            {{/if}}
-            {{if role}}
-                and t1.role = {{role | q}}
-            {{/if}}
+            {{status | and:'t1.status'}}
+            {{role | and:'t1.role'}}
+            {{department_id | and:'t1.department_id'}}
+            {{name | and:'t1.name,t1.username','like'}}
 	</select>
 
 	<!-- 更新用户信息 -->
@@ -80,28 +65,27 @@
 	    update 
 	        user
 	    set
-	        mobile = {{mobile | q}}
-		{{if role}}
-			,role = {{role | q}}
-		{{/if}}
-		{{if pid}}
-			,pid = {{pid | q}}
-		{{/if}}
-		{{if status}}
-			,status = {{status | q}}
-		{{/if}}
-		{{if dept}}
-			,dept = {{dept | q}}
-		{{/if}}
-		{{if password}}
-			,password = {{password | q}}
-		{{/if}}
-		{{if name}}
-			,name = {{name | q}}
-		{{/if}}
-	    where 
-	        id = {{id | q}}
+            {{gmt_update | t:'gmt_update'}}
+            {{name | set:'name'}}
+            {{username | set:'username'}}
+            {{role | set:'role'}}
+            {{pid | set:'pid'}}
+            {{status | set:'status'}}
+            {{department_id | set:'department_id'}}
+            {{password | set:'password'}}
+	    where
+	        {{id | eq:'id'}}
 	</update>
+
+    <!-- 更改密码 -->
+    <update id="updatePassword">
+        update
+            user
+        set
+            {{password | eq:'password'}}
+        where
+            {{id | eq:'id'}}
+    </update>
 
     <select id="get">
         select
@@ -109,7 +93,7 @@
         from
             user
         where
-            id = {{id | q}}
+            {{id | eq:'id'}}
     </select>
 
     <select id="isUnique">
@@ -118,17 +102,15 @@
         from
             user
         where
-            username = {{username | q}}
-        {{if id}}
-            id != {{id}}
-        {{/if}}
+            {{username | eq:'username'}}
+            {{id | and:'id','neq'}}
     </select>
 
     <delete id="delete">
         delete from
             user
         where
-            id = {{id | q}}
+            {{id | eq:'id'}}
     </delete>
 
 

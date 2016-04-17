@@ -1,0 +1,67 @@
+<script id="temp_department_list" type="text/html">
+    [[each departments as department]]
+    <tr>
+        <td>[[department.name]]</td>
+        <td>[[department.leaders]]</td>
+        <td>
+            <a href="#" data-id="[[department.id]]" class="item_update_info">更名</a>
+            <!--<a href="/data/department/delete?id=[[department.id]]" target="_blank" >删除</a>-->
+        </td>
+    </tr>
+    [[/each]]
+</script>
+
+<!--模态框-->
+<!-- 添加部门信息 -->
+<div class="mywindow" id="win_add">
+    <div class="mywindow_head">
+        <span class="mywindow_title">添加部门</span>
+        <span class="mywindow_close_btn">✕</span>
+    </div>
+    <div class="mywindow_body">
+        <form id="form_add_info">
+            <table class="table_window">
+                <tbody>
+                    <tr>
+                        <td>名称</td>
+                        <td>
+                            <input type="text" class="minput" name="name" id="add_name"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div class="mywindow_foot">
+        <span class="mywindow_btn mywindow_cancel_btn">取消</span>
+
+        <span class="mywindow_btn mywindow_sure_btn">确定</span>
+    </div>
+</div>
+
+<!-- 添加部门信息 -->
+<div class="mywindow" id="win_update">
+    <div class="mywindow_head">
+        <span class="mywindow_title">添加部门</span>
+        <span class="mywindow_close_btn">✕</span>
+    </div>
+    <div class="mywindow_body">
+        <form id="form_update_info">
+            <table class="table_window">
+                <tbody>
+                <tr>
+                    <td>名称</td>
+                    <td>
+                        <input type="text" class="minput" name="name" id="update_name"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div class="mywindow_foot">
+        <span class="mywindow_btn mywindow_cancel_btn">取消</span>
+
+        <span class="mywindow_btn mywindow_sure_btn">确定</span>
+    </div>
+</div>

@@ -2,13 +2,15 @@ span,input,textarea,select{outline:none;}
 
 .myselect{
 	background: #FFFFFF;
-	width: 160px;
+	width: 200px;
 	height: 34px;
 	display: block;
 	color: #FFFFFF!important;
 	border-radius: 2px;
 }
-
+.select2-dropdown.select2-dropdown--above{
+	border:1px solid #D4D4D4;
+}
 .select2-container--default .select2-selection--single{
 	background: #FFFFFF;
 	border:0px solid #FFFFFF;

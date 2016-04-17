@@ -5,7 +5,8 @@ var fs = require('fs');
 var cache = require('memory-cache');
 var ajax = require('../modules/ajax');
 var settings = require('../config/jdbc');
-var print = require('../modules/print')
+var print = require('../modules/print');
+var validate = require('./model/validate');
 var util = {
 	exec : function(db,model,method,param,resolve,reject,res,deal){
 		var key = model + "." + method;
@@ -82,7 +83,7 @@ var util = {
 				print.info(data)
 			}
 			if(method == "isUnique" && data > 0){
-				var msg = param.unique_msg||"存在相同记录";
+				var msg = validate[model].unique;
 				if(res){
 					return ajax.failure(res,msg);
 				}
@@ -104,7 +105,7 @@ var util = {
 			if(data.length == 1 && util.countEle(data[0]) == 1){
 				data = util.getFirstEle(data[0]);
 			}
-            else if(data.length == 1 && method.indexOf("query") < 0){
+            else if(data.length == 1 && method.indexOf("pageQuery") < 0){
                 data = data[0];
             }
 			else if(data.length == 0){

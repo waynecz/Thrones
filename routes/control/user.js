@@ -1,5 +1,5 @@
 var md5 = require('../../modules/md5');
-
+var ajax = require('../../modules/ajax');
 exports.showSignup = function(req,res){
     res.renderPage("login",{"page":"signup"});
 }
@@ -18,10 +18,10 @@ exports.signin = function(req,res){
             return ajax.success(res,"登陆成功");
         });
 }
-exports.signup = function(res,res){
+exports.signup = function(req,res){
     md5.resetRequestPassword(req);
     req.body.status = 1; //默认激活
-    req.body.role = '01'; //默认普通用户角色
+    req.body.role = 'R01'; //默认普通用户角色
     //判断部门是否存在
     req.models.department.get({id:req.body.dept})
         .then(function(department){
@@ -41,23 +41,24 @@ exports.signup = function(res,res){
         });
 }
 
-
-
 //用户列表
 exports.list = function(req,res){
-
-
     res.renderPage('user');
 }
-//添加用户
-exports.update = function(req,res){
-
-}
-//禁用用户
-exports.forbid = function(req,res){
-
-}
-//修改用户
-exports.update = function(req,res){
-
+//更改用户密码
+exports.password = function(req,res){
+    var key = req.body.key;
+    if(key != "abc123"){
+        return ajax.failure(res,"秘钥不正确");
+    }
+    if(!req.body.username || !req.body.password){
+        return ajax.failure(res,"参数传递不正确");
+    }
+    md5.resetRequestPassword(req);
+    req.models.user.updatePassword(req.body)
+        .then(function(){
+            return ajax.success(res,"更改成功");
+        },function(){
+            return ajax.failure(res,"更新失败,请联系开发人员");
+        })
 }

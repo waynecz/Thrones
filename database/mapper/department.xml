@@ -1,38 +1,94 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <sql id="department">
-	<!-- 添加信息 -->
-	<insert id="add">
-		insert into
-			department(name)
-		value(
-			{{name | q}}
-		)
-	</insert>
 
-	<select id="all">
-		select * from department
-	</select>
+    <!-- 添加信息 -->
+    <insert id="add">
+        insert into
+            department(name)
+        value(
+            {{name | q}}
+        )
+    </insert>
 
-	<select id="byselect2">
-		select
-			id,name as text
-		from
-			department
-	</select>
-	
-	<insert id="add">
-	    insert into
-	        department(name)
-	    values(
-	        {{name | q}}
-	    )
-	</insert>
-	<select id="get">
-	    select
-	        *
-	    from
-	        department
-	    where
-	        id = {{id | q}}
-	</select>
+    <!-- 更新信息 -->
+    <update id="update">
+        update
+            department
+        set
+            {{name | eq:'name'}}
+        where
+            {{id | eq:'id'}}
+    </update>
+
+
+    <!-- 删除信息 -->
+    <delete id="delete">
+        delete from
+            department
+        where
+            {{id | eq:'id'}}
+    </delete>
+
+
+    <!-- 获取所有信息 -->
+    <select id="all">
+        select
+            *
+        from
+            department
+    </select>
+
+    <!-- 根据id获取信息 -->
+    <select id="get">
+        select
+            *
+        from
+            department
+        where
+            {{id | eq:'id'}}
+    </select>
+
+    <!-- 唯一性 -->
+    <select id="isUnique">
+        select
+            count(1) total
+        from
+            department
+        where
+            {{name | eq:'name'}}
+            {{id | and:'id','neq'}}
+    </select>
+
+    <select id="byselect2">
+        select
+        id,name as text
+        from
+        department
+    </select>
+
+    <!-- 查询信息 -->
+    <select id="pageQuery">
+        select
+            t1.*
+        from
+            department t1
+        where
+            1 = 1
+            {{id | and:'t1.id'}}
+            {{name | and:'t1.name'}}
+            {{sort | orderby}}
+            {{offset | limit:pageSize}}
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="pageCount">
+        select
+            count(1)
+        from
+            department t1
+        where
+            1 = 1
+            {{id | and:'t1.id'}}
+            {{name | and:'t1.name'}}
+    </select>
 </sql>

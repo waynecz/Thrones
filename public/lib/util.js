@@ -1,4 +1,4 @@
-define(['jquery'],function($){
+define(['jquery','message'],function($){
 	return {
 		jax : function(param){
 			$.ajax({
@@ -8,7 +8,7 @@ define(['jquery'],function($){
 				dataType : 'json',
 				success : function(e){
 					if(!e.success){
-						alert(e.message);
+						$.showErrorMessage(e.message);
 						return;
 					}
 					if(e.data){
@@ -17,7 +17,7 @@ define(['jquery'],function($){
 					param.cb && param.cb(e);
 				},
 				error : function(e){
-					alert("服务器错误");
+					$.showErrorMessage("服务器错误");
 				}
 			})
 		},
@@ -28,6 +28,9 @@ define(['jquery'],function($){
 				data : data,
 				cb : cb
 			});
+		},
+		formdata : function(form){
+			return $(form).serialize();
 		},
 		form2param : function(form){
 			return this.query2param($(form).serialize(),form);

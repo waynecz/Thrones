@@ -35,9 +35,10 @@ exports.data = function(req,res){
                 //这里会拿到数量信息
                 if(total == 0){
                     //返回空
-                    return ajax.success(res,{
+                    ajax.success(res,{
                         total : 0
                     });
+                    return Promise.reject();
                 }
                 _total = total;
                 return Promise.resolve();
@@ -46,24 +47,29 @@ exports.data = function(req,res){
                 //注入相关参数
                 param.offset = (page - 1) * pageSize;
                 param.pageSize = pageSize;
-                return model[_method](param);
+                model[_method](param).then(function(data){
+                    print.ps(data);
+                    //返回数据+分页信息
+                    var result = {
+                        total : _total,
+                        pageSize : pageSize,
+                        page : page,
+                        data : data
+                    };
+                    return ajax.success(res,result);
+                });
+            },function(){
+                print.ps("没有数据哟");
             })
-            .then(function(data){
-                print.ps(data);
-                 //返回数据+分页信息
-                var result = {
-                    total : _total,
-                    pageSize : pageSize,
-                    page : page,
-                    data : data
-                };
-                return ajax.success(res,result);
-            });
     }
     else{
-        model[_method](param,res);
+        model[_method](param)
+            .then(function(data){
+                ajax.success(res,data);
+            },function(e){
+               ajax.failure(res,e || "操作失败");
+            });
     }
-
 }
 
 

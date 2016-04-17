@@ -83,12 +83,14 @@ select{
     height:36px;
     border:1px solid #D4D4D4;
     
-    background: none;
-    background-color: #fff;
-    padding:none;
     padding-left: 5px;
     font-size:12px;
     border-radius: 2px;
+    margin-right:5px;
+}
+
+input:-webkit-autofill{
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
 }
 
 /* 搜索样式 */
@@ -105,14 +107,13 @@ select{
     display: inline-block;
 }
 
-#btn_search{
+#btn_search,#btn_add{
     display: inline-block;
     width:80px;
     text-align: center;
     line-height: 36px;
     background-color: #2ea5ff;
     color:#fff;
-    margin-left: 50px;
     border:none;
     cursor: pointer;
     border-radius: 2px;
@@ -121,35 +122,47 @@ select{
 
 /* 表格样式 */
 
-table {
+table.table {
     background-color: #fff;
     width:100%;
     border-collapse: collapse;
 }
 
-table th{
+table.table th{
     font-weight: normal;
     color: #666;
     font-size: 15px;
     height: 50px;
     text-align: left;
 }
-
-table tr{
+table.table tr{
     height: 48px;
     font-size: 12px;
     border-bottom: 1px solid #eee;
     /*transition:background-color 1s;*/
 }
 
-table tr th,
-table tr td{
+table.table tr th,
+table.table tr td{
     padding-left: 8px;
 }
 
-table tbody tr:hover{
+table.table tbody tr:hover{
     background-color: #FAFAFA;
 }
+
+
+.table_window{
+
+}
+.table_window tr{
+    height: 52px;
+}
+.table_window tr td{
+    font-size:14px;
+    min-width: 80px;
+}
+
 
 /*分页信息*/
 #pagination{
@@ -174,3 +187,30 @@ table tbody tr:hover{
     z-index : 100;
 }
 
+
+
+
+
+
+/*用户管理页面*/
+span.R01,span.R02,span.R03{
+    display: inline-block;
+    border-radius: 4px;
+    padding:1px 3px;
+    color:#fff;
+    font-size:12px;
+    -webkit-transform:scale(0.8);
+}
+
+span.R08{
+    background: #ff6601;
+}
+span.R03{
+    background:#ff6601;
+}
+span.R02{
+    background: #C40000;
+}
+span.R01{
+    background: #999;
+}

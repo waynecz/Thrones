@@ -38,6 +38,26 @@ require(['jquery'],function($){
 	link.addClass('active');
 	link.parents("dd").prev("dt").addClass("active");
 	document.title = "Thrones-" + (link.text() || '后台管理中心');
+
+
+
+
+    $(window).resize(function(){
+        setSearchSectionSize();
+    });
+    setSearchSectionSize();
+    function setSearchSectionSize(){
+        //判断内容区域的宽度
+        var sectionHeight = $(".search_section").outerHeight(true);
+        if(sectionHeight > 120){
+            $(".search_item").css("margin-bottom","20px");
+        }
+        else{
+            $(".search_item").css("margin-bottom","0px");
+        }
+    }
+
+
 });
 
 

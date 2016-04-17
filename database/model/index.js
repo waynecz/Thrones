@@ -97,7 +97,22 @@ module.exports = function(db,dbutil){
                                 }
                                 break;
                             case "update":
-                                dbutil.update(db,oName,method,param,resolve,reject,res);
+                                //先判断唯一值
+                                if(((db.models)[oName]).hasOwnProperty("isUnique")){
+                                    var model = db.models[oName];
+                                    model.isUnique(param).then(function(){
+                                        dbutil.update(db,oName,method,param,resolve,reject,res);
+                                    },function(err){
+                                        if(res){
+                                            return ajax.failure(res,err);
+                                        }
+                                        return reject(err);
+                                    });
+                                }
+                                else{
+                                    dbutil.update(db,oName,method,param,resolve,reject,res);
+                                }
+
                                 break;
                             case "delete":
                                 dbutil.delete(db,oName,method,param,resolve,reject,res);

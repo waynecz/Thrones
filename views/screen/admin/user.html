@@ -17,20 +17,21 @@
 	<div class="search_item">
 		<select  id="sort" class="myselect select2" name="catalog" placeholder="选择排序">
 			<option></option>
-			<option value="0" title="注册时间降序">默认排序</option>
-			<option value="1">权限数降序</option>
-			<option value="2">权限数升序</option>
-			<option value="3">注册时间升序</option>
+			<option value="id desc" title="注册时间降序">默认排序</option>
+			<option value="auth_num desc">权限数降序</option>
+			<option value="auth_num asc">权限数升序</option>
+			<option value="id asc">注册时间升序</option>
 		</select>
 	</div>
-	
-	<input type="text" class="minput" placeholder="用户信息搜索" title="可搜姓名及用户名"/>
+
+	<input type="text" class="minput" name="name" id="search_name" placeholder="用户信息搜索" title="可搜姓名及用户名"/>
+
 	<span id="btn_search">搜索</span>
 </section>
 
 
 
-<table border="0" id="table_list">
+<table border="0" id="table_list" class="table">
 	<thead>
 		<th>姓名</th>
 		<th>用户名</th>
@@ -43,45 +44,7 @@
 	</thead>
 
 	<tbody id="lists">
-		<tr>
-			<td>张三</td>
-			<td>zhangsan@tongdun.cn</td>
-			<td>反欺诈及基础风控部</td>
-			<td>-</td>
-			<td>100</td>
-			<td>普通用户</td>
-			<td>2016-02-01</td>
-			<td>
-				<a href="#" class="item_update_info">重置信息</a>
-				<a href="#" class="item_update_password">重置密码</a>
-			</td>
-		</tr>
-		<tr>
-			<td>张三</td>
-			<td>zhangsan@tongdun.cn</td>
-			<td>反欺诈及基础风控部</td>
-			<td>-</td>
-			<td>100</td>
-			<td>安全专员</td>
-			<td>2016-02-01</td>
-			<td>
-				<a href="#" class="item_update_info">重置信息</a>
-				<a href="#" class="item_update_password">重置密码</a>
-			</td>
-		</tr>
-		<tr>
-			<td>张三</td>
-			<td>zhangsan@tongdun.cn</td>
-			<td>反欺诈及基础风控部</td>
-			<td>-</td>
-			<td>100</td>
-			<td>部门领导</td>
-			<td>2016-02-01</td>
-			<td>
-				<a href="#" class="item_update_info">重置信息</a>
-				<a href="#" class="item_update_password">重置密码</a>
-			</td>
-		</tr>
+
 	</tbody>
 </table>
 
@@ -89,6 +52,10 @@
 	<div class="mypage" id="mypage"></div>
 </div>
 
+
+
+</div>
+</div>
 
 {{include './template/user_list'}}
 

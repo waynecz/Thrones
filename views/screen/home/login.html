@@ -6,19 +6,19 @@
     <div class="panel layout row-wp">
         <!-- 注册-->
         <div id="add" class="sign-up layout row-wp login-form shadow">
-            <div class="form-unit sign-up-unit">
+            <div class="form-unit sign-up-unit" data-tooltip="请填写用户名">
                 <h5>用户名</h5>
                 <input type="text" class="input" id="username"/>
             </div>
-            <div class="form-unit sign-up-unit">
+            <div class="form-unit sign-up-unit" data-tooltip="请填写密码">
                 <h5>密码</h5>
                 <input type="text" class="input" id="password"/>
             </div>
-            <div class="form-unit sign-up-unit">
+            <div class="form-unit sign-up-unit" data-tooltip="请填写姓名">
                 <h5>姓名</h5>
                 <input type="text" class="input" id="name"/>
             </div>
-            <div class="form-unit sign-up-unit">
+            <div class="form-unit sign-up-unit" data-tooltip="请选择部门">
                 <h5>部门</h5>
                 <div class="ui-select" id="dept">
                     <a href="javascript:void(0)" class="ui-select-trigger"><span></span></a>
@@ -29,16 +29,16 @@
         </div>
         <!-- 登录-->
         <div id="login" class="sign-in layout col-wp login-form">
-            <div class="form-unit sign-in-unit">
+            <div class="form-unit sign-in-unit" data-tooltip="用户名为邮箱">
                 <h5>用户名</h5>
                 <input type="text" class="input" id="loginusername"/>
             </div>
-            <div class="form-unit sign-in-unit">
+            <div class="form-unit sign-in-unit" data-tooltip="请输入密码">
                 <h5>密码</h5>
                 <input type="password" class="input" id="loginpassword"/>
             </div>
         </div>
-        <div class="button-wraper">
+        <div id="buttonWraper" class="button-wraper">
             <button data-operation="login" id="dosSignIn" class="active">SIGN IN</button>
             <button data-operation="add" id="doSignUp">SIGN UP</button>
         </div>

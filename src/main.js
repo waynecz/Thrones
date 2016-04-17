@@ -67,11 +67,10 @@ $(function () {
         },
         checkBeforePost: function (targetFormId) {
             var fields = $('.form-unit', targetFormId),
-                flag = false,
                 total = fields.length,
                 count = total,
                 tipMsg = '';
-            fields.each(function (e) {
+            fields.each(function (i, e) {
                 var ele = $(e),
                     select = ele.find('.ui-select'),
                     text = ele.find('.input'),
@@ -85,21 +84,24 @@ $(function () {
                 
                 if (content == '') {
                     count --;
+                    ele.addClass('warn');
+                } else {
+                    ele.removeClass('warn');
                 }
 
-                return (count == total);
-            })
-            
+            });
+            return (count == total);
         },
         resetForm: function (targetFormId) {
             var tgt = $(targetFormId);
+            tgt.find('.form-unit').removeClass('warn');
             tgt.find('.input').val('');
-            tgt.find('.ui-select').each(function (e) {
+            tgt.find('.ui-select').each(function (i, e) {
                 $(e).selectIndex(-1);
             });
         },
         doSignUp: function () {
-            var flag = Wayne.checkBeforePost('#'+operation);
+            var flag = Wayne.checkBeforePost('#add');
             if (!flag) {
                 return false;
             }
@@ -110,13 +112,16 @@ $(function () {
             }).done(function (res) {
                 log(res)
             })
+        },
+        doSignIn: function () {
+
         }
     };
 //-------------------------------------------------------------------------------------------------------------------------------------------------
     Wayne.getDepartment();
 
-    $('#dosSignIn, #doSignUp')
-        .on('click', function () {
+    $('#buttonWraper')
+        .on('click', '#dosSignIn, #doSignUp',function () {
             var me        = $(this),
                 operation = me.attr('data-operation');
             if (me.hasClass('active')) {

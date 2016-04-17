@@ -3,7 +3,7 @@
 	<!-- 申请 -->
 	<insert id="addApply">
 		insert into 
-			apply(user_id,pid,state,auth,auth_detail,reason,remarks,gmt_apply)
+			apply(user_id,pid,state,auth,auth_detail,content,reason,remarks,gmt_apply)
 		value
 			(
 				{{user_id | q}},
@@ -11,6 +11,7 @@
 				{{state | q}},
 				{{auth | q}},
 				{{auth_detail | q}},
+				{{content | q}},
 				{{reason | q}},
 				{{remarks | q}},
 				{{gmt_apply | dateFormat}}

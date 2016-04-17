@@ -6,35 +6,74 @@ require('../node_modules/art-template/dist/template');
 
 $(function () {
     var action = {
-        doCreateApply: function () {
-
+        // 获取申请类型并联动申请对象
+        getType        : function () {
+            if ($('#auth.ui-select').length) {
+                $.jax({
+                    url: '/data/apply_type/listByType'
+                }).done(function (res) {
+                    var rst = [];
+                    res.data.map(function (dp) {
+                        rst.push({text: dp.name, value: dp.id});
+                    });
+                    if ($('#auth_detail.ui-select'))
+                    $('#auth.ui-select').selectInit({
+                        dataList: rst,
+                        callback: function (index, selectObj) {
+                            var postData = {};
+                            postData.pid = selectObj.value;
+                            $.jax({
+                                url: '/data/apply_type/listByPid'
+                            }).done(function (res) {
+                                var rst2 = [];
+                                res.data.map(function (dp) {
+                                    rst2.push({text: dp.name, value: dp.id});
+                                });
+                                $('#auth_detail.ui-select').selectInit({
+                                    dataList: rst2
+                                });
+                            })
+                        }
+                    })
+                })
+            }
         },
-        switchPage   : function () {
+        doApplyAdd     : function () {
+            var postData = $.generatePostData('addForm');
+            $.jax({
+                url : '/data/apply/addApply',
+                data: postData
+            }).done(function (res) {
+
+            })
+        },
+        switchPage     : function () {
             var modal = $('#modal')
-            modal.hasClass('in-view')
-                ? modal.removeClass('in-view').addClass('out-view')
-                : modal.removeClass('out-view').addClass('in-view');
+            if (modal.hasClass('in-view')) {
+                modal.removeClass('in-view').addClass('out-view');
+                $('#pageSwitcher').attr('data-button', '+');
+                $('#doAddApply').removeClass('active');
+            } else {
+                modal.removeClass('out-view').addClass('in-view');
+                $('#pageSwitcher').attr('data-button', '-');
+                $('#doAddApply').addClass('active');
+            }
         }
     };
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
-    $('#submitApply')
-        .on('click', function (e) {
+    action.getType();
+
+    // 提交申请
+    $('#modal')
+        .on('click', '#doAddApply', function (e) {
             e = window.event || e;
             e.stopPropagation();
-            log($.generatePostData('addForm'));
-            var postData          = {};
-            postData              = $.generatePostData('addForm');
-            postData['model']     = 'apply_type';
-            postData['operation'] = 'add';
-            $.jax({
-                url : '/data',
-                type: 'get',
-                data: postData
-            })
-        })
-    $('#pageSwitcher')
-        .on('click', function () {
+            action.doApplyAdd();
+        });
+    // 新增申请和列表页切换
+    $('.page-switcher-wraper')
+        .on('click', '#pageSwitcher', function () {
             action.switchPage();
         })
 });
@@ -44,65 +83,15 @@ $(function () {
 //注册登录页私有
 $(function () {
     var Wayne = {
-        getDepartment: function () {
-            if ($('#dept.ui-select').length) {
-                $.jax({
-                    url : '/data/department/all'
-                }).done(function (res) {
-                    var rst = [];
-                    res.data.map(function (dp) {
-                        rst.push({text: dp.name, value: dp.id});
-                    });
-                    $('#dept.ui-select').selectInit({
-                        dataList: rst
-                    })
-                })
-            }
-        },
-        switchSign   : function (targetBtn, targetFormId) {
+        switchSign: function (targetBtn, targetFormId) {
             targetBtn.siblings('button').removeClass('active ready');
             targetBtn.addClass('active');
-            Wayne.resetForm(targetFormId);
+            $.resetForm(targetFormId);
             $(targetFormId).siblings('.login-form').addClass('shadow');
             $(targetFormId).removeClass('shadow');
         },
-        checkBeforePost: function (targetFormId) {
-            var fields = $('.form-unit', targetFormId),
-                total = fields.length,
-                count = total,
-                tipMsg = '';
-            fields.each(function (i, e) {
-                var ele = $(e),
-                    select = ele.find('.ui-select'),
-                    text = ele.find('.input'),
-                    content = '';
-
-                if (select.length) {
-                    content = select.selectValue();
-                } else if (text.length) {
-                    content = text.val();
-                }
-                
-                if (content == '') {
-                    count --;
-                    ele.addClass('warn');
-                } else {
-                    ele.removeClass('warn');
-                }
-
-            });
-            return (count == total);
-        },
-        resetForm: function (targetFormId) {
-            var tgt = $(targetFormId);
-            tgt.find('.form-unit').removeClass('warn');
-            tgt.find('.input').val('');
-            tgt.find('.ui-select').each(function (i, e) {
-                $(e).selectIndex(-1);
-            });
-        },
-        doSignUp: function () {
-            var flag = Wayne.checkBeforePost('#add');
+        doSignUp  : function () {
+            var flag = $.checkBeforePost('#add');
             if (xhrCtrl['signup']) {
                 $.msg.pop('正在提交.', 'warning');
                 return false;
@@ -114,17 +103,17 @@ $(function () {
             var postData = $.generatePostData('#add');
 
             $.jax({
-                url: '/data/user/add',
-                data: postData,
-                ctrl: 'signup',
+                url   : '/data/user/add',
+                data  : postData,
+                ctrl  : 'signup',
                 button: $('#doSignUp')
             }).done(function (res) {
                 $.msg.pop('注册成功!', 'success');
                 Wayne.switchSign($('#dosSignIn'), '#login');
             })
         },
-        doSignIn: function () {
-            var flag = Wayne.checkBeforePost('#login');
+        doSignIn  : function () {
+            var flag = $.checkBeforePost('#login');
             if (xhrCtrl['signin']) {
                 $.msg.pop('正在提交.', 'warning');
                 return false;
@@ -136,29 +125,30 @@ $(function () {
             var postData = $.generatePostData('#login');
 
             $.jax({
-                url: '/data/user/login',
-                data: postData,
-                ctrl: 'signin',
+                url   : '/data/user/login',
+                data  : postData,
+                ctrl  : 'signin',
                 button: $('#doSignIn')
             }).done(function (res) {
-                
+                window.location.href = '/';
             })
         }
     };
 //-------------------------------------------------------------------------------------------------------------------------------------------------
-    Wayne.getDepartment();
-
+    // 获取部门信息
+    $.getDepartment();
+    // 注册登录
     $('#buttonWraper')
-        .on('click', '#dosSignIn, #doSignUp',function () {
+        .on('click', '#dosSignIn, #doSignUp', function () {
             var me        = $(this),
                 operation = me.attr('data-operation');
-            if ( me.hasClass('disabled') ) {
+            if (me.hasClass('disabled')) {
                 return false;
             }
-            if ( me.hasClass('active'))  {
+            if (me.hasClass('active')) {
                 operation == 'add' ? Wayne.doSignUp() : Wayne.doSignIn();
             } else {
-                Wayne.switchSign(me, '#'+operation)
+                Wayne.switchSign(me, '#' + operation)
             }
         })
 });

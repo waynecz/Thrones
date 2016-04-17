@@ -34,10 +34,10 @@ header {
 	}
 	h1 {
 		margin: 0;
-		letter-spacing: 1px;
 		font-weight: 100;
-		font-size: 24px;
+		font-size: 20px;
 		line-height: 1.3;
+		font-family: 'Press Start 2P', cursive;
 
 		.b {
 			color: $gr;
@@ -50,6 +50,12 @@ header {
 			min-width: 80px;
 			width: 14%;
 			font-weight: 600;
+			a {
+				color: $bk;
+				&:hover {
+					color: $gr;
+				}
+			}
 		}
 	}
 	.gap {
@@ -108,34 +114,31 @@ main {
 			transform: translate3d(-100%, 0, 0);
 			.modal-body {
 				margin-left: 5%;
-				// @media screen and (max-width: 700px) {
-				//     flex-flow: column wrap!important;
-			 //    }
-				// justify-content: space-between;
+				@media screen and (max-width: 700px) {
+					overflow: auto;
+			    }
 			}
 			.modal-footer {
 				flex: 1 1 auto;
 
-				&:hover {
-					.button {
-						height: 100%;
-					}
-				}
 				.button {
-				  position: absolute;right: 0;bottom: 0;
-				  left: 0;
+				  position: absolute;
+				  bottom: 0;
+				  left: 5%;
 				  display: block;
-				  padding: 0;
-				  width: 100%;
-				  height: 1px;
+				  padding: 10px 20px;
+				  color: $bk;
+				  font-size: 14px;
+				  font-family: 'Press Start 2P', cursive;
+				  border: 3px $bk solid;
 				  outline: none;
-				  border: 0px #333 solid;
-				  background: #333;
-				  color: #999;
+				  background: transparent;
 				  transition: .2s ease-out;
 
 				  &:hover {
 				    color: #fff;
+				    background: $gr;
+				    border-color: $gr;
 				  }
 				}
 			}
@@ -143,16 +146,15 @@ main {
 		
 	}
 	.data-content {
+		position: relative;
 		margin: 1.5% 0 1.5% 5%;
 		padding: 5px 0  20px 20px;
-		min-width: 70%;
-		max-width: 70%;
+		width: 70%;
 		cursor: pointer;	
 		transition: .2s ease-out;
 
 		@media screen and (max-width: 1100px) {
-		    min-width: 90%;
-			max-width: 90%;
+		    width: 90%;
 	    }
 
 		&:first-child {
@@ -175,18 +177,37 @@ main {
 			font-weight: 100;
 			font-size: 23px;
 		}
+		.data-status {
+			position: absolute;
+			right: 2%;top: 10%;
+			font-size: 12px;
+			height: 10px;
+			// background: $bk-2;
+			&[data-stage="1"] {
+				color: $bk;
+			}
+			&[data-stage="2"] {
+				color: $rd;
+			}
+			&[data-stage="3"] {
+				color: $gr;
+			}
+		}
 	}
 	
 	
 }
 footer {
-	color: $gr;
-
 	.cube {
+		font-size: 0;
 		margin-right: 2px;
 		width: 25px;
 		height: 25px;
 		cursor: pointer;
+		&.active {
+			width: 100px;
+			font-size: 12px;
+		}
 	}
 	.dark-1 {
 		background: #333;
@@ -227,7 +248,7 @@ footer {
 			background: #000;
 		}
 		&::after {
-			content: '＋';
+			content: attr(data-button);
 			position: absolute;
 			top: 50%;left: 0;right: 0;
 			transform: translateY(-50%);

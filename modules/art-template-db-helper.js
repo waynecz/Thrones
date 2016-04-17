@@ -9,12 +9,15 @@ module.exports = function(template){
 	});
 
 	template.helper('t',function(){
-		return "'" + new Date().getTime() + "'";
+		return "'" + (new Date().getTime() / 1000) + "'";
 	});
 
 	template.helper('dateFormat',function(val,format){
+
 		if(typeof val == "undefined"){
 			val = new Date();
+            console.log(val)
+            console.log(val.getTime())
 		}
 		if(typeof format == "undefined" || format == "datetime"){
 			format = "yyyy-MM-dd HH:mm:ss";
@@ -28,7 +31,7 @@ module.exports = function(template){
 				case 'yyyy':
 					return val.getFullYear();
 				case 'MM':
-					return getTwo(val.getMonth());
+					return getTwo(val.getMonth() + 1);
 				case 'dd':
 					return getTwo(val.getDate());
 				case 'HH':

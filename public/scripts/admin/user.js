@@ -15,7 +15,7 @@ require(['jquery','util','comjax','mtemplate','pager','select2'],function($,util
 	});
 
 
-	var pager = new Pager("#mypage",{
+	window.pager = new Pager("#mypage",{
 		fnJump : function(page,mpager){
             search(page,function(data){
             	if(data.total == 0){

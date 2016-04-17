@@ -139,11 +139,16 @@ table tr{
     height: 48px;
     font-size: 12px;
     border-bottom: 1px solid #eee;
+    /*transition:background-color 1s;*/
 }
 
 table tr th,
 table tr td{
     padding-left: 8px;
+}
+
+table tbody tr:hover{
+    background-color: #FAFAFA;
 }
 
 /*分页信息*/

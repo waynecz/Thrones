@@ -4,7 +4,7 @@ function Pager(id,opts){
 	this.id = id;
 	_instance = this;
 	this.rules = $.extend({
-		pageObj : "pagination",  //实例化Pager的对象名称
+		pageObj : "pager",  //实例化Pager的对象名称
 		nTotal : 0,   // 总数量
 		nCurrentPage : 1, //当前页数
 		nPageSize : 10,  //每页显示的数量

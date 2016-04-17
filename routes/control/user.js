@@ -1,10 +1,10 @@
 var md5 = require('../../modules/md5');
 
 exports.showSignup = function(req,res){
-    res.render("login",{"page":"signup"});
+    res.renderPage("login",{"page":"signup"});
 }
 exports.showSignin = function(req,res){
-    res.render("login",{"page":"signin"});
+    res.renderPage("login",{"page":"signin"});
 }
 exports.signin = function(req,res){
     md5.resetRequestPassword(req);

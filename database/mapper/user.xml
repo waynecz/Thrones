@@ -30,7 +30,7 @@
 	<!-- 查询用户 -->
 	<select id="pageQuery">
 		select 
-			*
+			*,unix_timestamp(gmt_create) as gmt_create_timestamp
 		from
 			view_user t1
 		where 1 = 1
@@ -49,7 +49,7 @@
 			{{if sort}}
 				order by {{sort}}
 			{{/if}}
-			{{if offset}}
+			{{if pageSize}}
 				limit {{offset}},{{pageSize}}
 			{{/if}}
 	</select>

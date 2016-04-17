@@ -5,16 +5,13 @@
   padding-bottom: 80px;
 
   &.warn {
-    h5 {
-      color: $rd;
-    }
     &::after {
       display: block;
     }
   }
   &::after {
     position: absolute;
-    top: 30%;
+    top: 34%;
     left: 50%;
     font-size: 12px;
     display: none;

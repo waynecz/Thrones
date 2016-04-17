@@ -1,0 +1,47 @@
+
+#msg-container {
+	position: fixed;
+	bottom: 2%;
+	left: 2%;
+	z-index: 10000;
+	display: block;
+	max-width: 86%;
+}
+
+.pop-msg {
+	position: relative;
+	top: 0;
+	z-index: 999999;
+	display: none;
+	clear: both;
+	margin-bottom: 10px;
+	padding: 7px 25px;
+	max-width: 100%;
+	background-color: $bk;
+	color: $wt;
+	word-break: break-all;
+	line-height: 1.5;
+	will-change: margin-top;
+}
+
+.pop-msg .pop-msg-text {
+	position: relative;
+	display: block;
+	white-space: pre;
+	font-size: 12px;
+}
+
+
+.pop-msg.success {
+	background-color: $bk;
+
+}
+
+.pop-msg.warning {
+	background-color: $bk;
+
+}
+
+.pop-msg.error {
+	background-color: $bk;
+}

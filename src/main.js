@@ -2,6 +2,8 @@ require('./ui-select');
 require('./thrones');
 require('./pop-msg');
 require('../node_modules/art-template/dist/template');
+// 提交控制
+
 $(function () {
     var action = {
         doCreateApply: function () {
@@ -45,8 +47,7 @@ $(function () {
         getDepartment: function () {
             if ($('#dept.ui-select').length) {
                 $.jax({
-                    url : '/data/department/all',
-                    type: 'get'
+                    url : '/data/department/all'
                 }).done(function (res) {
                     var rst = [];
                     res.data.map(function (dp) {
@@ -61,7 +62,7 @@ $(function () {
         switchSign   : function (targetBtn, targetFormId) {
             targetBtn.siblings('button').removeClass('active ready');
             targetBtn.addClass('active');
-            Wayne.resetForm(targetFormId)
+            Wayne.resetForm(targetFormId);
             $(targetFormId).siblings('.login-form').addClass('shadow');
             $(targetFormId).removeClass('shadow');
         },
@@ -102,19 +103,46 @@ $(function () {
         },
         doSignUp: function () {
             var flag = Wayne.checkBeforePost('#add');
-            if (!flag) {
+            if (xhrCtrl['signup']) {
+                $.msg.pop('正在提交.', 'warning');
                 return false;
             }
-            var postData = {};
+            if (!flag) {
+                $.msg.pop('填写错误', 'warning');
+                return false;
+            }
+            var postData = $.generatePostData('#add');
+
             $.jax({
                 url: '/data/user/add',
-                data: postData
+                data: postData,
+                ctrl: 'signup',
+                button: $('#doSignUp')
             }).done(function (res) {
-                log(res)
+                $.msg.pop('注册成功!', 'success');
+                Wayne.switchSign($('#dosSignIn'), '#login');
             })
         },
         doSignIn: function () {
+            var flag = Wayne.checkBeforePost('#login');
+            if (xhrCtrl['signin']) {
+                $.msg.pop('正在提交.', 'warning');
+                return false;
+            }
+            if (!flag) {
+                $.msg.pop('字段不能为空', 'warning');
+                return false;
+            }
+            var postData = $.generatePostData('#login');
 
+            $.jax({
+                url: '/data/user/login',
+                data: postData,
+                ctrl: 'signin',
+                button: $('#doSignIn')
+            }).done(function (res) {
+                
+            })
         }
     };
 //-------------------------------------------------------------------------------------------------------------------------------------------------
@@ -124,7 +152,10 @@ $(function () {
         .on('click', '#dosSignIn, #doSignUp',function () {
             var me        = $(this),
                 operation = me.attr('data-operation');
-            if (me.hasClass('active')) {
+            if ( me.hasClass('disabled') ) {
+                return false;
+            }
+            if ( me.hasClass('active'))  {
                 operation == 'add' ? Wayne.doSignUp() : Wayne.doSignIn();
             } else {
                 Wayne.switchSign(me, '#'+operation)

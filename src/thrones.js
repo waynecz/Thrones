@@ -4,8 +4,8 @@
  * 依赖 pager art-template ui-select
  * 功能: ajax方法改写 获取各种列表 计算提交数据 刷新按钮及多选框状态 重置表单 删除
  */
-var xhrCtrl = [];
-;(function ($) {
+;window.xhrCtrl = {};
+(function ($) {
     $.extend({
         jax                        : function (options) {
             var requestUrl = location.pathname,
@@ -237,7 +237,7 @@ var xhrCtrl = [];
             return dfd.promise()
         },
         generatePostData           : function (targetId) {
-            var target = $('#' + targetId);
+            var target = $(targetId);
             var postData   = {},
                 dataContainer = [],
                 prefixer   = '',

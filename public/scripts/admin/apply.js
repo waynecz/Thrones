@@ -16,6 +16,13 @@ define('Apply',['jquery','util','comjax','mselect2'],function($,util,comjax,msel
                 SearchParam.state = val;
                 Apply.search();
             });
+                
+            comjax.getDepartments(function(data){
+                mselect2.renderDataAndBind("#department",)
+            });
+            
+
+
 
         },
         search : function(){

@@ -39,11 +39,12 @@ define(['jquery','select2'],function($){
                 cb && cb(select[0].value);
             });
         },
-        renderDataAndBind : function(id,cb){
+        renderDataAndBind : function(id,data,cb){
             var select = $(id);
             select.select2({
                 allowClear: false,
                 minimumResultsForSearch: 10,
+                data : data
             });
             select.on('change',function(){
                 cb && cb(select[0].value);

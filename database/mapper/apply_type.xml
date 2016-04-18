@@ -26,7 +26,7 @@
 
     <select id="listByPid">
         select
-            id,name
+            id,name text,id value
         from
             apply_type
         where

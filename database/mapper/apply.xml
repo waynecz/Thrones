@@ -44,4 +44,66 @@
 			state = {{state | q}},
 			gmt_end = {{gmt_now | dateFormat}}
 	</update>
+
+    <!-- 查询信息 -->
+    <select id="pageQuery">
+        select
+            t1.*
+        from
+            apply t1
+        where
+            1 = 1
+            {{id | and:'t1.id'}}
+            {{user_id | and:'t1.user_id'}}
+            {{pid | and:'t1.pid'}}
+            {{state | and:'t1.state'}}
+            {{auth | and:'t1.auth'}}
+            {{auth_detail | and:'t1.auth_detail'}}
+            {{reason | and:'t1.reason'}}
+            {{remarks | and:'t1.remarks'}}
+            {{pid_reason | and:'t1.pid_reason'}}
+            {{safe_reason | and:'t1.safe_reason'}}
+            {{final_reason | and:'t1.final_reason'}}
+            {{gmt_apply | and:'t1.gmt_apply_start','gte'}}
+            {{gmt_apply | and:'t1.gmt_apply_end','lte'}}
+            {{gmt_pid | and:'t1.gmt_pid_start','gte'}}
+            {{gmt_pid | and:'t1.gmt_pid_end','lte'}}
+            {{gmt_safe | and:'t1.gmt_safe_start','gte'}}
+            {{gmt_safe | and:'t1.gmt_safe_end','lte'}}
+            {{gmt_end | and:'t1.gmt_end_start','gte'}}
+            {{gmt_end | and:'t1.gmt_end_end','lte'}}
+            {{content | and:'t1.content'}}
+            {{sort | orderby}}
+            {{offset | limit:pageSize}}
+    </select>
+
+    <!-- 查询总数 -->
+    <select id="pageCount">
+        select
+            count(1)
+        from
+            apply t1
+        where
+            1 = 1
+            {{id | and:'t1.id'}}
+            {{user_id | and:'t1.user_id'}}
+            {{pid | and:'t1.pid'}}
+            {{state | and:'t1.state'}}
+            {{auth | and:'t1.auth'}}
+            {{auth_detail | and:'t1.auth_detail'}}
+            {{reason | and:'t1.reason'}}
+            {{remarks | and:'t1.remarks'}}
+            {{pid_reason | and:'t1.pid_reason'}}
+            {{safe_reason | and:'t1.safe_reason'}}
+            {{final_reason | and:'t1.final_reason'}}
+            {{gmt_apply | and:'t1.gmt_apply_start','gte'}}
+            {{gmt_apply | and:'t1.gmt_apply_end','lte'}}
+            {{gmt_pid | and:'t1.gmt_pid_start','gte'}}
+            {{gmt_pid | and:'t1.gmt_pid_end','lte'}}
+            {{gmt_safe | and:'t1.gmt_safe_start','gte'}}
+            {{gmt_safe | and:'t1.gmt_safe_end','lte'}}
+            {{gmt_end | and:'t1.gmt_end_start','gte'}}
+            {{gmt_end | and:'t1.gmt_end_end','lte'}}
+            {{content | and:'t1.content'}}
+    </select>
 </sql>

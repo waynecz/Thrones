@@ -30,7 +30,7 @@ exports.signup = function(req,res){
     req.body.role = 'R01'; //默认普通用户角色
     console.log(req.body);
     //判断部门是否存在
-    req.models.department.get({id:req.body.dept})
+    req.models.department.get({id:req.body.department_id})
         .then(function(department){
             if(department == null){
                 return ajax.failure(res,"部门不存在");

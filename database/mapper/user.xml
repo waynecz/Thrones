@@ -77,6 +77,7 @@
 	    set
             {{gmt_update | t:'gmt_update'}}
             {{name | set:'name'}}
+            {{leader | set:'leader'}}
             {{username | set:'username'}}
             {{role | set:'role'}}
             {{pid | set:'pid'}}

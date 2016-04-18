@@ -5,14 +5,14 @@ define(['jquery','util'],function($,util){
 	return {
 		getDepartments : function(cb){
 			util.jax({
-				url : '/data/department/byselect2',
+				url : '/data/department/all',
 				type : 'post',
 				cb : cb
 			})
 		},
 		getRoles : function(cb){
 			util.jax({
-				url : '/data/role/byselect2',
+				url : '/data/role/all',
 				type : 'post',
 				cb : cb
 			})

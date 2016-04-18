@@ -1,34 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sql id="role">
-    <insert id="add">
-        insert into
-            role(code,name)
-        values(
-            {{code | q}},
-            {{name | q}}
-        )
-    </insert>
-
     <select id="all">
-        select
-            *
-        from
-            role
-    </select>
-
-    <select id="byselect2">
         select
             code as id,name as text
         from
             role
-    </select>
-
-    <select id="get">
-        select
-            *
-        from
-            role
-        where
-            code = {{code | q}}
     </select>
 </sql>

@@ -2,7 +2,7 @@
     [[each departments as department]]
     <tr>
         <td>[[department.name]]</td>
-        <td>[[department.leaders]]</td>
+        <td>[[department.user_name]]</td>
         <td>
             <a href="#" data-id="[[department.id]]" class="item_update_info">更名</a>
             <!--<a href="/data/department/delete?id=[[department.id]]" target="_blank" >删除</a>-->
@@ -61,6 +61,14 @@
                     <td>名称</td>
                     <td>
                         <input type="text" class="minput" name="name" id="update_name"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>负责人</td>
+                    <td>
+                        <select  id="update_leader" class="myselect select2" name="leader" placeholder="请选择负责人">
+                            <option></option>
+                        </select>
                     </td>
                 </tr>
                 </tbody>

@@ -65,3 +65,19 @@ create table user_role(
 	user_id int not null comment '用户id',
 	role_id int not null comment '角色id'
 )
+
+
+
+## view   view_user
+
+create view view_user as
+    select
+        t1.*,t2.name role_name,t3.name department_name
+    from
+        user t1
+    left join
+        role t2
+        on t1.role = t2.code
+    left join
+        department t3
+        on t1.department_id = t3.id

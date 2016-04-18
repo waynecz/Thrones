@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sql id="user">
-	
+
+    <!-- 所有用户 -->
+    <select id="all">
+        select
+            id,username,name as text
+        from
+            user
+        order by
+            id asc
+    </select>
+
 	<!-- 添加用户 --> 
 	<insert id="add">
 		insert into

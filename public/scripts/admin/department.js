@@ -1,6 +1,6 @@
 require(['dialog','frame','message']);
 
-define('Department',['jquery','util','mtemplate','pager','select2'],function($,util,mtemplate){
+define('Department',['jquery','util','mtemplate','comjax','pager','select2'],function($,util,mtemplate,comjax){
 
     var searchParam = {
         page : 1,
@@ -10,6 +10,7 @@ define('Department',['jquery','util','mtemplate','pager','select2'],function($,u
     var Department = {
         init : function(){
             this.initPager();
+            this.initLeader();
             this.bindAddEvent();
         },
         initPager : function(){
@@ -19,7 +20,23 @@ define('Department',['jquery','util','mtemplate','pager','select2'],function($,u
                 }
             });
         },
+        initLeader : function(){
+            //获取角色信息
+            comjax.getUsers(function(data){
+                Department.users = data;
+                var leaderSelect2 = $("#leader");
+                $("#leader,#update_leader").select2({
+                    placeholder: "请选择负责人",
+                    allowClear: false,
+                    minimumResultsForSearch: 8,
+                    data : data
+                });
 
+                leaderSelect2.on('change',function(){
+
+                });
+            });
+        },
         search : function(page){
             //分页查询
             util.jax({
@@ -63,7 +80,7 @@ define('Department',['jquery','util','mtemplate','pager','select2'],function($,u
                     fnSure: function(d) {
                         var param = util.form2param("#form_add_info");
                         util.jax({
-                            'url' : '/data/department/add',
+                            'url' : '/admin/department/add',
                             'type' : 'post',
                             'data' : param,
                             'cb' : function(){
@@ -92,7 +109,7 @@ define('Department',['jquery','util','mtemplate','pager','select2'],function($,u
                     $("#update_name").val(department.name);
                     var oldInfo = $("#form_update_info").serialize();
                     $("#win_update").dialog({
-                        width: 500,
+                        width: 400,
                         fnSure: function(d) {
                             var param = util.form2param("#form_update_info");
                             if(oldInfo == $("#form_update_info").serialize()){

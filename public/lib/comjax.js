@@ -16,7 +16,14 @@ define(['jquery','util'],function($,util){
 				type : 'post',
 				cb : cb
 			})
-		}
+		},
+        getUsers : function(cb){
+            util.jax({
+                url : '/data/user/all',
+                type : 'post',
+                cb : cb
+            })
+        }
 	}
 
 });

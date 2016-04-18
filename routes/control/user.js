@@ -21,11 +21,7 @@ exports.signin = function(req,res){
             doLogin(user,res);
             return ajax.success(res,"登陆成功");
         });
-<<<<<<< HEAD
-}
-=======
 };
->>>>>>> 866c12da16fcf0410c9e49d7ef322f10819537e8
 exports.signup = function(req,res){
     md5.resetRequestPassword(req);
     req.body.status = 1; //默认激活

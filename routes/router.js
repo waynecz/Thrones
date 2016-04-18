@@ -12,7 +12,6 @@ module.exports = function (app) {
     //页面中间件
     app.use(Filter.renderFilter);
 
-
     app.get('/', Index.index);
 
     //前台页面路由:
@@ -26,11 +25,12 @@ module.exports = function (app) {
 
 
     //后台管理路由:
-<<<<<<< HEAD
     app.get('/admin/user/list',User.list);
     app.post('/admin/user/password',User.password);
     app.get('/admin/role/list',Role.list);
+
     app.get('/admin/department/list',Department.list);
+    app.post('/admin/department/add',Department.add);
     app.get('/admin/os',Role.list);
     app.get('/admin/me',Role.list);
     app.get('/admin/apply/leaderlist',Apply.leaderlist);
@@ -41,21 +41,10 @@ module.exports = function (app) {
     //全局数据请求
     app.post("/data/:model/:operation",Api.data);
     app.get("/data/:model/:operation",Api.data);
-=======
-    app.get('/admin/user/list', User.list);
-    app.get('/admin/role/list', Role.list);
-    app.get('/admin/department/list', Department.list);
-    app.get('/admin/os', Role.list);
-    app.get('/admin/me', Role.list);
-    app.get('/admin/apply/leaderlist', Apply.leaderlist);
-    app.get('/admin/apply/safelist', Apply.safelist);
-    app.get('/admin/apply/operationlist', Apply.operationlist);
-    app.get('/admin/apply/applylist', Apply.applylist);
 
     //全局数据请求
     app.post("/data/:model/:operation", Api.data);
     // router.get("/data/:model/:operation",Api.data);
->>>>>>> 866c12da16fcf0410c9e49d7ef322f10819537e8
 
 
     //错误页面

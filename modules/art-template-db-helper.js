@@ -39,7 +39,9 @@ module.exports = function(template){
         if(val == null) {
              return '';
         }
-        val = val.trim();
+        if(typeof val == "string"){
+            val = val.trim();
+        }
         if(val == ''){
             return '';
         }
@@ -84,9 +86,9 @@ module.exports = function(template){
         }
     });
 
-    template.helper('orderby',function(val){
+    template.helper('orderby',function(val,defaultVal){
         if(val == null || val == ''){
-            return '';
+            return ' order by ' + (defaultVal || 'id asc') + ' ';
         }
         return ' order by ' + val + ' ';
     });

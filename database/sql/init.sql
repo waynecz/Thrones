@@ -80,4 +80,34 @@ create view view_user as
         on t1.role = t2.code
     left join
         department t3
-        on t1.department_id = t3.id
+        on t1.department_id = t3.id;
+
+
+
+## view_apply
+SELECT
+    t1.*,
+    t2.name auth_name,
+    t3.name auth_detail_name,
+    t4.name user_name,
+    t5.name pname,
+    t6.name safe_name,
+    t7.name op_name,
+    t8.id department_id,
+    t8.name department_name
+FROM
+    apply t1
+        LEFT JOIN
+    apply_type t2 ON t1.auth = t2.id
+        LEFT JOIN
+    apply_type t3 ON t1.auth = t3.id
+        LEFT JOIN
+    user t4 ON t1.user_id = t4.id
+        LEFT JOIN
+    user t5 ON t1.pid = t5.id
+        LEFT JOIN
+    user t6 ON t1.sid = t6.id
+        LEFT JOIN
+    user t7 ON t1.oid = t7.id
+        LEFT JOIN
+    department t8 ON t4.department_id = t8.id

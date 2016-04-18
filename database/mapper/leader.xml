@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql id="leader">
+
+    <!-- 添加信息 -->
+    <insert id="add">
+        insert into
+            leader(user_id,department_id)
+        value(
+            {{user_id | q}},
+            {{department_id | q}}
+        )
+    </insert>
+
+    <!-- 批量插入信息 -->
+    <insert id="addBatch">
+        insert into
+            leader(user_id,department_id)
+        values
+            {{each datas as data dataIndex}}
+            (
+                {{user_id | q}},
+                {{department_id | q}}
+            ){{datas | m:dataIndex}}
+        {{/each}}
+    </insert>
+
+    <!-- 删除信息 -->
+    <delete id="delete">
+        delete from
+            leader
+        where
+            {{department_id | eq:'department_id'}}
+    </delete>
+
+    <!-- 唯一性 -->
+    <select id="isUnique">
+        select
+            count(1) total
+        from
+            leader
+        where
+            {{user_id | eq:'user_id'}}
+            {{department_id | and:'department_id'}}
+    </select>
+
+</sql>

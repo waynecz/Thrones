@@ -51,6 +51,7 @@ define('Department',['jquery','util','mtemplate','comjax','pager','select2'],fun
                     }
                     else{
                         Department.pageData = data.data;
+                        console.log(data.data);
                         Department.renderPageData(data.data);
                         pager.setTotal(data.total);
                         pager.setPageSize(data.pageSize);
@@ -85,6 +86,8 @@ define('Department',['jquery','util','mtemplate','comjax','pager','select2'],fun
                             'data' : param,
                             'cb' : function(){
                                 $.showSuccessMessage("添加成功");
+                                d.clear();
+                                $("#leader").select2("val","");
                                 Department.search(searchParam.page);
                                 d.close();
                             }
@@ -107,7 +110,8 @@ define('Department',['jquery','util','mtemplate','comjax','pager','select2'],fun
                         return;
                     }
                     $("#update_name").val(department.name);
-                    $("#update_leader").select2("val",department.user_id);
+                    var old_leader = department.user_id
+                    $("#update_leader").select2("val",old_leader);
                     var oldInfo = $("#form_update_info").serialize();
                     $("#win_update").dialog({
                         width: 400,
@@ -118,7 +122,7 @@ define('Department',['jquery','util','mtemplate','comjax','pager','select2'],fun
                                 return;
                             }
                             param.id = departmentId;
-                            param.old_leader = department.user_id;
+                            param.old_leader = old_leader;
                             util.jax({
                                 'url' : '/admin/department/update',
                                 'type' : 'post',

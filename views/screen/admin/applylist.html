@@ -1,0 +1,76 @@
+
+<section class="search_section">
+    <div class="search_item">
+        <select  id="state" class="myselect select2" name="state" placeholder="请选择状态">
+            <option></option>
+            <option value="0">领导待审批</option>
+            <option value="1">安全待审批</option>
+            <option value="2">运维待审批</option>
+            <option value="-1">领导拒绝</option>
+            <option value="-2">安全拒绝</option>
+            <option value="-3">运维拒绝</option>
+            <option value="3">已审核</option>
+        </select>
+    </div>
+
+    <div class="search_item">
+        <select  id="department" class="myselect select2" name="department_id" placeholder="请选择部门">
+            <option></option>
+            <option value="0">所有部门</option>
+        </select>
+    </div>
+
+
+    <div class="search_item">
+        <select  id="role" class="myselect select2" name="catalog" placeholder="请选择部门">
+            <option></option>
+            <option value="0">所有角色</option>
+        </select>
+    </div>
+
+    <div class="search_item">
+        <select  id="sort" class="myselect select2" name="catalog" placeholder="选择排序">
+            <option></option>
+            <option value="id desc" title="注册时间降序">默认排序</option>
+            <option value="auth_num desc">权限数降序</option>
+            <option value="auth_num asc">权限数升序</option>
+            <option value="id asc">注册时间升序</option>
+        </select>
+    </div>
+
+    <input type="text" class="minput" name="name" id="search_name" placeholder="用户信息搜索" title="可搜姓名及用户名"/>
+
+    <span id="btn_search">搜索</span>
+</section>
+
+
+
+<table border="0" id="table_list" class="table">
+    <thead>
+    <th>姓名</th>
+    <th>用户名</th>
+    <th>部门</th>
+    <th>正在申请</th>
+    <th>权限数目</th>
+    <th>角色</th>
+    <th>注册时间</th>
+    <th>操作</th>
+    </thead>
+
+    <tbody id="lists">
+
+    </tbody>
+</table>
+
+<div id="pagination">
+    <div class="mypage" id="mypage"></div>
+</div>
+
+
+
+</div>
+</div>
+
+{{include './template/user_list'}}
+
+<script type="text/javascript" src="/scripts/admin/apply.js"></script>

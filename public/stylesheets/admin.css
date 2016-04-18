@@ -137,7 +137,7 @@ table.table th{
 }
 table.table tr{
     height: 48px;
-    font-size: 12px;
+    font-size: 13px;
     border-bottom: 1px solid #eee;
     /*transition:background-color 1s;*/
 }

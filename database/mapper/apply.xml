@@ -48,9 +48,9 @@
     <!-- 查询信息 -->
     <select id="pageQuery">
         select
-            t1.*
+            t1.*,t2.name auth_name,t3.name auth_detail_name
         from
-            apply t1
+            view_apply t1
         where
             1 = 1
             {{id | and:'t1.id'}}
@@ -82,7 +82,7 @@
         select
             count(1)
         from
-            apply t1
+            view_apply t1
         where
             1 = 1
             {{id | and:'t1.id'}}

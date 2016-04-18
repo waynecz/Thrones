@@ -15,7 +15,8 @@ require.config({
         'pager' : '../lib/pagination/pager',
         'comjax' : '../lib/comjax',
         'message' : '../lib/message',
-        'mtemplate' : '../lib/mtemplate'
+        'mtemplate' : '../lib/mtemplate',
+        'mselect2' : '../lib/mselect2'
     },
     shim : {
     	'message' : {

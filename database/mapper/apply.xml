@@ -14,7 +14,7 @@
 				{{content | q}},
 				{{reason | q}},
 				{{remarks | q}},
-				{{gmt_apply | dateFormat}}
+				{{gmt_apply | d}}
 			)
 	</insert>
 	<!-- 直接领导审批 -->

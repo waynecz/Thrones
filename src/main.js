@@ -1,7 +1,6 @@
 require('./ui-select');
 require('./thrones');
 require('./pop-msg');
-require('../node_modules/art-template/dist/template');
 // 提交控制
 
 $(function () {
@@ -10,15 +9,11 @@ $(function () {
         getType        : function () {
             if ($('#auth.ui-select').length) {
                 $.jax({
-                    url: '/data/apply_type/listByType'
+                    url: '/data/apply_type/listByPid',
+                    data: {pid: 0}
                 }).done(function (res) {
-                    var rst = [];
-                    res.data.map(function (dp) {
-                        rst.push({text: dp.name, value: dp.id});
-                    });
-                    if ($('#auth_detail.ui-select'))
                     $('#auth.ui-select').selectInit({
-                        dataList: rst,
+                        dataList: res.data,
                         callback: function (index, selectObj) {
                             var postData = {};
                             postData.pid = selectObj.value;
@@ -26,12 +21,8 @@ $(function () {
                                 url: '/data/apply_type/listByPid',
                                 data: postData
                             }).done(function (res) {
-                                var rst2 = [];
-                                res.data.map(function (i, dp) {
-                                    rst2.push({text: dp.name, value: dp.id});
-                                });
                                 $('#auth_detail.ui-select').selectInit({
-                                    dataList: rst2
+                                    dataList: res.data
                                 });
                             })
                         }
@@ -40,7 +31,7 @@ $(function () {
             }
         },
         doApplyAdd     : function () {
-            var postData = $.generatePostData('addForm');
+            var postData = $.generatePostData('#addForm');
             $.jax({
                 url : '/data/apply/addApply',
                 data: postData

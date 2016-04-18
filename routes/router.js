@@ -45,7 +45,7 @@ module.exports = function (app) {
 
     //全局数据请求
     app.post("/data/:model/:operation", Api.data);
-    // router.get("/data/:model/:operation",Api.data);
+    app.get("/data/:model/:operation",Api.data);
 
 
     //错误页面

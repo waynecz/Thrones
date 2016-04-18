@@ -1,10 +1,10 @@
 /**
- * Create by Waynecz on 16-4-12.
  * 仅限于用在Thrones
  * 依赖 pager art-template ui-select
  * 功能: ajax方法改写 获取各种列表 计算提交数据 刷新按钮及多选框状态 重置表单 删除
  */
 ;window.xhrCtrl = {};
+window.template = require('../node_modules/art-template/dist/template');
 (function ($) {
     $.extend({
         jax                        : function (options) {
@@ -67,6 +67,32 @@
                 $('#preloader').fadeOut(150);
             })
             return deferred.promise();
+        },
+        render : function(id,data){
+            template.helper('dateFormat',function(val,pattern){
+                if(val == null || val == ''){
+                    return '-'
+                }
+                if(val.indexOf('0000-00-00') == 0){
+                    return '-';
+                }
+                pattern = pattern || 'datetime';
+                switch (pattern){
+                    case 'datetime' :
+                        return val;
+                    case 'date':
+                        return val.slice(0,10);
+                    case 'spectial':
+                        return showTime(val);
+                    default :
+                        return val;
+                }
+            });
+
+
+            template.config('openTag','[[');
+            template.config('closeTag',']]');
+            return template(id,data);
         },
         getList                    : function (pageNum, options) {
             if (xhrCtrl.getList) {
@@ -432,15 +458,12 @@
                 $.jax({
                     url: '/data/department/all'
                 }).done(function (res) {
-                    var rst = [];
-                    res.data.map(function (dp) {
-                        rst.push({text: dp.name, value: dp.id});
-                    });
                     $('#dept.ui-select').selectInit({
-                        dataList: rst
+                        dataList: res.data
                     })
                 })
             }
         },
+        
     })
 })(jQuery);

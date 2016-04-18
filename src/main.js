@@ -95,7 +95,7 @@ $(function () {
             var postData = $.generatePostData('#add');
 
             $.jax({
-                url   : '/data/user/add',
+                url   : '/signup',
                 data  : postData,
                 ctrl  : 'signup',
                 button: $('#doSignUp')
@@ -117,7 +117,7 @@ $(function () {
             var postData = $.generatePostData('#login');
 
             $.jax({
-                url   : '/data/user/login',
+                url   : '/signin',
                 data  : postData,
                 ctrl  : 'signin',
                 button: $('#doSignIn')

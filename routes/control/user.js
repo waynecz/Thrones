@@ -1,4 +1,5 @@
 var md5 = require('../../modules/md5');
+var Promise = require('bluebird');
 var ajax = require('../../modules/ajax');
 exports.showSignup = function(req,res){
     res.renderPage("login",{"page":"signup"});
@@ -24,8 +25,10 @@ exports.signin = function(req,res){
 };
 exports.signup = function(req,res){
     md5.resetRequestPassword(req);
+    console.log(req.body);
     req.body.status = 1; //默认激活
     req.body.role = 'R01'; //默认普通用户角色
+    console.log(req.body);
     //判断部门是否存在
     req.models.department.get({id:req.body.dept})
         .then(function(department){

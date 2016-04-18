@@ -23,10 +23,11 @@ $(function () {
                             var postData = {};
                             postData.pid = selectObj.value;
                             $.jax({
-                                url: '/data/apply_type/listByPid'
+                                url: '/data/apply_type/listByPid',
+                                data: postData
                             }).done(function (res) {
                                 var rst2 = [];
-                                res.data.map(function (dp) {
+                                res.data.map(function (i, dp) {
                                     rst2.push({text: dp.name, value: dp.id});
                                 });
                                 $('#auth_detail.ui-select').selectInit({

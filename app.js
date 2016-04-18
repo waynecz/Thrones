@@ -24,7 +24,8 @@ if (useWebpack) {
         stats: {
             colors: true
         },
-        historyApiFallback: true
+        historyApiFallback: true,
+        noInfo: true,
     }));
 
     app.use(webpackHotMiddleware(compiler, {

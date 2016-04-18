@@ -11,7 +11,8 @@ var VIEW =  path.resolve(ROOT, 'views');
 gulp.task('browser-sync', ['nodemon'], function() {
     bs.init(null, {
         proxy: "http://localhost:3000",
-        port: 4000
+        port: 4000,
+        logLevel: "silent"
     });
 });
 

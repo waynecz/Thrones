@@ -6,7 +6,8 @@ var Department = require('./control/department');
 var Apply      = require('./control/apply');
 var Index      = require('./control/index');
 var Api        = require('./control/api');
-var Filter     = require('./control/filter')
+var Filter     = require('./control/filter');
+
 module.exports = function (app) {
 
     //页面中间件

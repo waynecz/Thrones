@@ -36,7 +36,6 @@ String.prototype.contain = function(substr) {
 String.prototype.contains = function(substr,splitTag) {
 	if(substr && substr.contain(splitTag || ',')){
 		ms = substr.split(splitTag || ',');
-		var flag = false;
         for (var i in ms) {
             if (this.contain(ms[i])) {
                 return true;

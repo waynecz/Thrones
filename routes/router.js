@@ -32,6 +32,7 @@ module.exports = function (app) {
 
     app.get('/admin/department/list',Department.list);
     app.post('/admin/department/add',Department.add);
+    app.post('/admin/department/update',Department.update);
     app.get('/admin/os',Role.list);
     app.get('/admin/me',Role.list);
     app.get('/admin/apply/leaderlist',Apply.leaderlist);

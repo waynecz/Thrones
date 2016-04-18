@@ -107,6 +107,7 @@ define('Department',['jquery','util','mtemplate','comjax','pager','select2'],fun
                         return;
                     }
                     $("#update_name").val(department.name);
+                    $("#update_leader").select2("val",department.user_id);
                     var oldInfo = $("#form_update_info").serialize();
                     $("#win_update").dialog({
                         width: 400,
@@ -117,8 +118,9 @@ define('Department',['jquery','util','mtemplate','comjax','pager','select2'],fun
                                 return;
                             }
                             param.id = departmentId;
+                            param.old_leader = department.user_id;
                             util.jax({
-                                'url' : '/data/department/update',
+                                'url' : '/admin/department/update',
                                 'type' : 'post',
                                 'data' : param,
                                 'cb' : function(){

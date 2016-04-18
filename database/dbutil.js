@@ -7,6 +7,7 @@ var ajax = require('../modules/ajax');
 var settings = require('../config/jdbc');
 var print = require('../modules/print');
 var validate = require('./model/validate');
+require('../modules/string');
 var util = {
 	exec : function(db,model,method,param,resolve,reject,res,deal){
 		var key = model + "." + method;
@@ -105,7 +106,7 @@ var util = {
 			if(data.length == 1 && util.countEle(data[0]) == 1){
 				data = util.getFirstEle(data[0]);
 			}
-            else if(data.length == 1 && method.indexOf("pageQuery") < 0 && method.indexOf("list") < 0){
+            else if(data.length == 1 && !method.contains("pageQuery,all,list")){
                 data = data[0];
             }
 			else if(data.length == 0){

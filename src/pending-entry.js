@@ -1,4 +1,4 @@
-require('./app-self/home');
+require('./app-self/pending');
 
 if (module.hot) {
     module.hot.accept();

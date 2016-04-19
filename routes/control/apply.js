@@ -34,7 +34,7 @@ exports.leaderCheck = function(req,res){
 
 exports.safeCheck = function(req,res){
     var state = req.body.state;
-    if(state == -1){
+    if(state == '-'){
         //仅做评论
         req.models.comment.add(req,body,res);
     }

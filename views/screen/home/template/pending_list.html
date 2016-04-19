@@ -5,7 +5,12 @@
         <div class="data-detail layout row-wp">
             <span class="auth">[[list.auth_name]]</span>
             <span class="auth_detail">[[list.auth_detail_name]]</span>
-            <span class="remarks">[[list.remarks]]</span>
+            <span class="remarks">[[list.state]]</span>
+        </div>
+        <div class="comment-wraper">
+            [[each list.comments as comment]]
+                <div>[[comment.remark]]</div>
+            [[/each]]
         </div>
     </div>
     [[/each]]

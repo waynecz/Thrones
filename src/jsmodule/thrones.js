@@ -125,7 +125,8 @@ window.template = require('../../node_modules/art-template/dist/template');
                 // 一些数据映射
                 var map = $.generateMap();
                 $.templateHelpers(map);
-                var data = res.data.data.reverse()
+
+                var data = res.data.data.reverse();
                 var rst = $.render('listTemplate', {lists: data});
                 $('#contentWrap').empty().html(rst);
                 dfd.resolve();

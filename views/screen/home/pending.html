@@ -2,47 +2,6 @@
 {{include '../../control/top'}}
 <main class="layout col">
     <div class="container layout col">
-        <!-- 申请表单-->
-        <div id="modal" class="functional-module modal layout col">
-            <h2 class="modal-title">新建申请</h2>
-            <div class="modal-body modal-form layout row-wp " id="addForm">
-                <div class="form-unit">
-                    <h5>申请类型</h5>
-                    <div class="ui-select" id="auth">
-                        <a href="javascript:void(0)" class="ui-select-trigger"><span></span></a>
-                        <ul class="ui-select-content">
-                            <li class="ui-select-item" data-value="HIGH">1</li>
-                            <li class="ui-select-item" data-value="MEDIUM">2</li>
-                            <li class="ui-select-item" data-value="LOW">3</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="form-unit">
-                    <h5>申请对象</h5>
-                    <div class="ui-select" id="auth_detail">
-                        <a href="javascript:void(0)" class="ui-select-trigger"><span></span></a>
-                        <ul class="ui-select-content">
-                            <li class="ui-select-item" data-value="HIGH">4</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="form-unit">
-                    <h5>申请内容</h5>
-                    <input type="text" class="input" id="content"/>
-                </div>
-                <div class="form-unit">
-                    <h5>申请原因</h5>
-                    <input type="text" class="input" id="reason"/>
-                </div>
-                <div class="form-unit skipCheck">
-                    <h5>备注</h5>
-                    <input type="text" class="input" id="remarks"/>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button id="doAddApply" class="button">Apply</button>
-            </div>
-        </div>
         <!-- 列表-->
         <div id="list" class="functional-module list layout col">
             <div class="content-wrap" id="contentWrap">

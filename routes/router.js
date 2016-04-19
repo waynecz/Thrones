@@ -18,6 +18,7 @@ module.exports = function (app) {
     app.get('/index', Index.index);
 
     app.get('/login', User.loginPage);
+    app.get('/pending', User.pending);
     app.get('/signin', User.showSignin);
     app.get('/signup', User.showSignup);
     

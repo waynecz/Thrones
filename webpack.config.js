@@ -1,6 +1,7 @@
 var path         = require('path');
 var autoprefixer = require('autoprefixer');
 var webpack      = require('webpack');
+var commonPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
 
 //一些文件夹的路径
 var ROOT_PATH  = path.resolve(__dirname);
@@ -9,13 +10,15 @@ var MODULE_PATH = path.resolve(ROOT_PATH, './node_modules');
 
 module.exports = {
     context: path.join(__dirname, 'public'),
-    entry  : [
-        'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-        '../src'
-        ],
+    entry  : {
+        'bundle': ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', '../src'],
+        'login': ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', '../src/login-entry.js'],
+        'pending': ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', '../src/pending-entry.js'],
+        'home': ['webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000', '../src/home-entry.js']
+    },
     output : {
-        path      : '/',
-        filename  : 'bundle.js',
+        path      : '/javascripts',
+        filename  : '[name].js',
         publicPath: '/javascripts'
     },
     module : {
@@ -32,7 +35,7 @@ module.exports = {
     },
     resolve: {
       alias: {
-          jquery: "../node_modules/jquery/dist/jquery.min"
+          jquery: "../../node_modules/jquery/dist/jquery.min"
       }  
     },
     plugins: [

@@ -18,6 +18,7 @@ body {
 	box-sizing: border-box;
 	padding: 25px;
 	background-color: #fafafa;
+	// height: 2000px;
 }
 header, main, footer {
 	display: block;
@@ -47,12 +48,13 @@ header {
 		padding-left: 10%;
 
 		.nav-item {
-			min-width: 80px;
-			width: 14%;
 			font-weight: 600;
+			&:not(last-child) {
+				margin-right: 20px;
+			}
 			a {
 				color: $bk;
-				&:hover {
+				&:hover, &.active {
 					color: $gr;
 				}
 			}
@@ -99,12 +101,14 @@ main {
 			line-height: 1;
 		}
 		.content-wrap {
-		    flex: 0 1 80%;
-		    overflow-y: auto;
+		    flex: 1 1 80%;
+
+		    overflow: auto;
 		}
 		&.list {
 			position: relative;
 			will-change: transform;
+			overflow: hidden;
 		}
 		&.modal {
 			position: absolute;
@@ -124,9 +128,11 @@ main {
 				.button {
 				  position: absolute;
 				  bottom: 0;
-				  left: 5%;
+				  left: 0%;
 				  display: block;
-				  padding: 10px 20px;
+				  // padding: 10px 200px;
+				  width: 100%;
+				  line-height: 2.5;
 				  color: $bk;
 				  font-size: 14px;
 				  font-family: 'Press Start 2P', cursive;
@@ -180,17 +186,23 @@ main {
 		.data-status {
 			position: absolute;
 			right: 2%;top: 10%;
-			font-size: 12px;
-			height: 10px;
-			// background: $bk-2;
-			&[data-stage="1"] {
+			font-size: 11px;
+			text-align: center;
+			width: 70px;
+			line-height: 1.7;
+			border: 1px $bk solid;
+			border-radius: 2px;
+			&[data-stage="0"] {
 				color: $bk;
 			}
-			&[data-stage="2"] {
-				color: $rd;
+			&[data-stage="1"],&[data-stage="2"],&[data-stage="3"] {
+				color: $bk;
 			}
-			&[data-stage="3"] {
-				color: $gr;
+			&[data-stage="-1"],&[data-stage="-2"],&[data-stage="-3"] {
+				color: $bk;
+			}
+			&[data-stage="4"] {
+				color: $bk;
 			}
 		}
 	}

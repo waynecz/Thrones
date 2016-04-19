@@ -7,7 +7,7 @@ var ROOT = path.resolve(__dirname);
 var APP = path.resolve(ROOT, 'app.js');
 var DB = path.resolve(ROOT, 'database');
 var ROUTERS = path.resolve(ROOT, 'routes');
-var VIEW =  path.resolve(ROOT, 'views');
+var VIEW =  path.resolve(ROOT, 'views/**');
 
 // our browser-sync config + nodemon chain
 gulp.task('browser-sync', ['nodemon'], function() {

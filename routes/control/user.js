@@ -11,6 +11,10 @@ exports.showSignin = function(req,res){
 exports.loginPage = function(req,res){
     res.renderPage("login",{"page":"login"}, "login");
 };
+exports.pending = function(req,res){
+    res.renderPage("pending",{"page":"pending"});
+};
+
 exports.signin = function(req,res){
     md5.resetRequestPassword(req);
     //查询

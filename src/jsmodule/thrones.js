@@ -3,8 +3,9 @@
  * 依赖 pager art-template ui-select
  * 功能: ajax方法改写 获取各种列表 计算提交数据 刷新按钮及多选框状态 重置表单 删除
  */
-;window.xhrCtrl = {};
-window.template = require('../node_modules/art-template/dist/template');
+;
+window.xhrCtrl = {};
+window.template = require('../../node_modules/art-template/dist/template');
 (function ($) {
     $.extend({
         jax                        : function (options) {
@@ -68,20 +69,20 @@ window.template = require('../node_modules/art-template/dist/template');
             })
             return deferred.promise();
         },
-        render : function(id,data){
-            template.helper('dateFormat',function(val,pattern){
-                if(val == null || val == ''){
+        render                     : function (id, data) {
+            template.helper('dateFormat', function (val, pattern) {
+                if (val == null || val == '') {
                     return '-'
                 }
-                if(val.indexOf('0000-00-00') == 0){
+                if (val.indexOf('0000-00-00') == 0) {
                     return '-';
                 }
                 pattern = pattern || 'datetime';
-                switch (pattern){
+                switch (pattern) {
                     case 'datetime' :
                         return val;
                     case 'date':
-                        return val.slice(0,10);
+                        return val.slice(0, 10);
                     case 'spectial':
                         return showTime(val);
                     default :
@@ -90,174 +91,43 @@ window.template = require('../node_modules/art-template/dist/template');
             });
 
 
-            template.config('openTag','[[');
-            template.config('closeTag',']]');
-            return template(id,data);
+            template.config('openTag', '[[');
+            template.config('closeTag', ']]');
+            return template(id, data);
         },
-        getList                    : function (pageNum, options) {
+        getList                    : function (options, extPostData) {
             if (xhrCtrl.getList) {
                 $.msg.pop('再点船就翻了...', 'warning');
                 return false;
             }
-
-
-            var postData = {};
-            var pageSize = parseInt($("#changePageSize").selectValue());
+            var postData = $.extend({}, extPostData);
 
             var xdd = {
                 operation: undefined
             };
             if (options) {
                 var setting = $.extend(xdd, options);
-                for (i in options) {
-                    postData[i] = options[i];
+            }
+            if (extPostData) {
+                for (i in extPostData) {
+                    postData[i] = extPostData[i];
                 }
             }
-            $.extend(postData, $.generatePostData($('#conditionForm')));
-            postData['curPage']  = pageNum || 1;
-            postData['pageSize'] = pageSize || 10;
+            // $.extend(postData, $.generatePostData($('#conditionForm')));
 
             var dfd = $.Deferred();
 
             $.jax({
-                data  : postData,
-                button: $('#doSearch'),
-                ctrl  : 'getList'
-            }).done(function (data) {
-                if (data.attr.page) {
-                    $("#pager").pager({
-                        pagenumber         : data.attr.page.currentPage,
-                        pagecount          : data.attr.page.totalPage,
-                        buttonClickCallback: function (pageclickednumber) {
-                            $.getList(pageclickednumber, options);
-                        }
-                    });
-                    $('#totalCountNum').text(data.attr.page.totalCount);
-                }
-                // 日期格式化
-                Handlebars.registerHelper("date", function (value) {
-                    if (value == '') {
-                        return '-';
-                    } else {
-                        return new Date(value).format('yyyy-MM-dd hh:mm:ss');
-                    }
-                });
-                // json字符化
-                Handlebars.registerHelper("jsonToString", function (value) {
-                    if (value == '') {
-                        return '-';
-                    } else {
-                        return JSON.stringify(value);
-                    }
-                });
-                // get细节
-                Handlebars.registerHelper("getTitle", function (value) {
-                    if (value == '') {
-                        return '-';
-                    } else {
-                        var temRst = JSON.parse(value);
-                        return temRst.name || temRst.title || temRst.file_name || '-';
-                    }
-                });
-                Handlebars.registerHelper("getPlatform", function (value) {
-                    if (value == '') {
-                        return '-';
-                    } else {
-                        var temRst = JSON.parse(value);
-                        return temRst.platform || '-';
-                    }
-                });
-                Handlebars.registerHelper("monitorStstus", function (value) {
-                    if (value == 'LOCKED' || value == 'ERROR') {
-                        return '开始监控';
-                    } else {
-                        return '停止监控';
-                    }
-                });
+                url : setting.url,
+                data: postData,
+                ctrl: 'getList'
+            }).done(function (res) {
                 // 一些数据映射
-                var map = {
-                    manual: '手动添加',
-                    auto  : '自动导入'
-                };
-                if ($('#sourceType').length) {
-                    var sourceTypesMap = {};
-                    var sourceTypes    = $('#sourceType li');
-                    sourceTypes.each(function (i, e) {
-                        var wayne                                = $(e);
-                        sourceTypesMap[wayne.attr('data-value')] = wayne.text();
-                    });
-                    $.extend(map, sourceTypesMap)
-                }
-                if ($('#sourceStatus').length) {
-                    var sourceStatusMap = {};
-                    var sourceStatus    = $('#sourceStatus li');
-                    sourceStatus.each(function (i, e) {
-                        var wayne                                 = $(e);
-                        sourceStatusMap[wayne.attr('data-value')] = wayne.text();
-                    });
-                    $.extend(map, sourceStatusMap)
-                }
-                if ($('#handleResult').length) {
-                    var handleResultMap = {};
-                    var handleResult    = $('#handleResult li');
-                    handleResult.each(function (i, e) {
-                        var wayne                                 = $(e);
-                        handleResultMap[wayne.attr('data-value')] = wayne.text();
-                    });
-                    $.extend(map, handleResultMap)
-                }
-                var assetOwnersMap = {};
-                if (window.assetMap != undefined || window.assetMap != null) {
-                    assetOwnersMap = assetMap;
-                }
-                // 资产者映射
-                Handlebars.registerHelper("getAssetOwner", function (value) {
-                    var rst = '';
-                    if (value == '' || value == undefined || value == null) {
-                        rst = '-';
-                        return rst;
-                    }
-                    var owners = value.split(',');
-                    owners.map(function (assetowner) {
-                        if (assetOwnersMap[assetowner] == undefined) {
-                            rst += '';
-                        } else {
-                            rst += '<p class="other">' + assetOwnersMap[assetowner] + '</p>'
-                        }
-                    });
-                    rst == '' ? rst = '-' : rst = rst;
-
-                    return rst;
-                });
-                // 数据为空显示 - 防止塌陷
-                Handlebars.registerHelper("notEmpty", function (value) {
-                    var rst = value;
-                    if (map[rst]) {
-                        rst = map[rst];
-                    }
-                    if (rst == '' || rst == undefined || rst == null) {
-                        rst = '-'
-                    }
-                    return rst;
-                });
-                // 资产明细为空显示 - 防止塌陷
-                Handlebars.registerHelper("assetNotEmpty", function (value) {
-                    var rst = value;
-                    if (rst == '' || rst == undefined || rst == null || rst == {}) {
-                        rst = '-'
-                    } else {
-                        rst = '';
-                    }
-                    return rst;
-                });
-
-                var source   = $("#list-template").html();
-                var template = Handlebars.compile(source);
-                var context  = data.attr.resultList;
-                var html     = template(context);
-                $('#presentation-body').empty().html(html);
-                $.refreshCheckAllAndBtnStatus();
-                var sideNavHeightSuggestion = $('main').height() > 1200 ? $('main').height() : 1200;
+                var map = $.generateMap();
+                $.templateHelpers(map);
+                var data = res.data.data.reverse()
+                var rst = $.render('listTemplate', {lists: data});
+                $('#contentWrap').empty().html(rst);
                 dfd.resolve();
             });
             return dfd.promise()
@@ -276,9 +146,9 @@ window.template = require('../node_modules/art-template/dist/template');
             }
 
             if (target.hasClass('generateFormName')) {
-                targetAttr    = 'name';
+                targetAttr = 'name';
             }
-            
+
             dataContainer.each(function (i, e) {
                 var tony   = $(e);
                 var select = tony.find('.ui-select:not(.group)');
@@ -339,8 +209,8 @@ window.template = require('../node_modules/art-template/dist/template');
                 totlaDuck != 0 && livedDuck == totlaDuck ? checkAll.prop('checked', true) : checkAll.prop('checked', false);
             }
         },
-        checkBeforePost: function (targetFormId) {
-            var fields = $('.form-unit', targetFormId),
+        checkBeforePost            : function (targetFormId) {
+            var fields = $('.form-unit:not(.skipCheck)', targetFormId),
                 total  = fields.length,
                 count  = total,
                 tipMsg = '';
@@ -453,8 +323,8 @@ window.template = require('../node_modules/art-template/dist/template');
 
             });
         },
-        getDepartment  : function () {
-            if ($('#department_id.ui-select').length) {
+        getDepartment              : function () {
+            if ($('#dept.ui-select').length) {
                 $.jax({
                     url: '/data/department/all'
                 }).done(function (res) {
@@ -464,6 +334,32 @@ window.template = require('../node_modules/art-template/dist/template');
                 })
             }
         },
-        
+        generateMap                : function () {
+            var map = {
+                '0': '未审批',
+                '1': '领导已审批',
+                '2': '安全已审批',
+                '3': '全部通过',
+                '-1': '领导拒绝',
+                '-2': '安全拒绝',
+                '-3': '最后拒绝',
+                '4': '结束'
+            };
+
+            return map
+        },
+        templateHelpers            : function (map) {
+            template.helper('trueVal', function (val) {
+                val += '';
+
+                if (val == '' || val == undefined || val == null || val == 'null' || val == 'undefined') {
+                    return '-'
+                } else if (map[val]) {
+                    return map[val]
+                } else {
+                    return val
+                }
+            });
+        }
     })
 })(jQuery);

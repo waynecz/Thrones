@@ -11,6 +11,9 @@
   }
 
   &.warn {
+    .input, .ui-select input {
+      border-color: $wr;
+    }
     &::after {
       display: block;
     }
@@ -55,14 +58,15 @@
     font-size: 16px;
   }
   .input {
-    width: 200px;
+    width: 220px;
     height: 40px;
     border: none;
       border-bottom: 2px #333 solid;
       background: transparent;
     color: #444;
       text-align: center;
-      text-indent: -13px;
+      font-size: 12px;
+      // text-indent: -13px;
       letter-spacing: 1px;
       line-height: 40px;
   }
@@ -71,7 +75,7 @@
 .ui-select {
   position: relative;
   display: inline-block;
-  width: 200px;
+  width: 220px;
   height: 40px;
   color: #444;
   vertical-align: middle;

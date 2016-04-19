@@ -1,0 +1,12 @@
+<script id="listTemplate" type="text/html">
+    [[each lists as list]]
+    <div id="dataContent" class="data-content">
+        <h4 class="data-title">[[list.user_name]] [[list.content]] [[list.reason]] </h4>
+        <div class="data-detail layout row-wp">
+            <span class="auth">[[list.auth_name]]</span>
+            <span class="auth_detail">[[list.auth_detail_name]]</span>
+            <span class="remarks">[[list.remarks]]</span>
+        </div>
+    </div>
+    [[/each]]
+</script>

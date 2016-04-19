@@ -41,8 +41,8 @@
 	</update>
 
     <!-- 查询信息 -->
-    <select id="pageQuery" key="id"  child="remark,gmt_remark,remark_name" childName="comments">
-		select t2.*,t3.remark,t3.gmt_remark,t4.name remark_name  from
+    <select id="pageQuery" key="id"  child="comment_id,remark,gmt_remark,remark_name" childName="comments">
+		select t2.*,t3.id comment_id,t3.remark,t3.gmt_remark,t4.name remark_name  from
 		(
         select
             t1.*
@@ -65,7 +65,7 @@
 			comment t3 on t2.id = t3.apply_id
 		left join
 			user t4 on t3.user_id = t4.id
-		order by id asc
+		order by t2.id asc,t3.id asc
     </select>
 
     <!-- 查询总数 -->
@@ -86,10 +86,4 @@
             {{department_id | and:'t1.department_id'}}
             {{user_id | and:'t1.user_id'}}
     </select>
-
-
-
-
-
-
 </sql>

@@ -16,7 +16,8 @@ require.config({
         'comjax' : '../lib/comjax',
         'message' : '../lib/message',
         'mtemplate' : '../lib/mtemplate',
-        'mselect2' : '../lib/mselect2'
+        'mselect2' : '../lib/mselect2',
+        'echarts' : '../lib/echarts.simple.min'
     },
     shim : {
     	'message' : {

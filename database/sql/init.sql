@@ -18,11 +18,7 @@ create table apply(
 	state int not null comment '状态,0:未审批，1：领导已审批，2：安全已审批，3：全部通过,-1:领导拒绝，-2:安全拒绝，-3:最后拒绝',
 	auth varchar(100) not null comment '权限:如网络权限、机器权限、代码权限、日志权限',
 	auth_detail varchar(100) not null comment '具体权限:如stark代码权限',
-	reason varchar(200) not null comment '申请理由', 
-	remarks varchar(200) not null comment '备注',
-	pid_reason varchar(200) comment '领导理由',
-	safe_reason varchar(200) comment '安全部门理由',
-	final_reason varchar(200) comment '最后的理由',
+	content varchar(200) not null comment '申请内容',
 	gmt_apply datetime comment '申请时间',
 	gmt_pid datetime comment '领导审批时间',
 	gmt_safe datetime comment '安全审批时间',
@@ -45,12 +41,6 @@ create table apply_type(
 	pid int not null
 )
 
-## table code
-
-create table code(
-	id int auto_increment primary key comment '主键id',
-	name varchar(100) not null comment '代码库名称'
-)
 
 ## table role
 
@@ -58,12 +48,6 @@ create table role(
 	id int auto_increment primary key comment '主键id',
 	code varchar(100) not null comment '角色code',
 	name varchar(100) not null comment '角色名称'
-)
-
-create table user_role(
-	id int auto_increment primary key comment '主键id',
-	user_id int not null comment '用户id',
-	role_id int not null comment '角色id'
 )
 
 
@@ -100,7 +84,7 @@ FROM
         LEFT JOIN
     apply_type t2 ON t1.auth = t2.id
         LEFT JOIN
-    apply_type t3 ON t1.auth = t3.id
+    apply_type t3 ON t1.auth_detail = t3.id
         LEFT JOIN
     user t4 ON t1.user_id = t4.id
         LEFT JOIN

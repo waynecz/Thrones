@@ -22,7 +22,6 @@ exports.data = function(req,res){
         param = req.body;
     }
 
-
     //如果是分页查询,那么会自动的去做一些处理
     if(_method == "pageQuery"){
         var _total = 0;
@@ -30,37 +29,53 @@ exports.data = function(req,res){
         var pageSize = param.pageSize  || 10;
         //查询总量
         var _countMethod = "pageCount";
-        model[_countMethod](param)
-            .then(function(total){
-                //这里会拿到数量信息
-                if(total == 0){
-                    //返回空
-                    ajax.success(res,{
-                        total : 0
+        if(!model[_countMethod]){
+            //只查结果
+            model[_method](param).then(function(data){
+                print.ps(data);
+                //返回数据信息
+                var result = {
+                    total : 1,
+                    data : data
+                };
+                return ajax.success(res,result);
+            });
+        }
+        else{
+            model[_countMethod](param)
+                .then(function(total){
+                    //这里会拿到数量信息
+                    if(total == 0){
+                        //返回空
+                        ajax.success(res,{
+                            total : 0
+                        });
+                        return Promise.reject();
+                    }
+                    _total = total;
+                    return Promise.resolve();
+                })
+                .then(function(){
+                    //注入相关参数
+                    param.offset = (page - 1) * pageSize;
+                    param.pageSize = pageSize;
+                    model[_method](param).then(function(data){
+                        print.ps(data);
+                        //返回数据+分页信息
+                        var result = {
+                            total : _total,
+                            pageSize : pageSize,
+                            page : page,
+                            data : data
+                        };
+                        return ajax.success(res,result);
                     });
-                    return Promise.reject();
-                }
-                _total = total;
-                return Promise.resolve();
-            })
-            .then(function(){
-                //注入相关参数
-                param.offset = (page - 1) * pageSize;
-                param.pageSize = pageSize;
-                model[_method](param).then(function(data){
-                    print.ps(data);
-                    //返回数据+分页信息
-                    var result = {
-                        total : _total,
-                        pageSize : pageSize,
-                        page : page,
-                        data : data
-                    };
-                    return ajax.success(res,result);
-                });
-            },function(){
-                print.ps("没有数据哟");
-            })
+                },function(){
+                    print.ps("没有数据哟");
+                })
+        }
+
+
     }
     else{
         model[_method](param)

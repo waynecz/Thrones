@@ -2,6 +2,11 @@
 
 function Pager(id,opts){
 	this.id = id;
+    if(typeof opts == "function"){
+        var cb = opts;
+        opts = {};
+        opts.fnJump = cb;
+    }
 	_instance = this;
 	this.rules = $.extend({
 		pageObj : "pager",  //实例化Pager的对象名称

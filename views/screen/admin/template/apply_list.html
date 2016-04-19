@@ -1,0 +1,13 @@
+<script id="temp_model_list" type="text/html">
+    [[each models as model]]
+    <tr>
+        <td>[[model.user_name]]</td>
+        <td>[[model.department_name]]</td>
+        <td>[[model.content]]</td>
+        <td>[[model.auth_detail_name]]</td>
+        <td>[[model.gmt_apply | dateFormat:'yyyy-MM-dd HH:mm']]</td>
+        <td><span class="code s[[model.state]]">[[model.state | applyState]]</span></td>
+        <td>[[model | checkTime]]</td>
+    </tr>
+    [[/each]]
+</script>

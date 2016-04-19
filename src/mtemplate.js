@@ -1,5 +1,3 @@
-
-
 define(['template'],function(template){
 
     template.helper('dateFormat',function(val,pattern){
@@ -22,6 +20,7 @@ define(['template'],function(template){
         }
     });
 
+   
 
     template.config('openTag','[[');
     template.config('closeTag',']]');
@@ -35,4 +34,7 @@ define(['template'],function(template){
 
 
 
+    function showTime(){
+        return '';
+    }
 });

@@ -48,10 +48,7 @@ exports.signup = function(req,res){
         });
 }
 
-//用户列表
-exports.list = function(req,res){
-    res.renderPage('user');
-}
+
 //更改用户密码
 exports.password = function(req,res){
     var key = req.body.key;

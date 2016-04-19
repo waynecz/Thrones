@@ -1,30 +1,27 @@
 require(['dialog','frame','message']);
 
-define('Department',['jquery','util','comjax','mselect2','pager'],function($,util,comjax,mselect2){
+define('ApplyType',['jquery','util','comjax','mselect2','pager'],function($,util,comjax,mselect2){
 
-    var Department = {
+    var ApplyType = {
         init : function(){
             this.initPager();
-            this.initLeader();
             this.bindAddEvent();
+            this.initSelect();
         },
         initPager : function(){
-            window.pager = new Pager("#mypage",Department.search);
-        },
-        initLeader : function(){
-            //获取角色信息
-            comjax.getUsers(function(data){
-                Department.users = data;
-                mselect2.renderWithData("#leader,#update_leader",data);
-            });
+            window.pager = new Pager("#mypage",ApplyType.search);
         },
         search : function(){
-            comjax.searchPage(Department,'department',null,true,function(){
-                Department.bindUpdateInfo();
-                comjax.bindDeleteEvent(".item_delete_info",'department',Department);
+            comjax.searchPage(ApplyType,'apply_type',null,true,function(){
+                ApplyType.bindUpdateInfo();
+                comjax.bindDeleteEvent(".item_delete_info",'apply_type',ApplyType);
             });
         },
-
+        initSelect : function(){
+            comjax.getApplyTypeFirst(function(data){
+                 mselect2.renderWithData("#pid",data);
+            });
+        },
         /*******事件绑定区********/
         bindAddEvent : function(){
             $("#btn_add").click(function(){
@@ -32,31 +29,41 @@ define('Department',['jquery','util','comjax','mselect2','pager'],function($,uti
                     width: 500,
                     fnSure: function(d) {
                         var param = util.form2param("#form_add_info");
+
+                        if(param.pid>0){
+                            param.type = 1;
+                        }
+                        else{
+                            param.pid = 0;
+                            param.type = 0;
+
+                        }
                         util.jax({
-                            'url' : '/admin/department/add',
+                            'url' : '/data/apply_type/add',
                             'type' : 'post',
                             'data' : param,
-                            'cb' : function(){
+                            'cb' : function() {
                                 $.showSuccessMessage("添加成功");
                                 d.clear();
-                                mselect2.clear("#leader");
-                                Department.search(searchParam.page);
+                                mselect2.clear("#pid");
+                                ApplyType.search();
                                 d.close();
+                                if (param.pid == 0){
+                                    ApplyType.initSelect();
+                                }
                             }
                         })
                     }
                 });
             });
         },
-
         bindUpdateInfo : function (){
-
             $(".item_update_info").each(function(){
                 $(this).unbind("click");
                 $(this).click(function(){
                     var departmentId = $(this).data('id');
                     //初始化对话框内容
-                    var department = Department.getByDepartmentId(departmentId);
+                    var department = ApplyType.getByApplyTypeId(departmentId);
                     console.log(department);
                     if(department == null){
                         console.error('非法请求')
@@ -82,7 +89,7 @@ define('Department',['jquery','util','comjax','mselect2','pager'],function($,uti
                                 'data' : param,
                                 'cb' : function(){
                                     $.showSuccessMessage("更新成功");
-                                    Department.search(searchParam.page);
+                                    ApplyType.search(searchParam.page);
                                     d.close();
                                 }
                             })
@@ -91,11 +98,10 @@ define('Department',['jquery','util','comjax','mselect2','pager'],function($,uti
                 });
             });
         },
-
         /**   获取数据 **/
-        getByDepartmentId : function(id){
-            for(var i in Department.pageData){
-                var department = Department.pageData[i];
+        getByApplyTypeId : function(id){
+            for(var i in ApplyType.pageData){
+                var department = ApplyType.pageData[i];
                 if(department.id == id){
                     return department;
                 }
@@ -103,10 +109,10 @@ define('Department',['jquery','util','comjax','mselect2','pager'],function($,uti
             return null;
         }
     }
-    return Department;
+    return ApplyType;
 });
 
 
-require(['Department'],function(Department){
-    Department.init();
+require(['ApplyType'],function(ApplyType){
+    ApplyType.init();
 });

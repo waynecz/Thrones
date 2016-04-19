@@ -105,3 +105,63 @@ String.prototype.replaceAll = function(reg,replaceStr){
         return replaceStr || '?';
     });
 }
+
+
+String.prototype.repeat = function(n){
+    var i = 1;
+    var str = this.toString();
+    while(i<n){
+        str += str;
+        i++;
+    }
+    return str;
+}
+
+
+//保留小数   (类似toFixed(n))
+String.prototype.makeNum = function(n,absolute){
+    n = n || 0;
+    absolute = absolute || 0;
+    var str = this.toString();
+
+
+    var nums = str.split(".");
+    //无小数
+    if(nums.length == 1){
+        if(absolute || n == 0){
+            return nums[0]+'';
+        }
+        else{
+            return nums[0] + '.' + '0'.repeat(n);
+        }
+    }
+    //有小数
+    else{
+        var n1 = nums[0];
+        var n2 = nums[1];
+        var sn2 = n2 + '';
+        if(n==0){
+            //取下一位的四舍五入
+            var k1 = sn2.slice(0,1) * 1 > 4 ? 1 : 0;
+            n1 += k1;
+            return n1 + '';
+        }
+        if(sn2.length > n){
+            var k1 = sn2.slice(n,n+1) * 1 > 4 ? 1 : 0;
+            var mk = sn2.slice(0,n) * 1 + k1;
+            return n1 + '.' + mk;
+        }
+        else if(sn2.length == n){
+            return str;
+        }
+        else{
+            if(absolute){
+                return str;
+            }
+            else{
+                var gap = n - sn2.length;
+                return str + '0'.repeat(gap);
+            }
+        }
+    }
+}

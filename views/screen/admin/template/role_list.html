@@ -2,9 +2,8 @@
     [[each models as model]]
     <tr>
         <td>[[model.name]]</td>
-        <td>[[model.user_name]]</td>
+        <td>[[model.code]]</td>
         <td>
-            <a data-id="[[model.id]]" class="item_update_info">修改</a>
             <a data-id="[[model.id]]" class="item_delete_info">删除</a>
         </td>
     </tr>
@@ -15,7 +14,7 @@
 <!-- 添加部门信息 -->
 <div class="mywindow" id="win_add">
     <div class="mywindow_head">
-        <span class="mywindow_title">添加部门</span>
+        <span class="mywindow_title">添加角色</span>
         <span class="mywindow_close_btn">✕</span>
     </div>
     <div class="mywindow_body">
@@ -25,15 +24,13 @@
                     <tr>
                         <td>名称</td>
                         <td>
-                            <input type="text" class="minput" name="name" id="add_name"/>
+                            <input type="text" class="minput" name="name"/>
                         </td>
                     </tr>
                     <tr>
-                        <td>负责人</td>
+                        <td>CODE</td>
                         <td>
-                            <select  id="leader" class="myselect select2" name="user_id" placeholder="请选择负责人">
-                                <option></option>
-                            </select>
+                            <input type="text" class="minput" name="code"/>
                         </td>
                     </tr>
                 </tbody>
@@ -50,7 +47,7 @@
 <!-- 更新部门信息 -->
 <div class="mywindow" id="win_update">
     <div class="mywindow_head">
-        <span class="mywindow_title">更新部门</span>
+        <span class="mywindow_title">更新角色</span>
         <span class="mywindow_close_btn">✕</span>
     </div>
     <div class="mywindow_body">
@@ -61,14 +58,6 @@
                     <td>名称</td>
                     <td>
                         <input type="text" class="minput" name="name" id="update_name"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>负责人</td>
-                    <td>
-                        <select  id="update_leader" class="myselect select2" name="user_id" placeholder="请选择负责人">
-                            <option></option>
-                        </select>
                     </td>
                 </tr>
                 </tbody>

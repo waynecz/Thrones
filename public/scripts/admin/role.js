@@ -1,27 +1,20 @@
 require(['dialog','frame','message']);
 
-define('Department',['jquery','util','comjax','mselect2','pager'],function($,util,comjax,mselect2){
+define('Role',['jquery','util','comjax','pager'],function($,util,comjax,mselect2){
 
-    var Department = {
+  
+    var Role = {
         init : function(){
             this.initPager();
-            this.initLeader();
             this.bindAddEvent();
         },
         initPager : function(){
-            window.pager = new Pager("#mypage",Department.search);
-        },
-        initLeader : function(){
-            //获取角色信息
-            comjax.getUsers(function(data){
-                Department.users = data;
-                mselect2.renderWithData("#leader,#update_leader",data);
-            });
+            window.pager = new Pager("#mypage",Role.search);
         },
         search : function(){
-            comjax.searchPage(Department,'department',null,true,function(){
-                Department.bindUpdateInfo();
-                comjax.bindDeleteEvent(".item_delete_info",'department',Department);
+            comjax.searchPage(Role,'role',null,true,function(){
+                Role.bindUpdateInfo();
+                comjax.bindDeleteEvent(".item_delete_info",'role',Role);
             });
         },
 
@@ -33,14 +26,13 @@ define('Department',['jquery','util','comjax','mselect2','pager'],function($,uti
                     fnSure: function(d) {
                         var param = util.form2param("#form_add_info");
                         util.jax({
-                            'url' : '/admin/department/add',
+                            'url' : '/data/role/add',
                             'type' : 'post',
                             'data' : param,
                             'cb' : function(){
                                 $.showSuccessMessage("添加成功");
                                 d.clear();
-                                mselect2.clear("#leader");
-                                Department.search(searchParam.page);
+                                Role.search();
                                 d.close();
                             }
                         })
@@ -54,16 +46,16 @@ define('Department',['jquery','util','comjax','mselect2','pager'],function($,uti
             $(".item_update_info").each(function(){
                 $(this).unbind("click");
                 $(this).click(function(){
-                    var departmentId = $(this).data('id');
+                    var roleId = $(this).data('id');
                     //初始化对话框内容
-                    var department = Department.getByDepartmentId(departmentId);
-                    console.log(department);
-                    if(department == null){
+                    var role = Role.getByRoleId(roleId);
+                    console.log(role);
+                    if(role == null){
                         console.error('非法请求')
                         return;
                     }
-                    $("#update_name").val(department.name);
-                    var old_leader = department.user_id
+                    $("#update_name").val(role.name);
+                    var old_leader = role.user_id
                     $("#update_leader").select2("val",old_leader);
                     var oldInfo = $("#form_update_info").serialize();
                     $("#win_update").dialog({
@@ -74,15 +66,15 @@ define('Department',['jquery','util','comjax','mselect2','pager'],function($,uti
                                 d.close();
                                 return;
                             }
-                            param.id = departmentId;
+                            param.id = roleId;
                             param.old_leader = old_leader;
                             util.jax({
-                                'url' : '/admin/department/update',
+                                'url' : '/admin/role/update',
                                 'type' : 'post',
                                 'data' : param,
                                 'cb' : function(){
                                     $.showSuccessMessage("更新成功");
-                                    Department.search(searchParam.page);
+                                    Role.search(searchParam.page);
                                     d.close();
                                 }
                             })
@@ -93,20 +85,20 @@ define('Department',['jquery','util','comjax','mselect2','pager'],function($,uti
         },
 
         /**   获取数据 **/
-        getByDepartmentId : function(id){
-            for(var i in Department.pageData){
-                var department = Department.pageData[i];
-                if(department.id == id){
-                    return department;
+        getByRoleId : function(id){
+            for(var i in Role.pageData){
+                var role = Role.pageData[i];
+                if(role.id == id){
+                    return role;
                 }
             }
             return null;
         }
     }
-    return Department;
+    return Role;
 });
 
 
-require(['Department'],function(Department){
-    Department.init();
+require(['Role'],function(Role){
+    Role.init();
 });

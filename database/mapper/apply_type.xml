@@ -17,11 +17,11 @@
     </delete>
     <select id="listByType">
         select
-            *
+            id,name text,id value
         from
             apply_type
         where
-            type = {{type | q}}
+            {{type | eq:'type'}}
     </select>
 
     <select id="listByPid">
@@ -30,6 +30,29 @@
         from
             apply_type
         where
-            pid = {{pid | q}}
+            {{pid | eq:'pid'}}
+    </select>
+
+    <select id="pageQuery">
+        select
+            t1.*,t2.name pname
+        from
+            apply_type t1
+        left join
+            apply_type t2
+            on t1.pid = t2.id
+        order by
+            t1.pid asc,t1.id asc
+    </select>
+
+    <select id="isUnique">
+        select
+            count(1)
+        from
+            apply_type
+        where
+            name = {{name | q}}
+            {{id | and:'id','neq'}}
+
     </select>
 </sql>

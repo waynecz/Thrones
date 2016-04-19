@@ -1,9 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sql id="role">
+    <insert id="add">
+        insert into
+            role(name,code)
+        values(
+            {{name | q}},
+            {{code | q}}
+        )
+    </insert>
+
+    <delete id="delete">
+        delete from
+            role
+        where
+            id = {{id | q}}
+    </delete>
+    <select id="isUnique">
+        select
+            count(1)
+        from
+            role
+        where
+            {{name | eq:'name'}}
+    </select>
     <select id="all">
         select
             code as id,name as text
         from
             role
+    </select>
+    <select id="pageQuery">
+        select
+            *
+        from
+            role
+        order by
+            id asc
     </select>
 </sql>

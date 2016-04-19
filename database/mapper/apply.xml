@@ -3,7 +3,7 @@
 	<!-- 申请 -->
 	<insert id="addApply">
 		insert into 
-			apply(user_id,pid,state,auth,auth_detail,content,reason,remarks,gmt_apply)
+			apply(user_id,pid,state,auth,auth_detail,content,gmt_apply)
 		value
 			(
 				{{user_id | q}},
@@ -12,8 +12,6 @@
 				{{auth | q}},
 				{{auth_detail | q}},
 				{{content | q}},
-				{{reason | q}},
-				{{remarks | q}},
 				{{gmt_apply | d}}
 			)
 	</insert>
@@ -22,33 +20,32 @@
 		update
 			apply
 		set
-			pid_reason = {{pid | q}},
 			state = {{state | q}},
-			gmt_pid = {{gmt_now | dateFormat}}
+			gmt_pid = {{gmt_now | d}}
 	</update>
 	<!-- 安全审批 -->
 	<update id="safeReview">
 		update
 			apply
 		set
-			safe_reason = {{pid | q}},
 			state = {{state | q}},
-			gmt_safe = {{gmt_now | dateFormat}}
+			gmt_safe = {{gmt_now | d}}
 	</update>
 	<!-- 终极审批 -->
 	<update id="finalReview">
 		update
 			apply
 		set
-			final_reason = {{pid | q}},
 			state = {{state | q}},
-			gmt_end = {{gmt_now | dateFormat}}
+			gmt_end = {{gmt_now | d}}
 	</update>
 
     <!-- 查询信息 -->
-    <select id="pageQuery">
+    <select id="pageQuery" key="id"  child="remark,gmt_remark,remark_name" childName="comments">
+		select t2.*,t3.remark,t3.gmt_remark,t4.name remark_name  from
+		(
         select
-            t1.*,t2.name auth_name,t3.name auth_detail_name
+            t1.*
         from
             view_apply t1
         where
@@ -56,25 +53,19 @@
             {{id | and:'t1.id'}}
             {{user_id | and:'t1.user_id'}}
             {{pid | and:'t1.pid'}}
-            {{state | and:'t1.state'}}
-            {{auth | and:'t1.auth'}}
+            {{state | in:'t1.state'}}
             {{auth_detail | and:'t1.auth_detail'}}
-            {{reason | and:'t1.reason'}}
-            {{remarks | and:'t1.remarks'}}
-            {{pid_reason | and:'t1.pid_reason'}}
-            {{safe_reason | and:'t1.safe_reason'}}
-            {{final_reason | and:'t1.final_reason'}}
-            {{gmt_apply | and:'t1.gmt_apply_start','gte'}}
-            {{gmt_apply | and:'t1.gmt_apply_end','lte'}}
-            {{gmt_pid | and:'t1.gmt_pid_start','gte'}}
-            {{gmt_pid | and:'t1.gmt_pid_end','lte'}}
-            {{gmt_safe | and:'t1.gmt_safe_start','gte'}}
-            {{gmt_safe | and:'t1.gmt_safe_end','lte'}}
-            {{gmt_end | and:'t1.gmt_end_start','gte'}}
-            {{gmt_end | and:'t1.gmt_end_end','lte'}}
-            {{content | and:'t1.content'}}
+            {{key | and:'t1.user_name,t1.content,t1.reason','like'}}
+            {{user_id | and:'t1.user_id'}}
+            {{department_id | and:'t1.department_id'}}
             {{sort | orderby}}
             {{offset | limit:pageSize}}
+		) t2
+		left join
+			comment t3 on t2.id = t3.apply_id
+		left join
+			user t4 on t3.user_id = t4.id
+		order by id asc
     </select>
 
     <!-- 查询总数 -->
@@ -88,22 +79,17 @@
             {{id | and:'t1.id'}}
             {{user_id | and:'t1.user_id'}}
             {{pid | and:'t1.pid'}}
-            {{state | and:'t1.state'}}
-            {{auth | and:'t1.auth'}}
+            {{state | in:'t1.state'}}
             {{auth_detail | and:'t1.auth_detail'}}
-            {{reason | and:'t1.reason'}}
-            {{remarks | and:'t1.remarks'}}
-            {{pid_reason | and:'t1.pid_reason'}}
-            {{safe_reason | and:'t1.safe_reason'}}
-            {{final_reason | and:'t1.final_reason'}}
-            {{gmt_apply | and:'t1.gmt_apply_start','gte'}}
-            {{gmt_apply | and:'t1.gmt_apply_end','lte'}}
-            {{gmt_pid | and:'t1.gmt_pid_start','gte'}}
-            {{gmt_pid | and:'t1.gmt_pid_end','lte'}}
-            {{gmt_safe | and:'t1.gmt_safe_start','gte'}}
-            {{gmt_safe | and:'t1.gmt_safe_end','lte'}}
-            {{gmt_end | and:'t1.gmt_end_start','gte'}}
-            {{gmt_end | and:'t1.gmt_end_end','lte'}}
-            {{content | and:'t1.content'}}
+            {{key | and:'t1.user_name,t1.content,t1.reason','like'}}
+            {{user_id | and:'t1.user_id'}}
+            {{department_id | and:'t1.department_id'}}
+            {{user_id | and:'t1.user_id'}}
     </select>
+
+
+
+
+
+
 </sql>

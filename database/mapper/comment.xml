@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql id="comment">
+
+    <!-- 添加信息 -->
+    <insert id="add">
+        insert into
+            comment(user_id,remark,gmt_create,apply_id)
+        value(
+            {{user_id | q}},
+            {{remark | q}},
+            {{gmt_create | d}},
+            {{apply_id | q}}
+        )
+    </insert>
+
+    <!-- 更新信息 -->
+    <update id="update">
+        update
+            comment
+        set
+            {{user_id | set:'user_id'}},
+            {{remark | set:'remark'}},
+            {{apply_id | set:'apply_id'}}
+        where
+            {{id | eq:'id'}}
+    </update>
+
+    <!-- 删除信息 -->
+    <delete id="delete">
+        delete from
+            comment
+        where
+            {{id | eq:'id'}}
+    </delete>
+
+    <!-- 根据一的一方获取数据 -->
+    <select id="list">
+        select
+            *
+        from
+            comment
+        where
+            {{apply_id | eq:'apply_id'}}
+        order by
+            id asc
+    </select>
+
+</sql>

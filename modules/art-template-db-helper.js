@@ -33,17 +33,23 @@ module.exports = function(template){
         return "," + col + " = '" + val + "' ";
     });
 
+    template.helper('in',function(val,col){
+        if(val == null || val == '' || val == '-'){
+            return '';
+        }
+        return ' and ' + col + ' in (' + val + ') '
+    });
 
     template.helper('and',function(val,col,tag,pattern) {
         pattern = pattern || 'digit';
         if(val == null) {
              return '';
-        }
+        };
         if(typeof val == "string"){
             val = val.trim();
         }
-        if(val == ''){
-            return '';
+        if(val == '' || val == '-'){
+            return ''
         }
         switch (pattern){
             case 'digit' :
@@ -121,6 +127,8 @@ module.exports = function(template){
 	    var result = getFormatDate(val,format);
 		return "'" + (result || "") + "'";
 	});
+
+
 
 
 

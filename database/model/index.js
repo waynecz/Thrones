@@ -37,7 +37,8 @@ module.exports = function(db,dbutil){
                 print.error("请设置xml节点方法名");
             }
 
-            obj[method] = (function(oName,method){
+            obj[method] = (function(oName,ele){
+                var method = ele.attr.id;
                 return function(param,res){
                     //简单的讲：只有传入param
                     
@@ -74,7 +75,7 @@ module.exports = function(db,dbutil){
 
                         switch(operation){
                             case "select":
-                                dbutil.query(db,oName,method,param,resolve,reject,res);
+                                dbutil.query(db,oName,method,param,resolve,reject,res,ele);
                                 break;
                             case "insert":
                                 if(param.length > 0){
@@ -122,7 +123,7 @@ module.exports = function(db,dbutil){
                         }        
                     });
                 }
-            })(oName,method);
+            })(oName,ele);
         });
         
         (db.models)[oName] = obj;

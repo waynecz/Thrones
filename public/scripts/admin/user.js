@@ -1,6 +1,6 @@
 require(['dialog','frame','message']);
 
-define('User',['jquery','util','comjax','mtemplate','pager','select2'],function($,util,comjax,mtemplate){
+define('User',['jquery','util','comjax','mtemplate','mselect2','pager'],function($,util,comjax,mtemplate,mselect2){
 
     var searchParam = {
         page : 1,
@@ -26,17 +26,8 @@ define('User',['jquery','util','comjax','mtemplate','pager','select2'],function(
             //获取部门信息
             comjax.getDepartments(function(data){
                 User.departments = data;
-                var departmentSelect2 = $("#department");
-
-                $("#department,#user_department").select2({
-                    placeholder: "请选择部门",
-                    allowClear: false,
-                    minimumResultsForSearch: 8,
-                    data : data
-                });
-
-                departmentSelect2.on("change",function(){
-                    searchParam.department_id = departmentSelect2[0].value;
+                mselect2.renderDataAndBind("#department,#user_department",data,function(val){
+                    searchParam.department_id = val;
                     User.search();
                 });
             });
@@ -45,70 +36,26 @@ define('User',['jquery','util','comjax','mtemplate','pager','select2'],function(
             //获取角色信息
             comjax.getRoles(function(data){
                 User.roles = data;
-                var roleSelect2 = $("#role");
-                $("#role,#user_role").select2({
-                    placeholder: "请选择角色",
-                    allowClear: false,
-                    minimumResultsForSearch: 8,
-                    data : User.roles
-                });
-
-                roleSelect2.on('change',function(){
-                    searchParam.role = roleSelect2[0].value;
+                mselect2.renderDataAndBind("#role,#user_role",data,function(val){
+                    searchParam.role = val;
                     User.search();
                 });
-
             });
         },
         initSortSelect : function(){
-            var sortSelect2 = $("#sort");
-            sortSelect2.select2({
-                placeholder: "请选择排序",
-                allowClear: false,
-                minimumResultsForSearch: 8
-            });
-            sortSelect2.on('change',function(){
-                searchParam.sort = sortSelect2[0].value;
+            mselect2.renderAndBind("#sort",function(val){
+                searchParam.sort = val;
                 User.search();
             });
         },
         search : function(page){
             searchParam.name = $("#search_name").val();
             searchParam.page = page || 1;
-            //分页查询
-            util.jax({
-                'url' : '/data/user/pageQuery',
-                'type' : 'post',
-                'data' : searchParam,
-                'cb' : function(data){
-                    var page = data.page;
-                    if(data.total == 0){
-                        User.renderPageData([]);
-                        pager.showNullMsg();
-                    }
-                    else{
-                        User.pageData = data.data;
-                        User.renderPageData(data.data);
-                        pager.setTotal(data.total);
-                        pager.setPageSize(data.pageSize);
-                        pager.goPage(page);
-                    }
-                }
+            comjax.searchPage(User,'user',searchParam,true,function(){
+                User.bindUpdateInfo()
+                User.bindUpdatePassword()
             });
         },
-        renderPageData : function(data){
-            if(data == null || data.length == 0){
-                $("#table_list").hide();
-                return;
-            }
-            var html =  mtemplate.T("temp_user_list",{"users":data});
-            $("#lists").html(html);
-            this.bindUpdateInfo()
-            this.bindUpdatePassword()
-            $("#table_list").show();
-        },
-
-
         /*******事件绑定区********/
         bindSearchEvent : function(){
             $("#search_name").on('change',function(){
@@ -127,7 +74,6 @@ define('User',['jquery','util','comjax','mtemplate','pager','select2'],function(
                     var userId = $(this).data('id');
                     //初始化对话框内容
                     var user = User.getByUserId(userId);
-                    console.log(user);
                     if(user == null){
                         console.error('非法请求')
                         return;

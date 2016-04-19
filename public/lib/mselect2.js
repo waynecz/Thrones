@@ -2,50 +2,40 @@ define(['jquery','select2'],function($){
     return {
         render:function(id){
             $(id).select2({
+                placeholder : $(id).attr("placeholder") || '请选择',
                 allowClear: false,
                 minimumResultsForSearch: 10,
             })
         },
         renderWithData: function(id,data){
             $(id).select2({
+                placeholder : $(id).attr("placeholder") || '请选择',
                 allowClear: false,
                 minimumResultsForSearch: 10,
                 data : data
             })
         },
-        val : function(id,val){
-            if(val){
-                $(id).select2("val",val);
-            }
-            else{
-                return $(id).val();
-            }
-        },
-        change : function(id,cb){
-            var select = $(id);
-            select.on('change',function(){
-                cb && cb(select[0].value);
-            });
-        },
-        renderAndBind : function(id,cb,placeholder){
+        renderAndBind : function(id,cb,defaultData){
             var select = $(id);
             select.select2({
-                placeholder : $(id).attr("placeholder") || placeholder || '请选择',
+                placeholder : $(id).attr("placeholder") || '请选择',
                 allowClear: false,
                 minimumResultsForSearch: 10,
             });
-            select.select2("val","");
+            select.select2("val",defaultData || "");
             select.on('change',function(){
                 cb && cb(select[0].value);
             });
         },
-        renderDataAndBind : function(id,data,cb){
+        renderDataAndBind : function(id,data,cb,defaultData){
             var select = $(id);
             select.select2({
+                placeholder : $(id).attr("placeholder") || '请选择',
                 allowClear: false,
                 minimumResultsForSearch: 10,
                 data : data
             });
+            select.select2("val",defaultData || "");
             select.on('change',function(){
                 cb && cb(select[0].value);
             });
@@ -53,6 +43,5 @@ define(['jquery','select2'],function($){
         clear : function(id){
             $(id).select2("val","");
         }
-
     }
 });

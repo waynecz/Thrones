@@ -9,12 +9,20 @@
         )
     </insert>
 
-    <delete id="delete">
+    <delete id="delete" before="check">
         delete from
             role
         where
             id = {{id | q}}
     </delete>
+    <select id="check">
+        select
+            count(1)
+        from
+            user
+        where
+            role in (select code from role where {{id | eq:'id'}})
+    </select>
     <select id="isUnique">
         select
             count(1)
@@ -35,6 +43,6 @@
         from
             role
         order by
-            id asc
+            code asc
     </select>
 </sql>

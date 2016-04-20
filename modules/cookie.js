@@ -8,10 +8,9 @@ module.exports = {
             HttpOnly : true,
             path : "/"
         }
-
-        print.ps("保存数据"+user.username + ":" + user.password);
-        cache.put(user.username+"."+user.password,user);
-        res.setHeader('Set-Cookie',this.makeCookie(this.getEncodeCookieName(),user.username + "^^^" + user.password,opts));
+        var key = md5.md5(user.username + "" + user.password);
+        cache.put(key,user);
+        res.setHeader('Set-Cookie',this.makeCookie(this.getEncodeCookieName(),key,opts));
     },
     parseCookie : function(cookie){
         var cookies = {};
@@ -28,42 +27,15 @@ module.exports = {
     getCookieValue : function(req,name){
         return this.parseCookie(req.headers.cookie)[name] || null;
     },
-    getCookieUser : function(req){
-        var info = this.getCookieValue(req,this.getEncodeCookieName());
-        if(info == null){
-            return null;
-        }
-        print.ps(info,"&");
-        var realInfo = md5.decode(info);
-        print.ps(realInfo,'#');
-        var index = realInfo.indexOf("^^^");
-        if(index > -1){
-            if(realInfo.length == (index + 3)){
-                return null;
-            }
-
-            var result =  {"username":realInfo.slice(0,index),"password":realInfo.slice(index+3)};
-            print.ps("解析数据:");
-            print.ps(result);
-            return result;
-        }
-        return null;
-    },
     isLogin : function(req){
-        var user = this.getCookieUser(req);
-        if(user == null){
-            return false;
-        }
-        //本地缓存有数据
-        var loginUser = cache.get(user.username+"."+user.password);
-        //跳转到首页,免密码登陆
-        if(loginUser){
-            return loginUser;
+        var info = this.getCookieValue(req,this.getEncodeCookieName());
+        if(info){
+            return cache.get(info);
         }
         return false;
     },
     makeCookie : function(name,val,opt){
-        var pairs = [name + '=' + md5.encode(val)];
+        var pairs = [name + '=' + val];
         opt = opt || {};
         if(opt.maxAge){
             pairs.push('Max-Age=' + opt.maxAge);

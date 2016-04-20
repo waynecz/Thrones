@@ -300,6 +300,7 @@ table.table tbody tr:hover{
 
 #area_user{
     height:150px;
+    white-space: nowrap;
 }
 .panel_user{
     width:23%;

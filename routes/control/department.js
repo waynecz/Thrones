@@ -6,30 +6,34 @@ exports.list = function(req,res){
 
 exports.add = function(req,res){
     req.models.department.add(req.body)
-        .then(function(id){
-            var user_id = req.body.user_id;
-            if(user_id){
-                req.body.department_id = id;
-                req.models.leader.add(req.body)
-                    .then(function(){
-                        return ajax.success(res,"添加成功");
-                    });
-            }
-            return ajax.success(res,"添加成功");
-        },function(){
-            return ajax.failure(res,"添加失败,请联系开发人员");
+        .then(addLeader,function(err){
+            return ajax.failure(res,err);
         });
+
+    function addLeader(id){
+        var user_id = req.body.user_id;
+        if(user_id){
+            req.body.department_id = id;
+            req.models.leader.add(req.body)
+                .then(function(){
+                    return ajax.success(res,"添加成功");
+                });
+        }
+        return ajax.success(res,"添加成功");
+    }
 }
 
 exports.update = function(req,res){
     var department_id = req.body.id;
 
     req.models.department.update(req.body)
-        .then(function(){
-            req.models.leader.delete({"department_id":department_id});
-            req.body.department_id = department_id;
-            req.models.leader.add(req.body,res);
-        },function(e){
-            return ajax.failure(res,"更新失败,请联系开发人员");
+        .then(updateLeader,function(err){
+            return ajax.failure(res,err);
         });
+
+    function updateLeader(){
+        req.models.leader.delete({"department_id":department_id});
+        req.body.department_id = department_id;
+        req.models.leader.add(req.body,res);
+    }
 }

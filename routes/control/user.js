@@ -3,6 +3,9 @@ var Promise = require('bluebird');
 var ajax = require('../../modules/ajax');
 var cookie = require('../../modules/cookie');
 var app = require('express')();
+var print = require('../../modules/print');
+
+
 exports.loginPage = function(req,res){
     res.renderPage("login",{"page":"login"}, "login");
 };
@@ -12,16 +15,16 @@ exports.pending = function(req,res){
 
 
 exports.signin = function(req,res){
-    console.log("req")
     md5.resetRequestPassword(req);
     //查询
     req.models.user.login(req.body)
-        .then(function(user){
-            if(user == null){
+        .then(function(userInfo){
+            if(userInfo == null){
                 return ajax.failure(res,"用户名或密码错误");
             }
-            cookie.setCookie(res,user);
-            // req.locals.loginUser = user;
+            app.locals.user = userInfo;
+            print.ps(app.locals);
+            cookie.setCookie(res,userInfo);
             return ajax.success(res,"登陆成功");
         });
 };
@@ -47,6 +50,8 @@ exports.signup = function(req,res){
                 return ajax.success(res, "用户注册成功");
             }
             return ajax.failure(res, "用户注册失败,请联系管理员");
+        },function(e){
+            return ajax.failure(res,e);
         });
 }
 

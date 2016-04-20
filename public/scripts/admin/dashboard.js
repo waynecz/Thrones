@@ -17,6 +17,7 @@ define('Dashboard',['jquery','util','echarts','echarts/chart/line','echarts/char
             util.post('/sysuser',function(data){
                 for(var key in data){
                     $("#role"+key).text(data[key]+"");
+
                 }
             });
         },
@@ -24,12 +25,11 @@ define('Dashboard',['jquery','util','echarts','echarts/chart/line','echarts/char
             return echarts.init(document.getElementById('statistic'));
         },
         initSize : function(){
-            var contents = $("#contents").width();
-            var eachWidth = (contents - 15 * 3) / 4;
+            var contents = $("#contents").outerWidth();
+            var eachWidth = (contents - 15 * 3 - 40) / 4;
+            console.log(contents);
             $(".panel_user").width(eachWidth);
             $(".panel_user:gt(0)").css("margin-left","15px");
-
-
         },
         render : function(dates,applys,leaders,safes,ops){
             var option = {

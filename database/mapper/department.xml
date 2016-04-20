@@ -2,7 +2,7 @@
 <sql id="department">
 
     <!-- 添加信息 -->
-    <insert id="add">
+    <insert id="add" before="isUnique">
         insert into
             department(name)
         value(
@@ -11,7 +11,7 @@
     </insert>
 
     <!-- 更新信息 -->
-    <update id="update">
+    <update id="update" before="isUnique">
         update
             department
         set
@@ -22,12 +22,21 @@
 
 
     <!-- 删除信息 -->
-    <delete id="delete">
+    <delete id="delete" before="check">
         delete from
             department
         where
             {{id | eq:'id'}}
     </delete>
+
+    <select id="check">
+        select
+            count(1)
+        from
+            user
+        where
+            {{department_id | eq:'department_id'}}
+    </select>
 
     <!-- 获取所有信息 -->
     <select id="all">

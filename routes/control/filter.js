@@ -6,9 +6,7 @@ var print = require('../../modules/print');
 var template = require('art-template');
 var fs = require('fs');
 exports.filterAdmin = function(req,res,next){
-    if(isWhiteListUrl(req)){
-        return next();
-    }
+
     var url = req.originalUrl;
     if(url.startsWith("/admin","admin")){
         //判断是否登录
@@ -62,10 +60,10 @@ exports.renderFilter = function(req,res,next){
     res.renderPage = function(screenPage,screeData,extraDataOrLayout,selfLayout){
         print.warn('请求页面:' + screenPage);
         var data = screeData || {};
-        extra = extraDataOrLayout || {};
+        var extra = extraDataOrLayout || {};
         if(typeof extraDataOrLayout == 'string'){
             layout = extraDataOrLayout;
-            extraDataOrLayout = {};
+            extra = {};
         }
         else if(selfLayout){
             layout = selfLayout;
@@ -79,12 +77,25 @@ exports.renderFilter = function(req,res,next){
                 print.ps("找不到" + file);
                 return res.redirect("/404");
             }
+            var loginUser = cookie.isLogin(req);
+
+            print.ps(loginUser,"登陆用户-");
+
+            if(loginUser){
+                data.session = loginUser;
+            }
             var contents = template(checkfile,data);
             if(contents.startsWith("{Template Error}")){
                 return res.redirect("/500");
             }
             print.ps("layout:?,page:?".format(layout,page));
-            return res.render(layout,{'contents':contents,'extra':extraDataOrLayout,'page':page});
+            var layoutRenderData = {
+                contents : contents,
+                extra : extra,
+                session : loginUser || {},
+                page : page
+            }
+            return res.render(layout,layoutRenderData);
         });
     }
     next();

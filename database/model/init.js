@@ -75,50 +75,13 @@ module.exports = function(db,dbutil){
 
                         switch(operation){
                             case "select":
-                                dbutil.query(db,oName,method,param,resolve,reject,res,ele);
-                                break;
                             case "insert":
-                                if(param.length > 0){
-                                    param['uuid'] = generateUUID();
-                                }
-                                //先判断唯一值
-                                if(((db.models)[oName]).hasOwnProperty("isUnique")){
-                                    var model = db.models[oName];
-                                    model.isUnique(param).then(function(data){
-                                        dbutil.insert(db,oName,method,param,resolve,reject,res);
-                                    },function(err){
-                                        if(res){
-                                            return ajax.failure(res,err);
-                                        }
-                                        return reject(err);
-                                    });
-                                }
-                                else{
-                                    dbutil.insert(db,oName,method,param,resolve,reject,res);
-                                }
-                                break;
                             case "update":
-                                //先判断唯一值
-                                if(((db.models)[oName]).hasOwnProperty("isUnique")){
-                                    var model = db.models[oName];
-                                    model.isUnique(param).then(function(){
-                                        dbutil.update(db,oName,method,param,resolve,reject,res);
-                                    },function(err){
-                                        if(res){
-                                            return ajax.failure(res,err);
-                                        }
-                                        return reject(err);
-                                    });
-                                }
-                                else{
-                                    dbutil.update(db,oName,method,param,resolve,reject,res);
-                                }
-
-                                break;
                             case "delete":
-                                dbutil.delete(db,oName,method,param,resolve,reject,res);
+                                dbutil[operation](db,oName,method,param,resolve,reject,res,ele);
                                 break;
                             default :
+                                print.error("非法标签");
                                 break;
                         }        
                     });
@@ -130,12 +93,5 @@ module.exports = function(db,dbutil){
     }
     console.log("init model end "+new Date().toString());
 
-    function generateUUID(){
-        var seq = 'abcdefghijklmnopqrstuvwxyz1234567890012346789zyxwutrqponmlkjihgfedcba';
-        var result = '';
-        for(var i = 0;i<8;i++){
-            result += Math.floor(Math.random() * (seq.length - 1));
-        }
-        return result;
-    }
+    
 }

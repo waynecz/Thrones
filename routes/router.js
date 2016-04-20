@@ -46,6 +46,9 @@ module.exports = function (app) {
     app.get("/data/:model/:operation",Api.data);
 
 
+    app.get('/admin',function(req,res){
+        res.renderPage('dashboard');
+    });
     app.get('/admin/os',Index.os);
 
     //自动渲染后台页面

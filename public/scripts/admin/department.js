@@ -40,7 +40,7 @@ define('Department',['jquery','util','comjax','mselect2','pager'],function($,uti
                                 $.showSuccessMessage("添加成功");
                                 d.clear();
                                 mselect2.clear("#leader");
-                                Department.search(searchParam.page);
+                                Department.search();
                                 d.close();
                             }
                         })

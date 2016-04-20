@@ -73,7 +73,7 @@ exports.statistic = function(req,res){
     //统计近七日申请及审核情况
 
     var gmt_apply_begin = dateutil.gapDay('now',-6);
-    var gmt_apply_end = dateutil.formateToDate('now',1);
+    var gmt_apply_end = dateutil.gapDay('now',1);
 
 
     print.ps(gmt_apply_begin);

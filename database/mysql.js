@@ -7,18 +7,18 @@ module.exports = {
 	init : function(cb){
 		if(connection){
 			if(cb){
-				return cb(null,db)
+				return cb(null,connection)
 			}
 			return;
 		}
-		db = mysql.createConnection(settings.connection())
+		var db = mysql.createConnection(settings.connection())
 		db.connect(function(err){
 			if(err){
 				throw new Error("数据库连接失败")
 			}
 			connection = db
 			db.models = {}
-			require('./model/index')(db,dbutil)
+			require('./model/init')(db,dbutil)
 			if(cb){
 				return cb(null,db)
 			}
@@ -44,7 +44,7 @@ module.exports = {
 		}
 		db = mysql.createConnection(settings.connection())
 		db.models = {}
-		require('./model/index')(db,dbutil)
+		require('./model/init')(db,dbutil)
 		return db;
 	}
 }	

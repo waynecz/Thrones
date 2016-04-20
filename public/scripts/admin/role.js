@@ -74,7 +74,7 @@ define('Role',['jquery','util','comjax','pager'],function($,util,comjax,mselect2
                                 'data' : param,
                                 'cb' : function(){
                                     $.showSuccessMessage("更新成功");
-                                    Role.search(searchParam.page);
+                                    Role.search();
                                     d.close();
                                 }
                             })

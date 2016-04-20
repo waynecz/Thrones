@@ -4,8 +4,8 @@ var Promise = require('bluebird');
 var dateutil = require('../../modules/date');
 var print = require('../../modules/print');
 exports.add = function(req,res){
-
-    req.models.apply.add(req.body)
+    console.log("Ok")
+    req.models.apply.addApply(req.body)
         .then(addComment)
         .then(function(){
          return ajax.success(res,"发布成功");

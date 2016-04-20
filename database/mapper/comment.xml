@@ -4,11 +4,11 @@
     <!-- 添加信息 -->
     <insert id="add">
         insert into
-            comment(user_id,remark,gmt_create,apply_id)
+            comment(user_id,remark,gmt_remark,apply_id)
         value(
             {{user_id | q}},
             {{remark | q}},
-            {{gmt_create | d}},
+            {{gmt_remark | d}},
             {{apply_id | q}}
         )
     </insert>

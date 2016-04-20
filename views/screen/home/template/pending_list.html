@@ -7,15 +7,15 @@
             <span class="auth_detail">[[list.auth_detail_name]]</span>
             <span class="remarks">[[list.state]]</span>
         </div>
-        <div class="comment-wraper" data-applyid="[[list.]]">
+        <div class="comment-wraper" data-applyid="[[list.id]]">
             <button class="comment-button doComment">回复</button>
-            <textarea class="comment-inputer" placeholder="写在你的评论..."></textarea>
+            <textarea class="comment-inputer" placeholder="写下你的评论..."></textarea>
             [[if list.comments]]
                 [[each list.comments as comment]]
                     <div class="comment-detail">
                         <span class="name">[[comment.remark_name]]</span>
                         <span class="remark">[[comment.remark]]</span>
-                        <span class="time">[[comment.gmt_remark | trueVal]]</span>
+                        <span class="time" data-time="[[comment.gmt_remark]]"></span>
                     </div>
                 [[/each]]
             [[/if]]

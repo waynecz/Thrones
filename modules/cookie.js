@@ -8,6 +8,9 @@ module.exports = {
             HttpOnly : true,
             path : "/"
         }
+
+        print.ps("保存数据"+user.username + ":" + user.password);
+        cache.put(user.username+"."+user.password,user);
         res.setHeader('Set-Cookie',this.makeCookie(this.getEncodeCookieName(),user.username + "^^^" + user.password,opts));
     },
     parseCookie : function(cookie){
@@ -38,7 +41,11 @@ module.exports = {
             if(realInfo.length == (index + 3)){
                 return null;
             }
-            return {"username":realInfo.slice(0,index),"password":realInfo.slice(index+3)};
+
+            var result =  {"username":realInfo.slice(0,index),"password":realInfo.slice(index+3)};
+            print.ps("解析数据:");
+            print.ps(result);
+            return result;
         }
         return null;
     },

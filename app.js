@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 
 
 var app = express();
-
+// app.locals.user = "sssss"
 var useWebpack = true;
 if (useWebpack) {
     var webpackDevMiddleware = require("webpack-dev-middleware");

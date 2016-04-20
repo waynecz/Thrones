@@ -82,7 +82,7 @@ define('Department',['jquery','util','comjax','mselect2','pager'],function($,uti
                                 'data' : param,
                                 'cb' : function(){
                                     $.showSuccessMessage("更新成功");
-                                    Department.search(searchParam.page);
+                                    Department.search();
                                     d.close();
                                 }
                             })

@@ -6,6 +6,9 @@ var print = require('../../modules/print');
 var template = require('art-template');
 var fs = require('fs');
 exports.filterAdmin = function(req,res,next){
+    // if(isWhiteListUrl(req)){
+    //     return next();
+    // }
     var url = req.originalUrl;
     if(url.startsWith("/admin","admin")){
         //判断是否登录
@@ -29,15 +32,10 @@ exports.filterLogin = function(req,res,next){
     if(isWhiteListUrl(req)){
         return next();
     }
-
     //判断是否已经登陆过
     var loginUser =  cookie.isLogin(req);
+    print.ps(loginUser);
 
-    print.ps(req.originalUrl);
-
-    if(req.originalUrl.startsWith("/login")){
-       return next();
-    }
     if(!loginUser){
         return res.redirect("/login");
     }
@@ -96,6 +94,6 @@ exports.renderFilter = function(req,res,next){
 //所有白名单
 function isWhiteListUrl(req){
     var url = req.originalUrl;
-    return url.startsWith("/signup","/messages/","/data",'/admin',"/404","/500");
+    return url.startsWith("/signin","/signup","/login","/data",'/admin',"/404","/500");
 }
 

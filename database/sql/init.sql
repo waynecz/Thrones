@@ -6,9 +6,9 @@ create table user(
 	password varchar(100) not null comment '密码',
 	name varchar(100) not null comment '姓名',
 	mobile varchar(100) not null comment '联系电话',
+	superadmin tinyint(1) default 0,
 	dept int not null comment '部门',
 	gmt_create datetime comment '注册时间',
-	pid int comment '直接领导'
 );
 
 create table apply(

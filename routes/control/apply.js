@@ -1,6 +1,8 @@
 
 var ajax = require('../../modules/ajax');
 var Promise = require('bluebird');
+var dateutil = require('../../modules/date');
+var print = require('../../modules/print');
 exports.add = function(req,res){
 
     req.models.apply.add(req.body)
@@ -70,9 +72,15 @@ exports.statistic = function(req,res){
 
     //统计近七日申请及审核情况
 
+    var gmt_apply_begin = dateutil.gapDay('now',-6);
+    var gmt_apply_end = dateutil.formateToDate('now',1);
+
+
+    print.ps(gmt_apply_begin);
+    print.ps(gmt_apply_end);
     var param = {
-        'gmt_apply_begin' : '2016-04-13',
-        'gmt_apply_end' : '2016-04-20'
+        'gmt_apply_begin' : gmt_apply_begin,
+        'gmt_apply_end' : gmt_apply_end
     }
 
     req.models.apply.statistic(param)
@@ -103,20 +111,24 @@ exports.statistic = function(req,res){
             var leaders = [];
             var safes = [];
             var ops = [];
-            for(var date in result) {
+            // for(var date in result) {
+            //     dates.push(date);
+            // }
+            //
+            // dates.sort(function(d1,d2){
+            //     return d1 > d2;
+            // });
+
+
+            //统计每天的量
+            for(var i=-6;i<1;i++){
+                var date = dateutil.gapDay('now',i);
                 dates.push(date);
-            }
-
-            dates.sort(function(d1,d2){
-                return d1 > d2;
-            });
-
-            for(var i in dates){
-                var item = result[dates[i]];
-                applys.push(item['apply'] || 0);
-                leaders.push(item['leader'] || 0);
-                safes.push(item['safe'] || 0);
-                ops.push(item['op'] || 0);
+                var item = result[date];
+                applys.push(item ? (item['apply'] || 0) : 0);
+                leaders.push(item ? (item['leader'] || 0) : 0);
+                safes.push(item ? (item['safe'] || 0) : 0);
+                ops.push(item ? (item['op'] || 0) : 0);
             }
 
             var finalResult = {
@@ -148,7 +160,7 @@ function push(obj,key,key2){
 function todate(date){
     date = date || '-';
     if(date.length == 19){
-        return date.slice(0,11);
+        return date.slice(0,10);
     }
     else{
         return '-';

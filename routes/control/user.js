@@ -1,13 +1,8 @@
 var md5 = require('../../modules/md5');
 var Promise = require('bluebird');
 var ajax = require('../../modules/ajax');
-exports.showSignup = function(req,res){
-    res.renderPage("login",{"page":"signup"});
-};
-exports.showSignin = function(req,res){
-    res.renderPage("login",{"page":"signin"});
-};
-
+var cookie = require('../../modules/cookie');
+var app = require('express')();
 exports.loginPage = function(req,res){
     res.renderPage("login",{"page":"login"}, "login");
 };
@@ -15,7 +10,9 @@ exports.pending = function(req,res){
     res.renderPage("pending",{"page":"pending"});
 };
 
+
 exports.signin = function(req,res){
+    console.log("req")
     md5.resetRequestPassword(req);
     //查询
     req.models.user.login(req.body)
@@ -23,7 +20,8 @@ exports.signin = function(req,res){
             if(user == null){
                 return ajax.failure(res,"用户名或密码错误");
             }
-            doLogin(user,res);
+            cookie.setCookie(res,user);
+            // req.locals.loginUser = user;
             return ajax.success(res,"登陆成功");
         });
 };

@@ -6,9 +6,9 @@ var print = require('../../modules/print');
 var template = require('art-template');
 var fs = require('fs');
 exports.filterAdmin = function(req,res,next){
-    // if(isWhiteListUrl(req)){
-    //     return next();
-    // }
+    if(isWhiteListUrl(req)){
+        return next();
+    }
     var url = req.originalUrl;
     if(url.startsWith("/admin","admin")){
         //判断是否登录

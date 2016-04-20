@@ -43,8 +43,8 @@ app.set('views', path.join(__dirname, 'views/layout'));
 var template = require('art-template')
 //模板拓展
 // require('./modules/art_template_helper')(template)
-template.config('extname', '.html')
-template.config('cache',false);
+template.config('extname', '.html');
+template.config('cache', false);
 //设置模板引擎
 app.engine('.html', template.__express)
 app.set('view engine', 'html')

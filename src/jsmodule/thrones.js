@@ -325,7 +325,7 @@ window.template = require('../../node_modules/art-template/dist/template');
             });
         },
         getDepartment              : function () {
-            if ($('#dept.ui-select').length) {
+            if ($('#department_id.ui-select').length) {
                 $.jax({
                     url: '/data/department/all'
                 }).done(function (res) {

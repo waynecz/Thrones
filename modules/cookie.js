@@ -1,5 +1,6 @@
-var md5 = require('./md5')
-var print = require('../modules/print')
+var md5 = require('./md5');
+var cache = require('memory-cache');
+var print = require('../modules/print');
 module.exports = {
     setCookie : function(res,user){
         var opts = {
@@ -40,6 +41,19 @@ module.exports = {
             return {"username":realInfo.slice(0,index),"password":realInfo.slice(index+3)};
         }
         return null;
+    },
+    isLogin : function(req){
+        var user = this.getCookieUser(req);
+        if(user == null){
+            return false;
+        }
+        //本地缓存有数据
+        var loginUser = cache.get(user.username+"."+user.password);
+        //跳转到首页,免密码登陆
+        if(loginUser){
+            return loginUser;
+        }
+        return false;
     },
     makeCookie : function(name,val,opt){
         var pairs = [name + '=' + md5.encode(val)];

@@ -124,5 +124,13 @@
             {{id | eq:'id'}}
     </delete>
 
+    <select id="queryByRole">
+        select
+            role,count(1) total
+        from
+            user
+        group by
+            role
+    </select>
 
 </sql>

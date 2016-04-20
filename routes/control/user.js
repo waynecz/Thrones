@@ -70,3 +70,14 @@ exports.password = function(req,res){
             return ajax.failure(res,"更新失败,请联系开发人员");
         })
 }
+
+exports.sysuser = function(req,res){
+    req.models.user.queryByRole()
+        .then(function(data){
+            var result = {'online':100};
+            for(var i in data){
+                result[data[i].role] = data[i].total;
+            }
+            return ajax.success(res,result);
+        });
+}

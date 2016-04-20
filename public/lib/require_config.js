@@ -17,7 +17,7 @@ require.config({
         'message' : '../lib/message',
         'mtemplate' : '../lib/mtemplate',
         'mselect2' : '../lib/mselect2',
-        'echarts' : '../lib/echarts.simple.min'
+        'echarts' : '../lib/echarts.min'
     },
     shim : {
     	'message' : {

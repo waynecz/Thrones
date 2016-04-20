@@ -11,6 +11,30 @@ a{
     color: #2ea5ff;
     cursor: pointer;
 }
+#header{
+    height:80px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #D4D4D4;
+}
+#logo_title{
+    color:#2ea5ff;
+    display: inline-block;
+    font-weight: lighter;
+    font-size:40px;
+    margin-top:15px;
+    margin-left:40px;
+}
+
+#user_info{
+    float:right;
+}
+#user_info a{
+   line-height: 80px;
+    margin-right:20px;
+}
+#exit{
+    color:#999;
+}
 #containers{
     min-width: 800px;
     position: relative;
@@ -22,7 +46,7 @@ a{
     font-size:14px;
 }
 #nav dl{
-    color: #000;
+    color: #666;
 }
 .iconfont{
     color:#666;
@@ -33,7 +57,7 @@ a{
     line-height:52px;
     padding-left:20px;
     background: #FFF;
-    color: #000;
+    color: #666;
     font-size:15px;
 }
 .nav.active .iconfont,
@@ -54,7 +78,7 @@ a{
     display: block;
     line-height: 46px;
     text-decoration: none;
-    color: #000;
+    color: #666;
 }
 .subnav ul li a:hover,
 .subnav ul li a.active{
@@ -275,11 +299,11 @@ table.table tbody tr:hover{
 /*大盘*/
 
 #area_user{
-    height:120px;
+    height:150px;
 }
 .panel_user{
     width:23%;
-    height:120px;
+    height:140px;
     background: #7a8c99;
     float:left;
     color: #FFFFFF;
@@ -302,5 +326,27 @@ table.table tbody tr:hover{
     line-height:50px;
 }
 .panel_user .panel_digit{
-    font-size:25px;
+    font-size:32px;
+    font-weight: lighter;
+    text-align: left;
+}
+
+
+#area_daily{
+    height:500px;
+    margin-top:15px;
+    width:100%;
+    background: #fff;
+    padding-top:10px;
+}
+
+#statistic{
+    height:400px;
+    margin-top:30px;
+    width:100%;
+    background: #fff;
+}
+
+#title{
+    text-align: center;
 }

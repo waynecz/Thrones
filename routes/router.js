@@ -11,6 +11,8 @@ module.exports = function (app) {
 
     //页面中间件
     app.use(Filter.renderFilter);
+    app.use(Filter.filterLogin);
+    app.use(Filter.filterAdmin);
 
     app.get('/', Index.index);
 
@@ -21,11 +23,10 @@ module.exports = function (app) {
     app.get('/pending', User.pending);
     app.get('/signin', User.showSignin);
     app.get('/signup', User.showSignup);
-    
-    
+
     app.post('/signin', User.signin);
     app.post('/signup', User.signup);
-
+    app.post('/sysuser', User.sysuser);
 
 
     //申请管理
@@ -33,6 +34,7 @@ module.exports = function (app) {
     app.post('/leaderCheck',Apply.leaderCheck);
     app.post('/safeCheck',Apply.safeCheck);
     app.post('/opCheck',Apply.opCheck);
+    app.post('/statistic',Apply.statistic);
 
 
 

@@ -22,6 +22,10 @@ define(['jquery','message'],function($){
 			})
 		},
 		post : function(url,data,cb){
+			if(typeof data == "function"){
+				cb = data;
+				data = null;
+			}
 			this.jax({
 				url : url,
 				type : 'post',

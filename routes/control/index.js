@@ -4,6 +4,7 @@ var util = require('util');
 var os = require('os');
 
 exports.index = function(req,res){
+    console.log(req);
     res.renderPage('index');
 }
 
@@ -32,6 +33,5 @@ exports.os = function(req,res,next){
             'type' : os.type()
         }
     );
-    
-    
 }
+

@@ -39,8 +39,25 @@ require(['jquery'],function($){
 	link.parents("dd").prev("dt").addClass("active");
 	document.title = "Thrones-" + (link.text() || '后台管理中心');
 
+    $(".nav").each(function(index){
+        $(this).data("state",1);
+        $(this).click(function(){
+            var state = $(this).data("state");
+            if(state == 1){
+                $(this).next().find("ul").slideUp();
+                $(this).data('state',0);
+            }
+            else{
+                $(this).next().find("ul").slideDown();
+                $(this).data('state',1);
+            }
 
+        });
+    });
 
+	$(".nav").click(function(){
+		$(this).nextSibling(".subnav").slideUp();
+	});
 
     $(window).resize(function(){
         setSearchSectionSize();

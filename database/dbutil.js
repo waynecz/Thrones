@@ -184,8 +184,7 @@ var util = {
 	},
     contains : function(s1,s2){
         if(util.contain(s2,",")){
-            ms = s2.split(",");
-            var flag = false;
+            var ms = s2.split(",");
             for(var i in ms){
                 if(util.contain(s1,ms[i])){
                     return true;

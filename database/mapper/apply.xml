@@ -86,4 +86,17 @@
             {{department_id | and:'t1.department_id'}}
             {{user_id | and:'t1.user_id'}}
     </select>
+
+
+    <!-- 统计 -->
+    <select id="statistic">
+        select
+            *
+        from
+            view_apply
+        where
+            1 = 1
+            {{gmt_apply_begin | and:'gmt_apply','gte'}}
+            {{gmt_apply_end | and:'gmt_apply','lte'}}
+    </select>
 </sql>

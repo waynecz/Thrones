@@ -6,7 +6,23 @@ var print = require('../../modules/print');
 var template = require('art-template');
 var fs = require('fs');
 exports.filterAdmin = function(req,res,next){
-
+    var url = req.originalUrl;
+    if(url.startsWith("/admin","admin")){
+        //判断是否登录
+        var loginUser = cookie.isLogin(req);
+        if(!loginUser){
+            return res.redirect("/login");
+        }
+        else{
+            if(loginUser.superadmin && loginUser.superadmin == 1){
+                return next();
+            }
+            else{
+                return res.redirect("/index");
+            }
+        }
+    }
+    next();
 }
 
 exports.filterLogin = function(req,res,next){
@@ -14,22 +30,20 @@ exports.filterLogin = function(req,res,next){
         return next();
     }
 
-    if(req.originalUrl.startsWith("/signin")){
-        //判断是否已经登陆过
-        var user =  cookie.getCookieUser(req);
-        if(user == null){
-            return next();
-        }
-        //本地缓存有数据
-        var loginUser = cache.get(user.username+"."+user.password);
-        //跳转到首页,免密码登陆
-        if(loginUser!=null && loginUser.remember){
-            return res.redirect("/index");
-        }
-        //继续登陆
-        return next();
+    //判断是否已经登陆过
+    var loginUser =  cookie.isLogin(req);
+
+    print.ps(req.originalUrl);
+
+    if(req.originalUrl.startsWith("/login")){
+       return next();
     }
-    judgeFromCookie(req,res,next);
+    if(!loginUser){
+        return res.redirect("/login");
+    }
+    else{
+        next();
+    }
 }
 
 
@@ -72,12 +86,11 @@ exports.renderFilter = function(req,res,next){
                 return res.redirect("/500");
             }
             print.ps("layout:?,page:?".format(layout,page));
-            res.render(layout,{'contents':contents,'extra':extraDataOrLayout,'page':page});
+            return res.render(layout,{'contents':contents,'extra':extraDataOrLayout,'page':page});
         });
     }
     next();
 }
-
 
 
 //所有白名单
@@ -86,14 +99,3 @@ function isWhiteListUrl(req){
     return url.startsWith("/signup","/messages/","/data",'/admin',"/404","/500");
 }
 
-
-function judgeFromCookie(req,res,next){
-    var cookieUser = cookie.getCookieUser(req);
-    if(cookieUser == null){
-        return res.render("error",{"message":"请登录"});
-    }
-    if(cache.get(cookieUser.username+"."+cookieUser.password) == null){
-        return res.render("error",{"message":"请登录"});
-    }
-    return next();
-}

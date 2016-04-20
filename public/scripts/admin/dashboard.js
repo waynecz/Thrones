@@ -4,23 +4,44 @@ define('Dashboard',['jquery','util','echarts','echarts/chart/line','echarts/char
 
     var Dashboard = {
         init : function(){
-            var myChart = echarts.init(document.getElementById('area_daily'));
+            this.initSize();
+            this.initCharts();
+            this.initUsers();
+        },
+        initCharts : function(){
+            util.post('/statistic',function(data){
+                Dashboard.render(data.dates,data.applys,data.leaders,data.safes,data.ops);
+            });
+        },
+        initUsers : function(){
+            util.post('/sysuser',function(data){
+                for(var key in data){
+                    $("#role"+key).text(data[key]+"");
+                }
+            });
+        },
+        echart : function(){
+            return echarts.init(document.getElementById('statistic'));
+        },
+        initSize : function(){
+            var contents = $("#contents").width();
+            var eachWidth = (contents - 15 * 3) / 4;
+            $(".panel_user").width(eachWidth);
+            $(".panel_user:gt(0)").css("margin-left","15px");
+
+
+        },
+        render : function(dates,applys,leaders,safes,ops){
             var option = {
                 tooltip : {
                     trigger: 'axis',
                     axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                        type : 'line'        // 默认为直线，可选为：'line' | 'shadow'
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
                     }
                 },
                 legend: {
-                    show:true,
-                    zlevel:1,
-                    horizontal : 'horizonal',
-                    itemWidth : 20,
-                    itemHeight : 14,
-                    x:'10px',
-                    y:'10px',
-                    data:['今日申请','安全审批','运维审批']
+                    x : 'center',
+                    data:['今日申请','领导审批','安全审批','运维审批']
                 },
                 grid: {
                     left: '3%',
@@ -31,7 +52,7 @@ define('Dashboard',['jquery','util','echarts','echarts/chart/line','echarts/char
                 xAxis : [
                     {
                         type : 'category',
-                        data : ['02-01','02-02','02-03','02-04','02-05','02-06','02-07'],
+                        data : dates,
                         splitLine : {
                             show : false,
                             lineStyle : {
@@ -58,11 +79,11 @@ define('Dashboard',['jquery','util','echarts','echarts/chart/line','echarts/char
                 ],
                 series : [
                     {
-                        name:'申请人数',
+                        name:'今日申请',
                         type:'bar',
                         stack : '每日统计',
                         barWidth : '50',
-                        data:[320, 332, 301, 334, 390, 330, 320],
+                        data:applys,
                         itemStyle : {
                             normal : {
                                 color:"#7a8c99"
@@ -70,10 +91,21 @@ define('Dashboard',['jquery','util','echarts','echarts/chart/line','echarts/char
                         }
                     },
                     {
-                        name:'安全审批人数',
+                        name:'领导审批',
                         type:'bar',
                         stack : '每日统计',
-                        data:[120, 132, 101, 134, 90, 230, 210],
+                        data:leaders,
+                        itemStyle : {
+                            normal : {
+                                color:"#6098bb"
+                            }
+                        }
+                    },
+                    {
+                        name:'安全审批',
+                        type:'bar',
+                        stack : '每日统计',
+                        data:safes,
                         itemStyle : {
                             normal : {
                                 color:"#ff6c5c"
@@ -81,10 +113,10 @@ define('Dashboard',['jquery','util','echarts','echarts/chart/line','echarts/char
                         }
                     },
                     {
-                        name:'运维审批人数',
+                        name:'运维审批',
                         type:'bar',
                         stack : '每日统计',
-                        data:[220, 182, 191, 234, 290, 330, 310],
+                        data:ops,
                         itemStyle : {
                             normal : {
                                 color:"#a7db65"
@@ -93,11 +125,13 @@ define('Dashboard',['jquery','util','echarts','echarts/chart/line','echarts/char
                     }
                 ]
             };
-            myChart.setOption(option);
+            Dashboard.echart().setOption(option);
         }
     }
     return Dashboard;
 })
+
+
 
 
 

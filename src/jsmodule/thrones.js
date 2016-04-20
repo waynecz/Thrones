@@ -1,14 +1,15 @@
 /**
  * 仅限于用在Thrones
- * 依赖 pager art-template ui-select
- * 功能: ajax方法改写 获取各种列表 计算提交数据 刷新按钮及多选框状态 重置表单 删除
+ * 依赖 art-template ui-select
+ * 功能: ajax方法改写 模版渲染 获取申请列表 计算提交数据 提交前检查 重置表单 计算映射 等...
  */
 ;
-window.xhrCtrl = {};
+require('./utils');
+window.xhrCtrl  = {};
 window.template = require('../../node_modules/art-template/dist/template');
 (function ($) {
     $.extend({
-        jax                        : function (options) {
+        jax             : function (options) {
             var requestUrl = location.pathname,
                 lastIndex  = requestUrl.lastIndexOf('.');
 
@@ -69,7 +70,7 @@ window.template = require('../../node_modules/art-template/dist/template');
             })
             return deferred.promise();
         },
-        render                     : function (id, data) {
+        render          : function (id, data) {
             template.helper('dateFormat', function (val, pattern) {
                 if (val == null || val == '') {
                     return '-'
@@ -95,7 +96,7 @@ window.template = require('../../node_modules/art-template/dist/template');
             template.config('closeTag', ']]');
             return template(id, data);
         },
-        getList                    : function (options, extPostData) {
+        getList         : function (options, extPostData) {
             if (xhrCtrl.getList) {
                 $.msg.pop('再点船就翻了...', 'warning');
                 return false;
@@ -113,7 +114,6 @@ window.template = require('../../node_modules/art-template/dist/template');
                     postData[i] = extPostData[i];
                 }
             }
-            // $.extend(postData, $.generatePostData($('#conditionForm')));
 
             var dfd = $.Deferred();
 
@@ -127,13 +127,16 @@ window.template = require('../../node_modules/art-template/dist/template');
                 $.templateHelpers(map);
 
                 var data = res.data.data.reverse();
+                data.map(function (apply) {
+                    if (apply.comments) apply.comments.reverse();
+                });
                 var rst = $.render('listTemplate', {lists: data});
                 $('#contentWrap').empty().html(rst);
                 dfd.resolve();
             });
             return dfd.promise()
         },
-        generatePostData           : function (targetId) {
+        generatePostData: function (targetId) {
             var target        = $(targetId);
             var postData      = {},
                 dataContainer = [],
@@ -192,25 +195,7 @@ window.template = require('../../node_modules/art-template/dist/template');
                 return postData;
             }
         },
-        refreshCheckAllAndBtnStatus: function () {
-            var checkBoxs = $('[name=uuid]', '#presentation-body');
-            var checkAll  = $('#kingslanding');
-            if (checkAll.length && checkBoxs.length) {
-                var totlaDuck = checkBoxs.length;
-                var livedDuck = checkBoxs.filter(':checked').length;
-                if (!livedDuck) {
-                    $('#updateBtn, #delBtn').addClass('disabled');
-                } else if (livedDuck === 1) {
-                    $('#updateBtn').removeClass('disabled');
-                    $('#delBtn').removeClass('disabled');
-                } else {
-                    $('#updateBtn').addClass('disabled');
-                    $('#delBtn').removeClass('disabled');
-                }
-                totlaDuck != 0 && livedDuck == totlaDuck ? checkAll.prop('checked', true) : checkAll.prop('checked', false);
-            }
-        },
-        checkBeforePost            : function (targetFormId) {
+        checkBeforePost : function (targetFormId) {
             var fields = $('.form-unit:not(.skipCheck)', targetFormId),
                 total  = fields.length,
                 count  = total,
@@ -237,94 +222,16 @@ window.template = require('../../node_modules/art-template/dist/template');
             });
             return (count == total);
         },
-        resetForm                  : function (targetFormId) {
+        resetForm       : function (targetFormId) {
             var tgt = $(targetFormId);
             tgt.find('.form-unit').removeClass('warn');
             tgt.find('.input').val('');
+            tgt.find('textarea').val('');
             tgt.find('.ui-select').each(function (i, e) {
                 $(e).selectIndex(-1);
             });
         },
-        delete                     : function (operation, options) {
-            if (xhrCtrl.delete) {
-                $.msg.pop('大爷您慢点点啊..', 'info');
-                return false;
-            }
-            var missionTarget   = $('[name=uuid]:checked'),
-                missionTargetId = '',
-                i;
-            missionTarget.each(function (i, e) {
-                (i != missionTarget.length - 1) ?
-                    missionTargetId += $(e).attr('data-sid') + ',' :
-                    missionTargetId += $(e).attr('data-sid');
-            });
-            var postData          = {};
-            postData['operation'] = operation || 'delete';
-            postData['sids']      = missionTargetId;
-
-            if (options) { // 之前采用的addition方式有点渣..
-                for (i in options) {
-                    postData[i] = options[i];
-                }
-            }
-            var dfd = $.Deferred();
-            $.jax({
-                data  : postData,
-                button: $('#delBtn'),
-                ctrl  : 'delete'
-            }).done(function (data) {
-                var curPage = parseInt($('.pgCurrent', '#pager').text());
-                if (options && options.manualGetList) {
-                    dfd.resolve(curPage);
-                } else {
-                    $.getList(curPage);
-                    $.msg.pop('删除成功', 'success');
-                    $('#TheHatefulEight').popOff();
-                }
-            });
-            return dfd.promise();
-        },
-        justDoIt                   : function (operation, missionTargetId, options, pendingDataSpecific) {
-            if (xhrCtrl.justDoIt) {
-                $.msg.pop('大爷您慢点点啊..', 'info');
-                return false;
-            }
-
-            var postData = {};
-            var xdd      = {
-                operation: undefined
-            };
-            if (options) {
-                var setting = $.extend(xdd, options);
-                if (setting.addition) {
-                    setting.addition.map(function (single) {
-                        postData[single.key] = single.value;
-                    })
-                }
-            }
-            postData['operation'] = operation;
-            if (operation == 'delete') {
-                postData['sids'] = missionTargetId;
-            } else {
-                postData['sid'] = missionTargetId;
-            }
-
-
-            $.jax({
-                data  : postData,
-                button: $('.justDoIt', '#TheHatefulEight'),
-                ctrl  : 'justDoIt'
-            }).done(function (data) {
-                var curPage = parseInt($('.pgCurrent', '#pager').text());
-                $.msg.pop('操作成功!!', 'success');
-                $('#TheHatefulEight').popOff();
-                setTimeout(function () {
-                    $.getList(curPage, pendingDataSpecific);
-                }, 2000)
-
-            });
-        },
-        getDepartment              : function () {
+        getDepartment   : function () {
             if ($('#department_id.ui-select').length) {
                 $.jax({
                     url: '/data/department/all'
@@ -335,21 +242,22 @@ window.template = require('../../node_modules/art-template/dist/template');
                 })
             }
         },
-        generateMap                : function () {
+        generateMap     : function () {
             var map = {
-                '0': '未审批',
-                '1': '领导已审批',
-                '2': '安全已审批',
-                '3': '全部通过',
+                '0' : '未审批',
+                '1' : '领导已审批',
+                '2' : '安全已审批',
+                '3' : '全部通过',
                 '-1': '领导拒绝',
                 '-2': '安全拒绝',
                 '-3': '最后拒绝',
-                '4': '结束'
+                '4' : '结束'
             };
 
             return map
         },
-        templateHelpers            : function (map) {
+        templateHelpers : function (map) {
+            // 取得真值
             template.helper('trueVal', function (val) {
                 val += '';
 
@@ -361,6 +269,71 @@ window.template = require('../../node_modules/art-template/dist/template');
                     return val
                 }
             });
+            // 扭转数组
+            template.helper('reverseArr', function (val) {
+                var rst;
+
+                Object.prototype.toString.call(val) === '[object Array]'
+                    ? rst = val.reverse()
+                    : rst = val || [];
+
+                return rst;
+            });
+        },
+        doComment       : function (sourceBtn) {
+            if (xhrCtrl['comment']) {
+                $.msg.pop('正在提交,请稍等..')
+                return false
+            }
+            var commentData = {},
+                textarea    = sourceBtn.next('.comment-inputer');
+            remark = textarea.val().trim(),
+                commentWrap = sourceBtn.parents('.comment-wraper');
+            if (!remark) {
+                $.msg.pop('空评论不能提交啊');
+                return false;
+            }
+            commentData.remark   = remark;
+            commentData.apply_id = commentWrap.attr('data-applyid');
+            var postData         = commentData;
+            postData['user_id']  = 14;
+
+            $.jax({
+                url   : '/data/comment/add',
+                data  : postData,
+                ctrl  : 'comment',
+                button: $('.doComment')
+            }).done(function (res) {
+                textarea.val('');
+                $.msg.pop('评论成功', 'success');
+                var newComment       = {};
+                newComment.remark    = remark;
+                newComment.user_name = $('#user').attr('data-user');
+                newComment.time = new Date().format('yyy-MM-dd hh:mm:ss');
+                var rst              = $.render('commentTemplate', newComment);
+                var $rst             = $(rst);
+                textarea.after($rst);
+            })
+        },
+        calCommentDisplayTime   : function () {
+            var timeEles = $('.data-content.show-comment .comment-wraper .time', '#contentWrap');
+            timeEles.each(function (i, e) {
+                var ele = $(e);
+                Getime(ele.attr('data-time'))
+            });
+
+            function diffTime (time) {
+                var now = Getime(true);
+                var diff = now - time;
+                if (diff < 0) {
+                    log('Excuse me, 你穿越到未来了????')
+                } else if (diff > 0 ) {
+
+                }
+            }
         }
     })
 })(jQuery);
+
+
+

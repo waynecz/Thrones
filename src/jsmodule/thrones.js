@@ -9,7 +9,7 @@ window.xhrCtrl  = {};
 window.template = require('../../node_modules/art-template/dist/template');
 (function ($) {
     $.extend({
-        jax             : function (options) {
+        jax                  : function (options) {
             var requestUrl = location.pathname,
                 lastIndex  = requestUrl.lastIndexOf('.');
 
@@ -70,7 +70,7 @@ window.template = require('../../node_modules/art-template/dist/template');
             })
             return deferred.promise();
         },
-        render          : function (id, data) {
+        render               : function (id, data) {
             template.helper('dateFormat', function (val, pattern) {
                 if (val == null || val == '') {
                     return '-'
@@ -96,7 +96,7 @@ window.template = require('../../node_modules/art-template/dist/template');
             template.config('closeTag', ']]');
             return template(id, data);
         },
-        getList         : function (options, extPostData) {
+        getList              : function (options, extPostData) {
             if (xhrCtrl.getList) {
                 $.msg.pop('再点船就翻了...', 'warning');
                 return false;
@@ -136,7 +136,7 @@ window.template = require('../../node_modules/art-template/dist/template');
             });
             return dfd.promise()
         },
-        generatePostData: function (targetId) {
+        generatePostData     : function (targetId) {
             var target        = $(targetId);
             var postData      = {},
                 dataContainer = [],
@@ -195,7 +195,7 @@ window.template = require('../../node_modules/art-template/dist/template');
                 return postData;
             }
         },
-        checkBeforePost : function (targetFormId) {
+        checkBeforePost      : function (targetFormId) {
             var fields = $('.form-unit:not(.skipCheck)', targetFormId),
                 total  = fields.length,
                 count  = total,
@@ -222,7 +222,7 @@ window.template = require('../../node_modules/art-template/dist/template');
             });
             return (count == total);
         },
-        resetForm       : function (targetFormId) {
+        resetForm            : function (targetFormId) {
             var tgt = $(targetFormId);
             tgt.find('.form-unit').removeClass('warn');
             tgt.find('.input').val('');
@@ -231,7 +231,7 @@ window.template = require('../../node_modules/art-template/dist/template');
                 $(e).selectIndex(-1);
             });
         },
-        getDepartment   : function () {
+        getDepartment        : function () {
             if ($('#department_id.ui-select').length) {
                 $.jax({
                     url: '/data/department/all'
@@ -242,7 +242,7 @@ window.template = require('../../node_modules/art-template/dist/template');
                 })
             }
         },
-        generateMap     : function () {
+        generateMap          : function () {
             var map = {
                 '0' : '未审批',
                 '1' : '领导已审批',
@@ -256,7 +256,7 @@ window.template = require('../../node_modules/art-template/dist/template');
 
             return map
         },
-        templateHelpers : function (map) {
+        templateHelpers      : function (map) {
             // 取得真值
             template.helper('trueVal', function (val) {
                 val += '';
@@ -280,7 +280,7 @@ window.template = require('../../node_modules/art-template/dist/template');
                 return rst;
             });
         },
-        doComment       : function (sourceBtn) {
+        doComment            : function (sourceBtn) {
             if (xhrCtrl['comment']) {
                 $.msg.pop('正在提交,请稍等..')
                 return false
@@ -309,26 +309,41 @@ window.template = require('../../node_modules/art-template/dist/template');
                 var newComment       = {};
                 newComment.remark    = remark;
                 newComment.user_name = $('#user').attr('data-user');
-                newComment.time = new Date().format('yyy-MM-dd hh:mm:ss');
+                newComment.time      = new Date().format('yyyy-MM-dd hh:mm:ss');
                 var rst              = $.render('commentTemplate', newComment);
                 var $rst             = $(rst);
                 textarea.after($rst);
+                $.calCommentDisplayTime();
             })
         },
-        calCommentDisplayTime   : function () {
+        calCommentDisplayTime: function () {
             var timeEles = $('.data-content.show-comment .comment-wraper .time', '#contentWrap');
             timeEles.each(function (i, e) {
-                var ele = $(e);
-                Getime(ele.attr('data-time'))
+                var ele  = $(e);
+                var text = diffTime(Getime(ele.attr('data-time')));
+                ele.text(text);
             });
 
-            function diffTime (time) {
-                var now = Getime(true);
-                var diff = now - time;
+            function diffTime(time) {
+                var now     = Getime(true);
+                var numTime = Getime(time, true);
+                var diff    = now - numTime;
+                
                 if (diff < 0) {
                     log('Excuse me, 你穿越到未来了????')
-                } else if (diff > 0 ) {
-
+                    return '不可思议的日期';
+                } else if (diff > 0 && diff < 2 * 1000) {
+                    return '刚刚';
+                } else if (diff > 2 * 1000 && diff < 60 * 1000) {
+                    return Math.ceil(diff / 1000) + '秒前';
+                } else if (diff >= 60 * 1000 && diff < 60 * 60 * 1000) {
+                    return Math.ceil(diff / (1000 * 60)) + '分钟前';
+                } else if (diff >= 60 * 60 * 1000 && diff < 24 * 60 * 60 * 1000) {
+                    return Math.ceil(diff / (1000 * 60 * 60)) + '小时前';
+                } else if (diff >= 24 * 60 * 60 * 1000 && diff < 30 * 24 * 60 * 60 * 1000) {
+                    return new Date(time).format('yy-MM-dd hh:mm')
+                } else {
+                    return new Date(time).format('yy-MM-dd')
                 }
             }
         }

@@ -40,7 +40,7 @@ $(function () {
             } else {
                 target.addClass('show-comment');
                 target.find('.comment-wraper').show();
-                $.calCommentDisplayTime()
+                $.calCommentDisplayTime();
             }
         }
 

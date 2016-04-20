@@ -48,7 +48,7 @@ $(function () {
             var postData = $.generatePostData('#addForm');
             postData['user_id'] = 2;
             $.jax({
-                url : '/data/apply/addApply',
+                url : '/apply',
                 data: postData,
                 ctrl: 'addApply',
                 button: $('#pageSwitcher')

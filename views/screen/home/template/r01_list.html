@@ -1,12 +1,29 @@
 <script id="listTemplate" type="text/html">
     [[each lists as list]]
     <div id="dataContent" class="data-content">
-        <h4 class="data-title">[[list.auth_detail_name]] [[list.content]] 申请 </h4>
+        <h4 class="data-title">[[list.content]]</h4>
         <div class="data-detail layout row-wp">
             <span class="auth">[[list.auth_name]]</span>
             <span class="auth_detail">[[list.auth_detail_name]]</span>
             <span class="reason">[[list.reason]]</span>
-            <span class="remarks">[[list.remarks]]</span>
+            [[if list.comments]]
+            <span class="remarksCount"><i>[[list.comments.length]]</i> 条回复</span>
+            [[/if]]
+        </div>
+        <div class="comment-wraper" data-applyid="[[list.id]]">
+            <div class="check-button-wrap">
+                <button data-operation="doComment" class="comment-button">回复</button>
+            </div>
+            <textarea class="comment-inputer" placeholder="写下你的评论..."></textarea>
+            [[if list.comments]]
+                [[each list.comments as comment]]
+                    <div class="comment-detail">
+                        <span class="name">[[comment.remark_name]]</span>
+                        <span class="remark">[[comment.remark]]</span>
+                        <span class="time" data-time="[[comment.gmt_remark]]"></span>
+                    </div>
+                [[/each]]
+            [[/if]]
         </div>
         <div class="data-status" data-stage="[[list.state]]">[[list.state | trueVal]]</div>
     </div>

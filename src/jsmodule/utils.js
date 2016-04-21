@@ -22,23 +22,26 @@ Date.prototype.format = function (format) {
 
 window.Getime = function (time, isMillisecond) {
     var isMillisecond = isMillisecond || false;
-    if (!isMillisecond && time && Object.prototype.toString.call(time) !== '[object Boolean]') {
+    if (!isMillisecond && time && getType(time) !== '[object Boolean]') {
+        time = time.split('-').join('/');
         if (new Date(time) == 'Invalid Date') {
             console.log('您这并不是个日期啊,给大爷您返个现在的时间')
             return new Date()
         } else {
             return new Date(time)
         }
-    } else if (!isMillisecond && Object.prototype.toString.call(time) === '[object Boolean]') {
+    } else if (!isMillisecond && getType(time) === '[object Boolean]') {
         return new Date().getTime()
-    } else if (time && Object.prototype.toString.call(time) !== '[object Boolean]' && Object.prototype.toString.call(isMillisecond) === '[object Boolean]') {
+    } else if (time && getType(time) !== '[object Boolean]' && getType(isMillisecond) === '[object Boolean]') {
         return new Date(time).getTime()
     } else {
         return new Date()
     }
 
+    function getType(arg) {
+        return Object.prototype.toString.call(arg)
+    }
 };
-
 
 window.log = function (p) {
     console.log(p)

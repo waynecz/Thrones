@@ -65,11 +65,20 @@ $(function () {
             if (modal.hasClass('in-view')) {
                 modal.removeClass('in-view').addClass('out-view');
                 $('#pageSwitcher').attr('data-button', '+');
-                $('#doAddApply').removeClass('active');
             } else {
                 modal.removeClass('out-view').addClass('in-view');
                 $('#pageSwitcher').attr('data-button', '-');
-                $('#doAddApply').addClass('active');
+            }
+            $('#doAddApply').toggleClass('active');
+        },
+        showComment   : function (target) {
+            // target.toggleClass('show-comment')
+            target.get(0).classList.toggle('show-comment');
+            if (!target.hasClass('show-comment')) {
+                target.find('.comment-wraper').hide();
+            } else {
+                target.find('.comment-wraper').show();
+                $.calCommentDisplayTime();
             }
         }
     };
@@ -88,9 +97,19 @@ $(function () {
     $('.page-switcher-wraper')
         .on('click', '#pageSwitcher:not(.disabled)', function () {
             action.switchPage();
+        });
+    // 评论相关事件
+    $('#contentWrap')
+        .on('click', '[data-operation=doComment]', function (e) {
+            e = e || window.event;
+            e.stopPropagation();
+            $.doComment($(this));
+        })
+        .on('click', '.data-content', function () {
+            action.showComment($(this))
+        })
+        .on('click', '.comment-inputer, .comment-detail', function (e) {
+            e = e || window.event;
+            e.stopPropagation();
         })
 });
-
-function log(p) {
-    console.log(p)
-}

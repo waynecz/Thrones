@@ -201,7 +201,8 @@ main {
 	padding: 5px 20px  20px 20px;
 	width: 70%;
 	cursor: pointer;	
-	transition: .2s ease-out;
+	box-shadow: 0 0 0 3px transparent inset;
+	// transition: .1s ease-out;
 
 	@media screen and (max-width: 1100px) {
 	    width: 90%;
@@ -210,8 +211,12 @@ main {
 	&:first-child {
 		margin-top: 0;
 	}
-	&:hover, &.show-comment {
+	&:hover {
 		background: rgba(240,240,240,.9);
+	}
+	&.show-comment {
+		background: transparent;
+		box-shadow: 0 0 0 2px $bk inset;
 	}
 	.data-detail {
 		color: #666;
@@ -221,6 +226,11 @@ main {
 			margin-right: 13px;
 			line-height: 1.2;
 		}
+		.remarksCount {
+			text-decoration: underline;
+
+			cursor: pointer;
+		}
 	}
 	h4 {
 		margin: 8px 0;
@@ -228,7 +238,8 @@ main {
 		font-size: 23px;
 	}
 	.data-status {
-		position: absolute;top: 10%;
+		position: absolute;
+		top: 20px;
 		right: 2%;
 		width: 70px;
 		border: 1px $bk solid;
@@ -250,6 +261,7 @@ main {
 			color: $bk;
 		}
 	}
+
 	.comment-wraper {
 		position: relative;
 		display: none;
@@ -267,9 +279,11 @@ main {
 			font-size: 13px;
 			resize: none;
 		}
-		.comment-button {
+		.check-button-wrap {
 			position: absolute;top: 40px;
 			right: 1px;
+		}
+		.comment-button {
 			padding: 5px 9px;
 			border: 0 none;
 			background: transparent;
@@ -277,11 +291,19 @@ main {
 			cursor: poniter;
 
 			&:hover {
-				background: $bk;
 				color: $wt;
 			}
 			&:focus {
 				outline: none;
+			}
+			&.doResolve:hover {
+				background: $gr;
+			}
+			&.doReject:hover {
+				background: $rd;
+			}
+			&.doComment:hover {
+				background: $bk;
 			}
 		}
 		.comment-detail {

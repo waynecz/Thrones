@@ -14,11 +14,6 @@ $(function () {
                 $.msg.pop('正在提交,请稍等..')
                 return false
             }
-            var flag = $.checkBeforePost('#addForm');
-            if (!flag) {
-                $.msg.pop('存在填写错误', 'warning');
-                return false;
-            }
             var postData        = $.generatePostData('#addForm');
             postData['user_id'] = 2;
             $.jax({
@@ -33,12 +28,12 @@ $(function () {
                 $.msg.pop('申请成功');
             })
         },
-        showComment: function (target) {
-            if ( target.hasClass('show-comment') ) {
-                target.removeClass('show-comment');
+        showComment   : function (target) {
+            // target.toggleClass('show-comment')
+            target.get(0).classList.toggle('show-comment');
+            if (!target.hasClass('show-comment')) {
                 target.find('.comment-wraper').hide();
             } else {
-                target.addClass('show-comment');
                 target.find('.comment-wraper').show();
                 $.calCommentDisplayTime();
             }
@@ -51,17 +46,22 @@ $(function () {
 
 
     $('#contentWrap')
-        .on('click', '.doComment', function (e) {
+        .on('click', '[data-operation=doComment]', function (e) {
             e = e || window.event;
             e.stopPropagation();
-            $.doComment($(this));
+            $.doCommentOrCheck($(this));
         })
         .on('click', '.data-content', function () {
-            action.showComment($(this));
+            action.showComment($(this))
         })
-        .on('click', '.comment-inputer', function (e) {
+        .on('click', '.comment-inputer, .comment-detail', function (e) {
             e = e || window.event;
             e.stopPropagation();
+        })
+        .on('click', '[data-operation=doResolve], [data-operation=doReject]', function (e) {
+            e = e || window.event;
+            e.stopPropagation();
+            $.doCommentOrCheck($(this));
         })
 });
 

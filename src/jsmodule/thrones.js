@@ -122,6 +122,10 @@ window.template = require('../../node_modules/art-template/dist/template');
                 data: postData,
                 ctrl: 'getList'
             }).done(function (res) {
+                if (res.data.total == 0) {
+                    $.msg.pop('当前没有申请需要处理', 'success');
+                    return
+                }
                 // 一些数据映射
                 var map = $.generateMap();
                 $.templateHelpers(map);
@@ -280,26 +284,33 @@ window.template = require('../../node_modules/art-template/dist/template');
                 return rst;
             });
         },
-        doComment            : function (sourceBtn) {
+        doCommentOrCheck     : function (sourceBtn) {
             if (xhrCtrl['comment']) {
                 $.msg.pop('正在提交,请稍等..')
                 return false
             }
             var commentData = {},
-                textarea    = sourceBtn.next('.comment-inputer');
-            remark = textarea.val().trim(),
-                commentWrap = sourceBtn.parents('.comment-wraper');
-            if (!remark) {
-                $.msg.pop('空评论不能提交啊');
+                textarea    = sourceBtn.next('.comment-inputer'),
+                remark      = textarea.val() && textarea.val().trim(),
+                commentWrap = sourceBtn.parents('.comment-wraper'),
+                operation   = sourceBtn.attr('data-operation'),
+                url         = '/data/comment/add';
+            if (!remark && operation == 'doComment') {
+                $.msg.pop('空评论不能提交啊', 'warning');
                 return false;
             }
             commentData.remark   = remark;
             commentData.apply_id = commentWrap.attr('data-applyid');
             var postData         = commentData;
             postData['user_id']  = 14;
+            if (operation != 'doComment') {
+                postData['currentState'] = sourceBtn.attr('data-state');
+                postData['state']        = sourceBtn.attr('data-tarstate');
+                url = '';
+            }
 
             $.jax({
-                url   : '/data/comment/add',
+                url   : url,
                 data  : postData,
                 ctrl  : 'comment',
                 button: $('.doComment')
@@ -314,10 +325,12 @@ window.template = require('../../node_modules/art-template/dist/template');
                 var $rst             = $(rst);
                 textarea.after($rst);
                 $.calCommentDisplayTime();
+                commentWrap.siblings('.data-detail').find('.remarksCount i').text(commentWrap.find('.comment-detail').length);
             })
         },
         calCommentDisplayTime: function () {
             var timeEles = $('.data-content.show-comment .comment-wraper .time', '#contentWrap');
+
             timeEles.each(function (i, e) {
                 var ele  = $(e);
                 var text = diffTime(Getime(ele.attr('data-time')));
@@ -328,11 +341,11 @@ window.template = require('../../node_modules/art-template/dist/template');
                 var now     = Getime(true);
                 var numTime = Getime(time, true);
                 var diff    = now - numTime;
-                
+
                 if (diff < 0) {
                     log('Excuse me, 你穿越到未来了????')
                     return '不可思议的日期';
-                } else if (diff > 0 && diff < 2 * 1000) {
+                } else if (diff >= 0 && diff < 2 * 1000) {
                     return '刚刚';
                 } else if (diff > 2 * 1000 && diff < 60 * 1000) {
                     return Math.ceil(diff / 1000) + '秒前';

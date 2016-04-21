@@ -10,7 +10,7 @@ exports.loginPage = function(req,res){
     res.renderPage("login",{"page":"login"}, "login");
 };
 exports.pending = function(req,res){
-    res.renderPage("pending",{"page":"pending"});
+    res.renderPage("pending",{"page":"待处理申请"});
 };
 
 

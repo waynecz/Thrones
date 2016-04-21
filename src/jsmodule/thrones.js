@@ -290,7 +290,7 @@ window.template = require('../../node_modules/art-template/dist/template');
                 return false
             }
             var commentData = {},
-                textarea    = sourceBtn.next('.comment-inputer'),
+                textarea    = sourceBtn.parent().next('.comment-inputer'),
                 remark      = textarea.val() && textarea.val().trim(),
                 commentWrap = sourceBtn.parents('.comment-wraper'),
                 operation   = sourceBtn.attr('data-operation'),

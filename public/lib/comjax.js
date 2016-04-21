@@ -49,6 +49,7 @@ define(['jquery','util','mtemplate'],function($,util,mtemplate){
                 'cb' : function(data){
                     var page = data.page;
                     if(data.total == 0){
+                        model.pageData = [];
                         if(renderDefault){
                             comon.renderPage([]); //自动渲染
                         }

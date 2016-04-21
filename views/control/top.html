@@ -6,10 +6,10 @@
         <div class="nav-item"><a href="/">我的申请</a></div>
         <div class="nav-item"><a href="/history">申请记录</a></div>
         <div class="nav-item"><a href="/admin">管理界面</a></div>
-       {{session.name}}
+
     </nav>
     <div class="gap"></div>
-    <div id="user" class="user" data-user="翁诚舟">
+    <div id="user" class="user" data-user="{{session.name||'未知人'}}">
         <i class="iconfont icon-yonghu">&#xe600</i>
     </div>
 </header>

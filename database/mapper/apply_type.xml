@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sql id="apply_type">
-    <insert id="add">
+    <insert id="add" before="isUnique">
         insert into
             apply_type(name,pid,type)
         values(
@@ -9,12 +9,31 @@
             {{type | q}}
         )
     </insert>
-    <delete id="delete">
+
+    <update id="update" before="isUnique">
+        update
+            apply_type
+        set
+            {{name | set:'name'}}
+            {{pid | set:'pid'}}
+        where
+            id = {{id | q}}
+    </update>
+    <delete id="delete" before="check">
         delete from
             apply_type
         where
             id = {{id | q}}
     </delete>
+    <select id="check">
+        select
+            sum(total)
+        from(
+            (select count(1) total from apply_type where pid = {{id | q}} limit 1)
+            union
+            (select count(1) total from apply where auth_detail = {{id | q}} limit 1)
+        ) s;
+    </select>
     <select id="listByType">
         select
             id,name text,id value
@@ -53,6 +72,5 @@
         where
             name = {{name | q}}
             {{id | and:'id','neq'}}
-
     </select>
 </sql>

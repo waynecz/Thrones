@@ -1,7 +1,7 @@
 //过滤器
 require('../../modules/string');
 var cache = require('memory-cache');
-var cookie = require('../../modules/cookie');
+var session = require('../../modules/cookie');
 var print = require('../../modules/print');
 var template = require('art-template');
 var fs = require('fs');
@@ -10,7 +10,7 @@ exports.filterAdmin = function(req,res,next){
     var url = req.originalUrl;
     if(url.startsWith("/admin","admin")){
         //判断是否登录
-        var loginUser = cookie.isLogin(req);
+        var loginUser = session.loginUser(req);
         if(!loginUser){
             return res.redirect("/login");
         }
@@ -31,7 +31,7 @@ exports.filterLogin = function(req,res,next){
         return next();
     }
     //判断是否已经登陆过
-    var loginUser =  cookie.isLogin(req);
+    var loginUser =  session.loginUser(req);
     print.ps(loginUser);
 
     if(!loginUser){
@@ -77,13 +77,10 @@ exports.renderFilter = function(req,res,next){
                 print.ps("找不到" + file);
                 return res.redirect("/404");
             }
-            var loginUser = cookie.isLogin(req);
-
+            var loginUser = session.loginUser(req);
             print.ps(loginUser,"登陆用户-");
 
-            if(loginUser){
-                data.session = loginUser;
-            }
+            data.session = loginUser || {};
             var contents = template(checkfile,data);
             if(contents.startsWith("{Template Error}")){
                 return res.redirect("/500");
@@ -105,6 +102,6 @@ exports.renderFilter = function(req,res,next){
 //所有白名单
 function isWhiteListUrl(req){
     var url = req.originalUrl;
-    return url.startsWith("/", "/signin","/signup","/login","/data",'/admin',"/404","/500");
+    return url.startsWith("/signin","/signup","/login","/data",'/admin',"/404","/500");
 }
 

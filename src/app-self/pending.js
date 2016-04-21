@@ -7,7 +7,7 @@ $(function () {
     var action = {
         // 获取申请类型并联动申请对象
         getPendingList: function () {
-            $.getList({url: '/data/apply/pageQuery'}, {state: '1'});
+            $.getList({url: '/data/apply/pageQuery'}, {state: '0,1'});
         },
         doCheck       : function () {
             if (xhrCtrl['check']) {

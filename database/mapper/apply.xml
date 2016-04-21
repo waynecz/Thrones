@@ -20,29 +20,31 @@
 		update
 			apply
 		set
-			state = {{state | q}},
-			gmt_pid = {{gmt_now | d}}
+            {{pid | eq:'pid'}}
+            {{state | eq:'state'}}
+            {{now | d:'gmt_pid'}}
 	</update>
 	<!-- 安全审批 -->
 	<update id="safeReview">
 		update
 			apply
 		set
-			state = {{state | q}},
-			gmt_safe = {{gmt_now | d}}
+            {{sid | eq:'sid'}}
+            {{state | eq:'state'}}
+            {{now | d:'gmt_safe'}}
 	</update>
 	<!-- 终极审批 -->
 	<update id="finalReview">
 		update
 			apply
 		set
-			state = {{state | q}},
-			gmt_end = {{gmt_now | d}}
+            {{oid | eq:'oid'}}
+            {{state | eq:'state'}}
+            {{now | d:'gmt_end'}}
 	</update>
-
     <!-- 查询信息 -->
-    <select id="pageQuery" key="id"  child="comment_id,remark,gmt_remark,remark_name" childName="comments">
-		select t2.*,t3.id comment_id,t3.remark,t3.gmt_remark,t4.name remark_name  from
+    <select id="pageQuery" key="id"  child="comment_id,remark,gmt_remark,apply_state,remark_name,remark_role" childName="comments" childId="comment_id">
+		select t2.*,t3.id comment_id,t3.remark,t3.gmt_remark,t3.apply_state apply_state,t4.name remark_name,t5.name remark_role  from
 		(
         select
             t1.*
@@ -58,6 +60,9 @@
             {{key | and:'t1.user_name,t1.content,t1.reason','like'}}
             {{user_id | and:'t1.user_id'}}
             {{department_id | and:'t1.department_id'}}
+            {{if login_id}}
+            and t1.department_id in (select department_id from leader where user_id = {{login_id | q}})
+            {{/if}}
             {{sort | orderby}}
             {{offset | limit:pageSize}}
 		) t2
@@ -65,6 +70,8 @@
 			comment t3 on t2.id = t3.apply_id
 		left join
 			user t4 on t3.user_id = t4.id
+        left join
+            role t5 on t4.role = t5.code
 		order by t2.id asc,t3.id asc
     </select>
 
@@ -84,10 +91,11 @@
             {{key | and:'t1.user_name,t1.content,t1.reason','like'}}
             {{user_id | and:'t1.user_id'}}
             {{department_id | and:'t1.department_id'}}
+            {{if login_id}}
+            and t1.department_id in (select department_id from leader where user_id = {{login_id | q}})
+            {{/if}}
             {{user_id | and:'t1.user_id'}}
     </select>
-
-
     <!-- 统计 -->
     <select id="statistic">
         select

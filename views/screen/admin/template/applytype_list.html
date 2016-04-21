@@ -1,12 +1,12 @@
 <script id="temp_model_list" type="text/html">
-    [[each models as model]]
+    [[each models as model index]]
     <tr>
         <td>[[model.name]]</td>
         <td><span class="code [[model.pid>0?'':'code_red']]">[[model.pid>0?'二':'一']]级分类</span></td>
         <td>[[model.pname?model.pname:'-']]</td>
         <td>
-            <a data-id="[[model.id]]" class="item_update_info">修改</a>
-            <a data-id="[[model.id]]" class="item_delete_info">删除</a>
+            <a data-id="[[model.id]]" class="item_update_info" data-index="[[index]]">修改</a>
+            <a data-id="[[model.id]]" class="item_delete_info" data-index="[[index]]">删除</a>
         </td>
     </tr>
     [[/each]]
@@ -28,7 +28,7 @@
                         <td>
                             <select  id="pid" class="myselect select2" name="pid" placeholder="请选择">
                                 <option></option>
-                                <option>一级类型</option>
+                                <option value="0">一级类型</option>
                             </select>
                         </td>
                     </tr>
@@ -59,20 +59,21 @@
         <form id="form_update_info">
             <table class="table_window">
                 <tbody>
-                <tr>
-                    <td>名称</td>
-                    <td>
-                        <input type="text" class="minput" name="name" id="update_name"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>负责人</td>
-                    <td>
-                        <select  id="update_leader" class="myselect select2" name="user_id" placeholder="请选择负责人">
-                            <option></option>
-                        </select>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>父类</td>
+                        <td>
+                            <select  id="update_pid" class="myselect select2" name="pid" placeholder="请选择">
+                                <option></option>
+                                <option value="0">一级类型</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>名称</td>
+                        <td>
+                            <input type="text" class="minput" id="update_name" name="name"/>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </form>

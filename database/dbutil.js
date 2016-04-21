@@ -185,7 +185,7 @@ var util = {
 			else if(ele.attr.child){
 				var result = [];
 				for(var i in data){
-					push(result,data[i],ele.attr.child,ele.attr.childName,ele.attr.key);
+					push(result,data[i],ele.attr.child,ele.attr.childName,ele.attr.childId,ele.attr.key);
 				}
 				data = result;
                 if(!method.contains("pageQuery,all,list") && data.length == 1){
@@ -272,11 +272,15 @@ var util = {
 }
 
 
-function push(arr,item,childColumns,childName,key){
-
-    key = key || 'id';
+function push(arr,item,childColumns,childName,childId,key){
     childName = childName || 'child';
+    childId = childId || 'id';
+    key = key || 'id';
     if(arr.length == 0){
+        if(item[childId]){
+            var mchild = [copyBean(item,childColumns)];
+            item[childName] = mchild;
+        }
         arr.push(copyBean(item));
         return;
     }
@@ -297,6 +301,10 @@ function push(arr,item,childColumns,childName,key){
         arr[kindex][childName] = mchild;
     }
     else{
+        if(item[childId]){
+            var mchild = [copyBean(item,childColumns)];
+            item[childName] = mchild;
+        }
         arr.push(copyBean(item));
     }
 }

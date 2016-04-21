@@ -29,9 +29,8 @@ module.exports = function (app) {
 
     //申请管理
     app.post('/apply',Apply.add);
-    app.post('/leaderCheck',Apply.leaderCheck);
-    app.post('/safeCheck',Apply.safeCheck);
-    app.post('/opCheck',Apply.opCheck);
+    app.post('/applycheck',Apply.check);
+
     app.post('/statistic',Apply.statistic);
 
 

@@ -27,12 +27,19 @@ module.exports = {
     getCookieValue : function(req,name){
         return this.parseCookie(req.headers.cookie)[name] || null;
     },
-    isLogin : function(req){
+    loginUser : function(req){
         var info = this.getCookieValue(req,this.getEncodeCookieName());
         if(info){
             return cache.get(info);
         }
         return false;
+    },
+    role : function(req){
+        var user = this.loginPage(req);
+        if(user){
+            return user.role;
+        }
+        return null;
     },
     makeCookie : function(name,val,opt){
         var pairs = [name + '=' + val];

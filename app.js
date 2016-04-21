@@ -4,12 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-
-
 var app = express();
-app.locals.info = "abc";
-console.log(app.locals);
 var useWebpack = true;
 if (useWebpack) {
     var webpackDevMiddleware = require("webpack-dev-middleware");

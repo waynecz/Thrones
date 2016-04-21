@@ -1,17 +1,17 @@
-
+require('./string');
 
 module.exports = function(template){
 
 	template.helper('q',function(val){
-		return "'" + (val || "") + "'";
+		return "'" + escape(val || "") + "'";
 	});
 
     template.helper('eq',function(val,col){
-       return " " + col + " = '" + val + "' ";
+       return " " + col + " = '" + escape(val) + "' ";
     });
 
 	template.helper('p',function(val){
-		return "'%" + (val || "") + "'";
+		return "'%" + escape(val || "") + "'";
 	});
 
     template.helper('m',function(data,index){
@@ -30,14 +30,14 @@ module.exports = function(template){
         if(val == null){
             return '';
         }
-        return "," + col + " = '" + val + "' ";
+        return "," + col + " = '" + escape(val) + "' ";
     });
 
     template.helper('in',function(val,col){
         if(val == null || val == '' || val == '-'){
             return '';
         }
-        return ' and ' + col + ' in (' + val + ') '
+        return ' and ' + col + ' in (' + escape(val) + ') '
     });
 
     template.helper('and',function(val,col,tag,pattern) {
@@ -70,7 +70,7 @@ module.exports = function(template){
             like : 'like'
         }
         if(tag == 'like'){
-            val = "%" + val + "%";
+            val = "%" + escape(val) + "%";
         }
         var realTag = tags[tag];
         if(realTag){
@@ -106,9 +106,8 @@ module.exports = function(template){
         return '';
     });
 
-
     function getSql(col,tag,val){
-        return col + " " + tag  + " '" + val + "' ";
+        return col + " " + tag  + " '" + escape(val) + "' ";
     }
 	template.helper('d',function(val,format){
 
@@ -128,14 +127,9 @@ module.exports = function(template){
 		return "'" + (result || "") + "'";
 	});
 
-
-
-
-
 	function getTwo(n){
 		return n<10 ? "0"+n : n;
 	}
-
 
     function getFormatDate(d,pattern){
         var val = d || new Date();
@@ -158,5 +152,10 @@ module.exports = function(template){
                     return '';
             }
         });
+    }
+
+    function escape(val){
+        val = val + '';
+        return val.replace(/'/g,"\\'");
     }
 }

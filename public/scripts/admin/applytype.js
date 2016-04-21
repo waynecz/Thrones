@@ -6,6 +6,7 @@ define('ApplyType',['jquery','util','comjax','mselect2','pager'],function($,util
         init : function(){
             this.initPager();
             this.bindAddEvent();
+            this.bindUpdateInfo();
             this.initSelect();
         },
         initPager : function(){
@@ -19,7 +20,7 @@ define('ApplyType',['jquery','util','comjax','mselect2','pager'],function($,util
         },
         initSelect : function(){
             comjax.getApplyTypeFirst(function(data){
-                 mselect2.renderWithData("#pid",data);
+                 mselect2.renderWithData("#pid,#update_pid",data);
             });
         },
         /*******事件绑定区********/
@@ -61,17 +62,15 @@ define('ApplyType',['jquery','util','comjax','mselect2','pager'],function($,util
             $(".item_update_info").each(function(){
                 $(this).unbind("click");
                 $(this).click(function(){
-                    var departmentId = $(this).data('id');
-                    //初始化对话框内容
-                    var department = ApplyType.getByApplyTypeId(departmentId);
-                    console.log(department);
-                    if(department == null){
-                        console.error('非法请求')
+                    var index = $(this).data('index');
+                    var data = ApplyType.getData(index);
+                    console.log(data);
+                    if(data == null){
+                        $.showErrorMessage('非法请求');
                         return;
                     }
-                    $("#update_name").val(department.name);
-                    var old_leader = department.user_id
-                    $("#update_leader").select2("val",old_leader);
+                    $("#update_name").val(data.name);
+                    $("#update_pid").select2("val",data.pid);
                     var oldInfo = $("#form_update_info").serialize();
                     $("#win_update").dialog({
                         width: 400,
@@ -81,15 +80,14 @@ define('ApplyType',['jquery','util','comjax','mselect2','pager'],function($,util
                                 d.close();
                                 return;
                             }
-                            param.id = departmentId;
-                            param.old_leader = old_leader;
+                            param.id = data.id;
                             util.jax({
-                                'url' : '/admin/department/update',
+                                'url' : '/data/apply_type/update',
                                 'type' : 'post',
                                 'data' : param,
                                 'cb' : function(){
                                     $.showSuccessMessage("更新成功");
-                                    ApplyType.search(searchParam.page);
+                                    ApplyType.search();
                                     d.close();
                                 }
                             })
@@ -107,6 +105,9 @@ define('ApplyType',['jquery','util','comjax','mselect2','pager'],function($,util
                 }
             }
             return null;
+        },
+        getData : function(index){
+            return this.pageData.length > index ? this.pageData[index] : null;
         }
     }
     return ApplyType;

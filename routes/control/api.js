@@ -1,6 +1,7 @@
 var ajax = require('../../modules/ajax');
 var print = require('../../modules/print');
 var Promise = require('bluebird');
+var session = require('../../modules/cookie');
 exports.data = function(req,res){
 
     print.ps("原始URL: " + req.originalUrl);
@@ -24,6 +25,13 @@ exports.data = function(req,res){
 
     //如果是分页查询,那么会自动的去做一些处理
     if(_method == "pageQuery"){
+        if(param.leader){
+            var loginUser = session.loginUser(req);
+            if(loginUser){
+                param.login_id = loginUser.id;
+            }
+        }
+
         var _total = 0;
         var page = param.page || 1;
         var pageSize = param.pageSize  || 10;

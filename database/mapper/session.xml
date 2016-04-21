@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<sql id="session">
+   <insert id="add">
+       insert into
+            session(key,user_id,info,name,gmt_create,gmt_effect,max_age)
+       values(
+            {{key | q}},
+            {{user_id | q}}
+            {{info | q}},
+            {{name | q}},
+            {{gmt_create | q}},
+            {{gmt_effect | q}},
+            {{max_age | q}}
+       )
+   </insert>
+
+   <update id="update">
+       update
+           session
+       set
+           gmt_effect = {{gmt_effect | q}}
+       where
+           key = {{key | q}}
+   </update>
+
+    <delete id="delete">
+        delete from
+            session
+        where
+            {{user_id | eq:'user_id'}}
+    </delete>
+</sql>

@@ -43,4 +43,15 @@
             {{department_id | and:'department_id'}}
     </select>
 
+    <select id="isLeader">
+        select
+            count(1)
+        from
+            user
+        where
+            {{id | eq:'user_id'}}
+            and department_id
+            in (select department_id from leader where user_id = {{leader | q}}
+    </select>
+
 </sql>

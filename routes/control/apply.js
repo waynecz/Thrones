@@ -3,6 +3,7 @@ var ajax = require('../../modules/ajax');
 var Promise = require('bluebird');
 var dateutil = require('../../modules/date');
 var print = require('../../modules/print');
+var session = require('../../modules/cookie');
 exports.add = function(req,res){
     console.log("Ok")
     req.models.apply.addApply(req.body)
@@ -13,68 +14,141 @@ exports.add = function(req,res){
 
     function addComment(applyId){
         req.body.apply_id = applyId;
-        req.models.comment.add(req.body);
+        req.body.apply_state = 0;
+        return req.models.comment.add(req.body);
     }
 }
 
-exports.leaderCheck = function(req,res){
+exports.check = function(req,res){
+    //检查权限
+    //获取状态,默认是当前,如果指定状态,则以最新为准
     var state = req.body.state;
-    if(state == -1){
-        //仅做评论
-        req.models.comment.add(req,body,res);
+    if(state != 0 || state != 1 || state != '-'){
+        return ajax.failure(res,'非法请求');
     }
-    else{
-        //修改状态
-        Promise.all([
-            req.models.apply.leaderReview(req,body),
-            req.models.comment.add(req,body)
-        ]).then(function(){
-            ajax.success(res,"审核成功");
+    var curState = req.body.curState;
+    var applyId = req.body.apply_id;
+
+    req.moodels.apply.get({'id':applyId})
+        .then(function(data){
+            if(data == null){
+                return ajax.failure(res,'非法请求,申请不存在');
+            }
+            var realState = data.state;
+            if(curState != realState){
+                return ajax.failure(res,'该申请已被审批了,刷新试试');
+            }
+            //判断当前用户的权限
+            var loginUser = session.loginUser(req);
+            var role = loginUser.role;
+            req.body.user_id = loginUser.id;
+            if(role == 'R01'){
+                //判断用户是否该申请人的领导
+                req.models.leader.isLeader({
+                    'user_id' : data.user_id,
+                    'leader' : loginUser.id
+                }).then(function(total){
+                    if(total == 0){
+                        return ajax.failure(res,'权限不足');
+                    }
+                    req.body.pid = loginUser.id;
+                    leaderCheck(req,res);
+                });
+            }
+            if(role == 'R02'){
+                req.body.sid = loginUser.id;
+                safeCheck(req,res);
+            }
+            else if(role == 'RO3'){
+                req.body.oid = loginUser.id;
+                opCheck(req,res);
+            }
+            else{
+                return ajax.failure(res,'您没权限操作');
+            }
         });
-    }
+    //修改状态
+    Promise.all([
+        req.models.apply.leaderReview(req,body),
+        req.models.comment.add(req,body)
+    ]).then(function(){
+        ajax.success(res,"审核成功");
+    });
 }
 
-exports.safeCheck = function(req,res){
+function leaderCheck(req,res){
     var state = req.body.state;
-    if(state == '-'){
-        //仅做评论
-        req.models.comment.add(req,body,res);
+    req.body.apply_state = state;
+    if(state == '-') {
+        //不做状态变更
+        return req.models.comment.add(req, body, res);
     }
-    else{
-        //修改状态
-        Promise.all([
-            req.models.apply.safeReview(req,body),
-            req.models.comment.add(req,body)
-        ]).then(function(){
-            ajax.success(res,"审核成功");
-        });
+    if(state == 0){
+        req.body.state = -1;
     }
+
+    //修改状态
+    Promise.all([
+        req.models.apply.leaderReview(req,body),
+        req.models.comment.add(req,body)
+    ]).then(function(){
+        ajax.success(res,"审核成功");
+    });
 }
 
-exports.opCheck = function(req,res){
+function safeCheck(req){
     var state = req.body.state;
-    if(state == -1){
-        //仅做评论
-        req.models.comment.add(req,body,res);
+    req.body.apply_state = state;
+    if(state == '-') {
+        //不做状态变更
+        return req.models.comment.add(req, body, res);
+    }
+    if(state == 0){
+        req.body.state = -2;
     }
     else{
-        //修改状态
-        Promise.all([
-            req.models.apply.finalReview(req,body),
-            req.models.comment.add(req,body)
-        ]).then(function(){
-            ajax.success(res,"审核成功");
-        });
+        req.body.state = 2;
     }
+
+    //修改状态
+    Promise.all([
+        req.models.apply.safeReview(req,body),
+        req.models.comment.add(req,body)
+    ]).then(function(){
+        ajax.success(res,"审核成功");
+    });
+
+}
+
+function opCheck(req){
+
+    var state = req.body.state;
+    req.body.apply_state = state;
+    if(state == '-') {
+        //不做状态变更
+        return req.models.comment.add(req, body, res);
+    }
+    if(state == 0){
+        req.body.state = -3;
+    }
+    else{
+        req.body.state = 3;
+    }
+
+    //修改状态
+    Promise.all([
+        req.models.apply.finalReview(req,body),
+        req.models.comment.add(req,body)
+    ]).then(function(){
+        ajax.success(res,"审核成功");
+    });
+
 }
 
 exports.statistic = function(req,res){
-
     //统计近七日申请及审核情况
-
     var gmt_apply_begin = dateutil.gapDay('now',-6);
     var gmt_apply_end = dateutil.gapDay('now',1);
-
 
     print.ps(gmt_apply_begin);
     print.ps(gmt_apply_end);
@@ -166,14 +240,6 @@ function todate(date){
         return '-';
     }
 }
-
-
-
-
-
-
-
-
 
 //[
 //     date1 : {

@@ -98,7 +98,7 @@ window.template = require('../../node_modules/art-template/dist/template');
         },
         getList              : function (options, extPostData) {
             if (xhrCtrl.getList) {
-                $.msg.pop('再点船就翻了...', 'warning');
+                $.msg.pop('别点了!.疼!!', 'warning');
                 return false;
             }
             var postData = $.extend({}, extPostData);
@@ -122,8 +122,13 @@ window.template = require('../../node_modules/art-template/dist/template');
                 data: postData,
                 ctrl: 'getList'
             }).done(function (res) {
+                var contentWrap = $('#contentWrap');
                 if (res.data.total == 0) {
-                    $.msg.pop('当前没有申请需要处理', 'success');
+                    var tipMsgMap = {
+                        '/'       : '当前并没有激活的申请',
+                        "/pending": '当前不存在需要处理的申请'
+                    }
+                    contentWrap.find('h2').text(tipMsgMap[window.location.pathname]);
                     return
                 }
                 // 一些数据映射
@@ -135,7 +140,7 @@ window.template = require('../../node_modules/art-template/dist/template');
                     if (apply.comments) apply.comments.reverse();
                 });
                 var rst = $.render('listTemplate', {lists: data});
-                $('#contentWrap').empty().html(rst);
+                contentWrap.empty().html(rst);
                 dfd.resolve();
             });
             return dfd.promise()
@@ -255,7 +260,8 @@ window.template = require('../../node_modules/art-template/dist/template');
                 '-1': '领导拒绝',
                 '-2': '安全拒绝',
                 '-3': '最后拒绝',
-                '4' : '结束'
+                '4' : '结束',
+                '-': '仅回复'
             };
 
             return map
@@ -283,10 +289,19 @@ window.template = require('../../node_modules/art-template/dist/template');
 
                 return rst;
             });
+            template.helper('state2color', function (val) {
+                var rst = 'info';
+                if (val < 0) {
+                    rst = 'warning';
+                } else if (val > 0) {
+                    rst = 'success';
+                }
+                return rst;
+            });
         },
         doCommentOrCheck     : function (sourceBtn) {
             if (xhrCtrl['comment']) {
-                $.msg.pop('正在提交,请稍等..')
+                $.msg.pop('别点了!.疼!!', 'warning');
                 return false
             }
             var commentData = {},
@@ -295,7 +310,8 @@ window.template = require('../../node_modules/art-template/dist/template');
                 commentWrap = sourceBtn.parents('.comment-wraper'),
                 operation   = sourceBtn.attr('data-operation'),
                 url         = '/data/comment/add',
-                sucMsg      = '';
+                sucMsg      = '评论成功',
+                userId      = $('#user').attr('data-id');
             if (!remark && operation == 'doComment') {
                 $.msg.pop('空评论不能提交啊', 'warning');
                 return false;
@@ -303,11 +319,15 @@ window.template = require('../../node_modules/art-template/dist/template');
             commentData.remark   = remark;
             commentData.apply_id = commentWrap.attr('data-applyid');
             var postData         = commentData;
-            postData['state']    = '-';
+
+            postData['user_id']  = userId;
             if (operation != 'doComment') {
                 postData['curState'] = sourceBtn.attr('data-state') - 0;
                 postData['state']    = sourceBtn.attr('data-tarstate') - 0;
                 url                  = '/applycheck';
+                sucMsg               = '审核成功!';
+            } else {
+                postData['apply_state']    = '-';
             }
 
             $.jax({

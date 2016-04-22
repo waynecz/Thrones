@@ -7,7 +7,7 @@ $(function () {
     var action = {
         // 获取申请类型并联动申请对象
         getPendingList: function () {
-            $.getList({url: '/data/apply/pageQuery'}, {checktype: 'R02'});
+            $.getList({url: '/data/apply/pageQuery'}, {checktype: $('#user').attr('data-role')});
         },
         showComment   : function (target) {
             // target.toggleClass('show-comment')

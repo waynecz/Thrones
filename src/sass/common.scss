@@ -172,12 +172,13 @@ main {
 
 				.button {
 				  position: absolute;
-				  bottom: 0%;
-				  right: 0%;
+				  bottom: 1%;
+				  right: 1%;
 				  // transform: translateX(50%);
 				  display: block;
+				  letter-spacing: 15px;
 				  // padding: 10px 200px;
-				  width: 70%;
+				  width: 40%;
 				  outline: none;
 				  border: 0px $bk solid;
 				  background: transparent;
@@ -189,7 +190,7 @@ main {
 
 				  &:hover {
 				    border-color: $gr;
-				    background: $gr;
+				    background: $dk;
 				    color: #fff;
 				  }
 				}
@@ -329,6 +330,20 @@ main {
 			.time {
 				color: #999;
 				font-size: 12px;
+			}
+			.thatTimeState {
+				font-size: 12px;
+				color: #aaa;
+				margin-left: 10px;
+				border: 1px $dk solid;
+				transform: scale(.8);
+
+				&.success {
+					color: $dk;
+				}
+				&.warning {
+					color: $rd;
+				}
 			}
 		}
 		.comment-detail:not(last-child) {

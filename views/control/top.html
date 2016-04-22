@@ -2,13 +2,13 @@
     <div class="logo flex-10"></div>
     <h1 class="flex-10">Thr<span class="b">ones</span></h1>
     <nav id="nav" class="nav flex-50 layout row">
-        <div class="nav-item"><a href="/pending">待处理申请</a></div>
+        {{if session.role!="R00"}}<div class="nav-item"><a href="/pending">待处理申请</a></div>{{/if}}
         <div class="nav-item"><a href="/">我的申请</a></div>
-        <div class="nav-item"><a href="/history">申请记录</a></div>
+        <!--<div class="nav-item"><a href="/history">申请记录</a></div>-->
         {{if session.superadmin}}<div class="nav-item"><a href="/admin">管理界面</a></div>{{/if}}
     </nav>
     <div class="gap"></div>
-    <div id="user" class="user" data-user="{{session.role}}">
+    <div id="user" class="user" data-user="{{session.name}}" data-role="{{session.role}}" data-id="{{session.id}}">
         <i class="iconfont icon-yonghu">&#xe600</i>
     </div>
 </header>

@@ -5,6 +5,7 @@ var dateutil = require('../../modules/date');
 var print = require('../../modules/print');
 var session = require('../../modules/cookie');
 exports.add = function(req,res){
+    req.body.user_id = session.loginUser(req).id;
     req.models.apply.addApply(req.body)
         .then(addComment)
         .then(function(){
@@ -45,7 +46,7 @@ exports.check = function(req,res){
             if(role == 'R01'){
                 //判断用户是否该申请人的领导
                 req.models.user.isLeader({
-                    'user_id' : data.user_id,
+                    'id' : data.user_id,
                     'pid' : loginUser.id
                 }).then(function(total){
                     if(total == 0){
@@ -59,11 +60,12 @@ exports.check = function(req,res){
                 req.body.sid = loginUser.id;
                 safeCheck(req,res);
             }
-            else if(role == 'RO3'){
+            else if(role == 'R03'){
                 req.body.oid = loginUser.id;
                 opCheck(req,res);
             }
             else{
+                console.log(role);
                 return ajax.failure(res,'您没权限操作');
             }
         });

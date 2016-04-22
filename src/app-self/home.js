@@ -46,7 +46,6 @@ $(function () {
                 return false;
             }
             var postData = $.generatePostData('#addForm');
-            postData['user_id'] = 2;
             $.jax({
                 url : '/apply',
                 data: postData,
@@ -103,7 +102,7 @@ $(function () {
         .on('click', '[data-operation=doComment]', function (e) {
             e = e || window.event;
             e.stopPropagation();
-            $.doComment($(this));
+            $.doCommentOrCheck($(this));
         })
         .on('click', '.data-content', function () {
             action.showComment($(this))

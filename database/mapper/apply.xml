@@ -59,11 +59,10 @@
             1 = 1
             {{id | and:'t1.id'}}
             {{user_id | and:'t1.user_id'}}
-            {{pid | and:'t1.pid'}}
+            {{pid | and:'t1.user_pid'}}
             {{state | in:'t1.state'}}
             {{auth_detail | and:'t1.auth_detail'}}
             {{key | and:'t1.user_name,t1.content,t1.reason','like'}}
-            {{user_id | and:'t1.user_id'}}
             {{department_id | and:'t1.department_id'}}
             {{sort | orderby}}
             {{offset | limit:pageSize}}
@@ -87,11 +86,10 @@
             1 = 1
             {{id | and:'t1.id'}}
             {{user_id | and:'t1.user_id'}}
-            {{pid | and:'t1.pid'}}
+            {{pid | and:'t1.user_pid'}}
             {{state | in:'t1.state'}}
             {{auth_detail | and:'t1.auth_detail'}}
             {{key | and:'t1.user_name,t1.content,t1.reason','like'}}
-            {{user_id | and:'t1.user_id'}}
             {{department_id | and:'t1.department_id'}}
             {{user_id | and:'t1.user_id'}}
     </select>

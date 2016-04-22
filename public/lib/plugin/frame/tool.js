@@ -84,11 +84,10 @@ define(['jquery'],function($){
 			dragarea.mousedown(function(e){
 				//获取鼠标与窗口的距离
 				var mousePosition = Tool.getMousePosition(e);
-
 				var winPosition = Tool.getElementPosition(container);
-
 				var gapX = mousePosition.x - winPosition.x1;
 				var gapY = mousePosition.y - winPosition.y1;
+
 				document.onmousemove = function(event){
 					Tool.fnMove(event,container,gapX,gapY);
 				}
@@ -99,15 +98,12 @@ define(['jquery'],function($){
 		},
 	    fnMove:function (event,container,gapX,gapY){
 			var mousePosition = this.getMousePosition(event);
-			var posX = mousePosition.x - gapX;
-			var posY = mousePosition.y - gapY;
-            console.log(mousePosition);
-            console.log(posX);
-            console.log(posY);
-            console.error("xxxxx");
+			var posX = mousePosition.x - gapX - $(window).scrollLeft();
+			var posY = mousePosition.y - gapY - $(window).scrollTop();
 			container.css({
 				"left" : posX,
-				"top" : posY
+				"top" : posY,
+                "position":"fixed"
 			});
 		}
 	}

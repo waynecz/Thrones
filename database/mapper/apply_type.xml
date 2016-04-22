@@ -14,8 +14,8 @@
         update
             apply_type
         set
+            {{pid | eq:'pid'}}
             {{name | set:'name'}}
-            {{pid | set:'pid'}}
         where
             id = {{id | q}}
     </update>

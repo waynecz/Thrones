@@ -261,7 +261,8 @@ window.template = require('../../node_modules/art-template/dist/template');
                 '-2': '安全拒绝',
                 '-3': '最后拒绝',
                 '4' : '结束',
-                '-': '仅回复'
+                '-' : '仅回复',
+                '~' : '待审核'
             };
 
             return map
@@ -320,14 +321,14 @@ window.template = require('../../node_modules/art-template/dist/template');
             commentData.apply_id = commentWrap.attr('data-applyid');
             var postData         = commentData;
 
-            postData['user_id']  = userId;
+            postData['user_id'] = userId;
             if (operation != 'doComment') {
                 postData['curState'] = sourceBtn.attr('data-state') - 0;
                 postData['state']    = sourceBtn.attr('data-tarstate') - 0;
                 url                  = '/applycheck';
                 sucMsg               = '审核成功!';
             } else {
-                postData['apply_state']    = '-';
+                postData['apply_state'] = '-';
             }
 
             $.jax({
@@ -338,12 +339,13 @@ window.template = require('../../node_modules/art-template/dist/template');
             }).done(function (res) {
                 textarea.val('');
                 $.msg.pop(sucMsg, 'success');
-                var newComment       = {};
-                newComment.remark    = remark;
-                newComment.user_name = $('#user').attr('data-user');
-                newComment.time      = new Date().format('yyyy-MM-dd hh:mm:ss');
-                var rst              = $.render('commentTemplate', newComment);
-                var $rst             = $(rst);
+                var newComment         = {};
+                newComment.remark      = remark;
+                newComment.user_name   = $('#user').attr('data-user');
+                newComment.time        = new Date().format('yyyy-MM-dd hh:mm:ss');
+                newComment.apply_state = postData['curState'] || postData['apply_state'] || '';
+                var rst                = $.render('commentTemplate', newComment);
+                var $rst               = $(rst);
                 textarea.after($rst);
                 $.calCommentDisplayTime();
                 commentWrap.siblings('.data-detail').find('.remarksCount i').text(commentWrap.find('.comment-detail').length);

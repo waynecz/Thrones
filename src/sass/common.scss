@@ -315,7 +315,6 @@ main {
 			width: 100%;
 
 			.name {
-				display: block;
 				padding-bottom: 3px;
 				color: $gr;
 				font-size: 14px;
@@ -332,18 +331,16 @@ main {
 				font-size: 12px;
 			}
 			.thatTimeState {
-				font-size: 12px;
-				color: #aaa;
-				margin-left: 10px;
-				border: 1px $dk solid;
-				transform: scale(.8);
+				font-size: 11px;
+				color: #ccc;
+				// margin-left: 5px;
 
-				&.success {
-					color: $dk;
-				}
-				&.warning {
-					color: $rd;
-				}
+				// &.success {
+				// 	color: $gr;
+				// }
+				// &.warning {
+				// 	color: $rd;
+				// }
 			}
 		}
 		.comment-detail:not(last-child) {

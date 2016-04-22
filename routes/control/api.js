@@ -27,14 +27,14 @@ exports.data = function(req,res){
     if(_method == "pageQuery"){
         if(param.checktype){
             var loginUser = session.loginUser(req);
-            if(param.checktype == "leader"){
+            if(param.checktype == "R01"){
                 param.pid = loginUser.id;
                 param.state = "0";
             }
-            else if(param.checktype == "safe"){
+            else if(param.checktype == "R02"){
                 param.state = "0,1";
             }
-            else if(param.checktype == "op"){
+            else if(param.checktype == "R03"){
                 param.state = "2";
             }
         }

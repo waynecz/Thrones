@@ -21,8 +21,9 @@ exports.add = function(req,res){
 exports.check = function(req,res){
     //检查权限
     //获取状态,默认是当前,如果指定状态,则以最新为准
+    console.log(req.body)
     var state = req.body.state;
-    if(state != 0 || state != 1 || state != '-'){
+    if(state != '0' && state != '1' && state != '-'){
         return ajax.failure(res,'非法请求');
     }
     var curState = req.body.curState;
@@ -66,13 +67,7 @@ exports.check = function(req,res){
                 return ajax.failure(res,'您没权限操作');
             }
         });
-    //修改状态
-    Promise.all([
-        req.models.apply.leaderReview(req,body),
-        req.models.comment.add(req,body)
-    ]).then(function(){
-        ajax.success(res,"审核成功");
-    });
+    
 }
 
 function leaderCheck(req,res){

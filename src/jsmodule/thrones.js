@@ -302,11 +302,11 @@ window.template = require('../../node_modules/art-template/dist/template');
             commentData.remark   = remark;
             commentData.apply_id = commentWrap.attr('data-applyid');
             var postData         = commentData;
-            postData['user_id']  = 14;
+            postData['state']    = '-';
             if (operation != 'doComment') {
-                postData['currentState'] = sourceBtn.attr('data-state');
-                postData['state']        = sourceBtn.attr('data-tarstate');
-                url = '';
+                postData['curState'] = sourceBtn.attr('data-state') - 0;
+                postData['state']        = sourceBtn.attr('data-tarstate') - 0;
+                url                      = '/applycheck';
             }
 
             $.jax({

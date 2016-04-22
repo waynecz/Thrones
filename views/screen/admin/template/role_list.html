@@ -1,9 +1,10 @@
 <script id="temp_model_list" type="text/html">
-    [[each models as model]]
+    [[each models as model index]]
     <tr>
         <td>[[model.name]]</td>
         <td>[[model.code]]</td>
         <td>
+            <a data-id="[[model.id]]" class="item_update_info" data-index="[[index]]">更新</a>
             <a data-id="[[model.id]]" class="item_delete_info">删除</a>
         </td>
     </tr>
@@ -58,6 +59,12 @@
                     <td>名称</td>
                     <td>
                         <input type="text" class="minput" name="name" id="update_name"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>CODE</td>
+                    <td>
+                        <input type="text" class="minput" name="code" id="update_code"/>
                     </td>
                 </tr>
                 </tbody>

@@ -42,6 +42,9 @@ define(['jquery','select2'],function($){
         },
         clear : function(id){
             $(id).select2("val","");
+        },
+        empty : function(id){
+            $(id).empty().append("<option></option>")
         }
     }
 });

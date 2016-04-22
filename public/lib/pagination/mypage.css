@@ -60,3 +60,6 @@
 .mypage ul>li>input.go:focus{
     border-color:#2ea5ff;
 }
+.nodata{
+    color:#DDD;
+}

@@ -400,7 +400,7 @@ Pager.prototype = {
 		$(this.id).fadeIn();
 	},
     showNullMsg : function(){
-        $(this.id).html("<p>"+this.rules.sNull+"</p>");
+        $(this.id).html("<p class='nodata'>"+this.rules.sNull+"</p>");
     }
 }
 

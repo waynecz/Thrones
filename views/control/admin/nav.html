@@ -17,6 +17,9 @@
         <dd class="subnav">
             <ul>
                 <li><a href="/admin/user" data-page="user">用户列表</a></li>
+                {{if session.role=="R01"}}
+                    <li><a href="/admin/leader" data-page="leader">我的下属</a></li>
+                {{/if}}
                 <li><a href="/admin/department" data-page="department">部门列表</a></li>
                 <li><a href="/admin/role" data-page="role">角色列表</a></li>
             </ul>

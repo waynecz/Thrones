@@ -7,11 +7,21 @@
             id,username,name as text
         from
             user
+        where
+            1 = 1
+            {{if department_id}}
+             and  pid = '0'
+                and
+                {{department_id | eq:'department_id'}}
+                {{id | and:'id','neq'}}
+            {{/if}}
         order by
             id asc
     </select>
 
-	<!-- 添加用户 --> 
+
+
+	<!-- 添加用户 -->
 	<insert id="add">
 		insert into
 		user(username,password,name,department_id,role,status,gmt_create,gmt_update)
@@ -37,7 +47,18 @@
 	        {{username | eq:'username'}}
 			and
 			{{password | eq:'password'}}
+        limit 1
 	</select>
+
+    <update id="updatePid">
+        update
+            user
+        set
+            pid = {{pid | q}}
+        where
+            id = {{id | q}}
+    </update>
+
 	<!-- 查询用户 -->
 	<select id="pageQuery">
 		select 
@@ -52,6 +73,7 @@
             {{status | and:'t1.status'}}
             {{role | and:'t1.role'}}
             {{department_id | and:'t1.department_id'}}
+            {{pid | and:'t1.pid'}}
             {{name | and:'t1.name,t1.username','like'}}
             {{sort | orderby}}
             {{offset | limit:pageSize}}
@@ -66,6 +88,7 @@
         where 1 = 1
             {{status | and:'t1.status'}}
             {{role | and:'t1.role'}}
+            {{pid | and:'t1.pid'}}
             {{department_id | and:'t1.department_id'}}
             {{name | and:'t1.name,t1.username','like'}}
 	</select>
@@ -117,12 +140,21 @@
             {{id | and:'id','neq'}}
     </select>
 
-    <delete id="delete">
+    <delete id="delete" before="isCheck">
         delete from
             user
         where
             {{id | eq:'id'}}
     </delete>
+
+    <select id="isCheck">
+        select
+            count(1)
+        from
+            apply
+        where
+            {{id | eq:'user_id'}}
+    </select>
 
     <select id="queryByRole">
         select
@@ -133,5 +165,14 @@
             role
     </select>
 
-
+    <select id="isLeader">
+        select
+            count(1)
+        from
+            user
+        where
+            {{id | eq:'id'}}
+            and
+            {{pid || eq:'pid'}}
+    </select>
 </sql>

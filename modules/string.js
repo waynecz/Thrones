@@ -165,3 +165,21 @@ String.prototype.makeNum = function(n,absolute){
         }
     }
 }
+
+String.random = function(n){
+    var cas = [];
+    for(var i=48;i<58;i++){
+        cas.push(String.fromCharCode(i));
+    }
+    for(var i=65;i<91;i++){
+        cas.push(String.fromCharCode(i));
+    }
+    for(var i=97;i<123;i++){
+        cas.push(String.fromCharCode(i));
+    }
+    var result = [];
+    for(var i=0;i<n;i++){
+        result.push(cas[Math.floor(Math.random() * (cas.length - 1))]);
+    }
+    return result.join("");
+}

@@ -9,6 +9,16 @@
         )
     </insert>
 
+    <update id="update">
+        update
+            role
+        set
+            {{name | eq:'name'}}
+            {{code | set:'code'}}
+        where
+            id = {{id | q}}
+    </update>
+
     <delete id="delete" before="check">
         delete from
             role

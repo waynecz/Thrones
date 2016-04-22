@@ -42,21 +42,19 @@ define('Role',['jquery','util','comjax','pager'],function($,util,comjax,mselect2
         },
 
         bindUpdateInfo : function (){
-
             $(".item_update_info").each(function(){
                 $(this).unbind("click");
                 $(this).click(function(){
-                    var roleId = $(this).data('id');
+                    var index = $(this).data('index');
                     //初始化对话框内容
-                    var role = Role.getByRoleId(roleId);
+                    var role = Role.getData(index);
                     console.log(role);
                     if(role == null){
                         console.error('非法请求')
                         return;
                     }
                     $("#update_name").val(role.name);
-                    var old_leader = role.user_id
-                    $("#update_leader").select2("val",old_leader);
+                    $("#update_code").val(role.code);
                     var oldInfo = $("#form_update_info").serialize();
                     $("#win_update").dialog({
                         width: 400,
@@ -66,10 +64,9 @@ define('Role',['jquery','util','comjax','pager'],function($,util,comjax,mselect2
                                 d.close();
                                 return;
                             }
-                            param.id = roleId;
-                            param.old_leader = old_leader;
+                            param.id = role.id;
                             util.jax({
-                                'url' : '/admin/role/update',
+                                'url' : '/data/role/update',
                                 'type' : 'post',
                                 'data' : param,
                                 'cb' : function(){
@@ -83,16 +80,9 @@ define('Role',['jquery','util','comjax','pager'],function($,util,comjax,mselect2
                 });
             });
         },
-
         /**   获取数据 **/
-        getByRoleId : function(id){
-            for(var i in Role.pageData){
-                var role = Role.pageData[i];
-                if(role.id == id){
-                    return role;
-                }
-            }
-            return null;
+        getData : function(index){
+            return this.pageData.length > index ? this.pageData[index] : null;
         }
     }
     return Role;

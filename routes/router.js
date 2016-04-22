@@ -18,6 +18,7 @@ module.exports = function (app) {
 
     //前台页面路由:
     app.get('/index', Index.index);
+    app.get('/exit', User.exit);
 
     app.get('/login', User.loginPage);
     app.get('/pending', User.pending);

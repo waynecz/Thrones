@@ -23,6 +23,14 @@ define(['jquery','util','mtemplate'],function($,util,mtemplate){
                 cb : cb
             })
         },
+        getUsersByDepartment : function(departmentId,id,cb){
+            util.jax({
+                url : '/data/user/all',
+                type : 'post',
+                data : {'department_id':departmentId,"id":id},
+                cb : cb
+            })
+        },
         getApplyTypeFirst : function(cb){
             util.jax({
                 url : '/data/apply_type/listByPid',
@@ -56,6 +64,7 @@ define(['jquery','util','mtemplate'],function($,util,mtemplate){
                         else{
                             model.renderPageData([]); //人工渲染
                         }
+                        $("#pagination").show();
                         pager.showNullMsg();
                     }
                     else{
@@ -69,6 +78,12 @@ define(['jquery','util','mtemplate'],function($,util,mtemplate){
                         pager.setTotal(data.total);
                         pager.setPageSize(data.pageSize);
                         pager.goPage(page);
+                        if(pager.getTotalPage() == 1){
+                            $("#pagination").hide();
+                        }
+                        else{
+                            $("#pagination").show();
+                        }
                     }
                     cb && cb();
                 }

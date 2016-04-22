@@ -4,9 +4,10 @@ define('Dashboard',['jquery','util','echarts','echarts/chart/line','echarts/char
 
     var Dashboard = {
         init : function(){
-            this.initSize();
             this.initCharts();
             this.initUsers();
+            $(window).resize(this.initSize);
+            this.initSize();
         },
         initCharts : function(){
             util.post('/statistic',function(data){
@@ -25,10 +26,13 @@ define('Dashboard',['jquery','util','echarts','echarts/chart/line','echarts/char
             return echarts.init(document.getElementById('statistic'));
         },
         initSize : function(){
-            var contents = $("#contents").outerWidth();
-            var eachWidth = (contents - 15 * 3 - 40) / 4;
+            var contents = $("#contents").width();
+            $("#area_daily").width(contents);
+            $("#statistic").width(contents);
+            var eachWidth = (contents - 15 * 3 ) / 4;
             console.log(contents);
-            $(".panel_user").width(eachWidth);
+            console.log(eachWidth);
+            $(".panel_user").css("width",eachWidth);
             $(".panel_user:gt(0)").css("margin-left","15px");
         },
         render : function(dates,applys,leaders,safes,ops){

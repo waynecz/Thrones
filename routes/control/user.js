@@ -1,7 +1,7 @@
 var md5 = require('../../modules/md5');
 var Promise = require('bluebird');
 var ajax = require('../../modules/ajax');
-var cookie = require('../../modules/cookie');
+var session = require('../../modules/cookie');
 var app = require('express')();
 var print = require('../../modules/print');
 
@@ -24,7 +24,7 @@ exports.signin = function(req,res){
             }
             app.locals.user = userInfo;
             print.ps(app.locals);
-            cookie.setCookie(res,userInfo);
+            session.setCookie(res,userInfo);
             return ajax.success(res,"登陆成功");
         });
 };
@@ -32,7 +32,7 @@ exports.signup = function(req,res){
     md5.resetRequestPassword(req);
     console.log(req.body);
     req.body.status = 1; //默认激活
-    req.body.role = 'R01'; //默认普通用户角色
+    req.body.role = 'R00'; //默认普通用户角色
     console.log(req.body);
     //判断部门是否存在
     req.models.department.get({id:req.body.department_id})
@@ -83,4 +83,9 @@ exports.sysuser = function(req,res){
             }
             return ajax.success(res,result);
         });
+}
+
+exports.exit = function(req,res){
+    session.remove(req);
+    res.redirect("/login");
 }

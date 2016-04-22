@@ -5,7 +5,6 @@ var dateutil = require('../../modules/date');
 var print = require('../../modules/print');
 var session = require('../../modules/cookie');
 exports.add = function(req,res){
-    console.log("Ok")
     req.models.apply.addApply(req.body)
         .then(addComment)
         .then(function(){
@@ -44,9 +43,9 @@ exports.check = function(req,res){
             req.body.user_id = loginUser.id;
             if(role == 'R01'){
                 //判断用户是否该申请人的领导
-                req.models.leader.isLeader({
+                req.models.user.isLeader({
                     'user_id' : data.user_id,
-                    'leader' : loginUser.id
+                    'pid' : loginUser.id
                 }).then(function(total){
                     if(total == 0){
                         return ajax.failure(res,'权限不足');

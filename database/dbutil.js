@@ -176,7 +176,7 @@ var util = {
                     throw new Error(util.errs.checkError);
                 }
             }
-            else if(data.length == 1 && !method.contains("pageQuery,all,list") && !ele.attr.child){
+            else if(data.length == 1 && !method.contains("pageQuery,all,list,statistic") && !ele.attr.child){
                 data = data[0];
             }
 			else if(data.length == 0){

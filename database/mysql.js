@@ -2,6 +2,7 @@ var mysql = require('mysql')
 var settings = require('../config/jdbc')
 var dbutil = require('./dbutil')
 var connection = null
+var session = require('../modules/cookie')
 module.exports = {
 	//项目启动时执行此方法
 	init : function(cb){
@@ -19,6 +20,11 @@ module.exports = {
 			connection = db
 			db.models = {}
 			require('./model/init')(db,dbutil)
+
+
+			//初始化cookie
+			session.init(db);
+
 			if(cb){
 				return cb(null,db)
 			}

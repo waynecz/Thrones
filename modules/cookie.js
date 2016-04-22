@@ -1,16 +1,32 @@
 var md5 = require('./md5');
 var cache = require('memory-cache');
-var print = require('../modules/print');
+var print = require('./print');
+var dateutil = require('./date');
 module.exports = {
     setCookie : function(res,user){
+        var maxAge = 24 * 60 * 60 * 1000
+        var effectTime = dateutil.gapTime('now',maxAge,'ms');
         var opts = {
-            maxAge : "1000",
+            maxAge : maxAge / 1000,
             HttpOnly : true,
             path : "/"
         }
-        var key = md5.md5(user.username + "" + user.password);
-        cache.put(key,user);
+        var key = String.random(12);
+        cache.put(key,user,maxAge);
         res.setHeader('Set-Cookie',this.makeCookie(this.getEncodeCookieName(),key,opts));
+        //并保存到mysql
+        var db = require('../database/mysql').db();
+        db.models.session.add({
+            'mkey' : key,
+            'user_id' : user.id,
+            'name' : user.name,
+            'gmt_effect' : effectTime
+        });
+    },
+    remove : function(req){
+        var key = this.getCookieValue(req,this.getEncodeCookieName());
+        cache.del(key);
+        req.models.session.delete({'mkey':key});
     },
     parseCookie : function(cookie){
         var cookies = {};
@@ -28,9 +44,9 @@ module.exports = {
         return this.parseCookie(req.headers.cookie)[name] || null;
     },
     loginUser : function(req){
-        var info = this.getCookieValue(req,this.getEncodeCookieName());
-        if(info){
-            return cache.get(info);
+        var key = this.getCookieValue(req,this.getEncodeCookieName());
+        if(key){
+            return cache.get(key);
         }
         return false;
     },
@@ -66,5 +82,15 @@ module.exports = {
     },
     getEncodeCookieName : function(){
         return md5.encode("cookie-username");
+    },
+    init : function(db){
+        db.models.session.all().then(this.setCache);
+    },
+    setCache : function(cookies){
+        for(var i in cookies){
+            var item = cookies[i];
+            var effectTime = dateutil.bettweenTime('now',item.gmt_effect);
+            cache.put(item.mkey,item,effectTime);
+        }
     }
 }

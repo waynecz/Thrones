@@ -1,0 +1,37 @@
+
+<section class="search_section">
+    <input type="text" class="minput" name="name" id="search_name" placeholder="用户信息搜索" title="可搜姓名及用户名"/>
+    <span id="btn_search">查询</span>
+    <input type="hidden" id="pid" value="{{session.id}}">
+    <input type="hidden" id="department_id" value="{{session.department_id}}">
+    <span id="btn_add" style="float:right">添加下属</span>
+</section>
+
+
+
+<table border="0" id="table_list" class="table">
+    <thead>
+    <th>姓名</th>
+    <th>用户名</th>
+    <th>部门</th>
+    <th>权限数目</th>
+    <th>角色</th>
+    <th>注册时间</th>
+    <th>操作</th>
+    </thead>
+
+    <tbody id="lists">
+
+    </tbody>
+</table>
+
+<div id="pagination">
+    <div class="mypage" id="mypage"></div>
+</div>
+
+</div>
+</div>
+
+{{include './template/leader_list'}}
+
+<script type="text/javascript" src="/scripts/admin/leader.js"></script>

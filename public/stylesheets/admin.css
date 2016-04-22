@@ -244,17 +244,21 @@ table.table tbody tr:hover{
     color:#69ba4c;
 }
 
-.code.R01{
+.code.R00{
     border-color: #999;
     color:#999;
 }
+.code.R01{
+    border-color: #6098bb;
+    color:#6098bb;
+}
 .code.R02{
-    border-color: #C40000;
-    color:#C40000;
+    border-color: #ff6c5c;
+    color:#ff6c5c;
 }
 .code.R03{
-    border-color: #ff6601;
-    color:#ff6601;
+    border-color: #a7db65;
+    color:#a7db65;
 }
 .code.R08{
     border-color: #69ba4c;
@@ -310,6 +314,13 @@ table.table tbody tr:hover{
     color: #FFFFFF;
     padding: 15px 20px;
 }
+.panel_user.R00{
+    background: #7a8c99;
+}
+.panel_user.R01{
+    background: #6098bb;
+    margin-left:2%;
+}
 .panel_user.R02{
     background: #ff6c5c;
     margin-left:2%;
@@ -319,10 +330,6 @@ table.table tbody tr:hover{
     margin-left:2%;
 }
 
-.panel_user.R00{
-    background: #f8d436;
-    margin-left:2%;
-}
 .panel_user .panel_title{
     line-height:50px;
 }

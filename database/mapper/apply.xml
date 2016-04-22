@@ -3,12 +3,10 @@
 	<!-- 申请 -->
 	<insert id="addApply">
 		insert into 
-			apply(user_id,pid,state,auth,auth_detail,content,gmt_apply)
+			apply(user_id,auth,auth_detail,content,gmt_apply)
 		value
 			(
 				{{user_id | q}},
-				{{pid | q}},
-				{{state | q}},
 				{{auth | q}},
 				{{auth_detail | q}},
 				{{content | q}},
@@ -60,9 +58,6 @@
             {{key | and:'t1.user_name,t1.content,t1.reason','like'}}
             {{user_id | and:'t1.user_id'}}
             {{department_id | and:'t1.department_id'}}
-            {{if login_id}}
-            and t1.department_id in (select department_id from leader where user_id = {{login_id | q}})
-            {{/if}}
             {{sort | orderby}}
             {{offset | limit:pageSize}}
 		) t2
@@ -91,9 +86,6 @@
             {{key | and:'t1.user_name,t1.content,t1.reason','like'}}
             {{user_id | and:'t1.user_id'}}
             {{department_id | and:'t1.department_id'}}
-            {{if login_id}}
-            and t1.department_id in (select department_id from leader where user_id = {{login_id | q}})
-            {{/if}}
             {{user_id | and:'t1.user_id'}}
     </select>
     <!-- 统计 -->

@@ -25,12 +25,21 @@ exports.data = function(req,res){
 
     //如果是分页查询,那么会自动的去做一些处理
     if(_method == "pageQuery"){
-        if(param.leader){
+        if(param.checktype){
             var loginUser = session.loginUser(req);
-            if(loginUser){
-                param.login_id = loginUser.id;
+            if(param.checktype == "leader"){
+                param.pid = loginUser.id;
+                param.state = "0";
+            }
+            else if(param.checktype == "safe"){
+                param.state = "0,1";
+            }
+            else if(param.checktype == "op"){
+                param.state = "2";
             }
         }
+
+        print.ps(param);
 
         var _total = 0;
         var page = param.page || 1;
@@ -44,6 +53,7 @@ exports.data = function(req,res){
                 //返回数据信息
                 var result = {
                     total : 1,
+                    pageSize : 10000,
                     data : data
                 };
                 return ajax.success(res,result);

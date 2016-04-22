@@ -102,6 +102,6 @@ exports.renderFilter = function(req,res,next){
 //所有白名单
 function isWhiteListUrl(req){
     var url = req.originalUrl;
-    return url.startsWith("/signin","/signup","/login","/data",'/admin',"/404","/500");
+    return url.startsWith("/signin","/signup","/login","/data","/404","/500");
 }
 

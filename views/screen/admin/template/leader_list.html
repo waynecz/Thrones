@@ -1,0 +1,46 @@
+<script id="temp_model_list" type="text/html">
+    [[each models as model]]
+    <tr>
+        <td>[[model.name]]</td>
+        <td>[[model.username]]</td>
+        <td>[[model.department_name]]</td>
+        <td>[[model.auth_num]]</td>
+        <td><span class="code [[model.role]]">[[model.role_name]]</span></td>
+        <td>[[model.gmt_create | dateFormat:'date']]</td>
+        <td>
+            <a data-id="[[model.id]]" class="item_delete_info">移除</a>
+        </td>
+    </tr>
+    [[/each]]
+</script>
+
+<!--模态框-->
+<!-- 更新用户信息 -->
+<div class="mywindow" id="win_add">
+    <div class="mywindow_head">
+        <span class="mywindow_title">添加下属</span>
+        <span class="mywindow_close_btn">✕</span>
+    </div>
+    <div class="mywindow_body">
+        <form id="form_add_info">
+            <table class="table_window">
+                <tbody>
+                    <tr>
+                        <td>用户</td>
+                        <td>
+                            <select  id="user" class="myselect select2" name="department_id" placeholder="请选择下属">
+                                <option></option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div class="mywindow_foot">
+        <span class="mywindow_btn mywindow_cancel_btn">取消</span>
+
+        <span class="mywindow_btn mywindow_sure_btn">确定</span>
+    </div>
+</div>
+

@@ -1,15 +1,15 @@
 .in-view {
-	animation: MODALIN .35s .3s ease forwards;
+	animation: MODALIN .35s .3s cubic-bezier(0.14, 0.71, 0.58, 1) forwards;
 	& + #list {
 		transform: translate3d(200%, 0, 0);
-		animation: LISTOUT .25s ease forwards;
+		animation: LISTOUT .25s cubic-bezier(0.67, 0.23, 0.84, 0.38) forwards;
 	}
 }
 .out-view {
-	animation: MODALOUT .35s  ease forwards;
+	animation: MODALOUT .35s  cubic-bezier(0.67, 0.23, 0.84, 0.38) forwards;
 	& + #list {
 		transform: translate3d(200%, 0, 0);
-		animation: LISTIN .35s .3s ease forwards;
+		animation: LISTIN .35s .3s cubic-bezier(0.14, 0.71, 0.58, 1) forwards;
 	}
 }
 .pull {

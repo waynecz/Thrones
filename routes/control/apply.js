@@ -13,7 +13,7 @@ exports.add = function(req,res){
 
     function addComment(applyId){
         req.body.apply_id = applyId;
-        req.body.apply_state = 0;
+        req.body.apply_state = "~";
         return req.models.comment.add(req.body);
     }
 }
@@ -23,11 +23,7 @@ exports.check = function(req,res){
     //获取状态,默认是当前,如果指定状态,则以最新为准
     console.log(req.body)
     var state = req.body.state;
-<<<<<<< HEAD
-    if(state != '0' || state != '1' || state != '-'){
-=======
     if(state != '0' && state != '1' && state != '-'){
->>>>>>> 237e80cdd33c3173dde1a5f79f7f720d62d4874f
         return ajax.failure(res,'非法请求');
     }
     var curState = req.body.curState;
@@ -49,7 +45,7 @@ exports.check = function(req,res){
             if(role == 'R01'){
                 //判断用户是否该申请人的领导
                 req.models.user.isLeader({
-                    'user_id' : data.user_id,
+                    'id' : data.user_id,
                     'pid' : loginUser.id
                 }).then(function(total){
                     if(total == 0){
@@ -63,7 +59,7 @@ exports.check = function(req,res){
                 req.body.sid = loginUser.id;
                 safeCheck(req,res);
             }
-            else if(role == 'RO3'){
+            else if(role == 'R03'){
                 req.body.oid = loginUser.id;
                 opCheck(req,res);
             }

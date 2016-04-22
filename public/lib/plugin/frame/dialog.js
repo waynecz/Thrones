@@ -48,10 +48,10 @@ define(['jquery','tool'],function($,tool){
 				var b = window.innerHeight - _this.height();
 				var scrollTop = $(window).scrollTop();
 				if(b>0){
-					_this.css("top",b/2+scrollTop);
+					_this.css("top",b/2);
 				}
 				else{
-					_this.css("top",20+scrollTop);
+					_this.css("top",20);
 				}
 				if(_default.hideFoot){
 					_this.find(".mywindow_foot").remove();

@@ -1,17 +1,24 @@
 require('./string');
-
+var dateutil = require('./date');
 module.exports = function(template){
 
 	template.helper('q',function(val){
+        if(val == 0 || val == '0'){
+            return "'0'";
+        }
 		return "'" + escape(val || "") + "'";
 	});
 
     template.helper('eq',function(val,col){
-       return " " + col + " = '" + escape(val) + "' ";
+        var rst = val;
+        if(val == 0 || val == '0'){
+            rst = "0";
+        }
+       return " " + col + " = '" + escape(rst || "") + "' ";
     });
 
 	template.helper('p',function(val){
-		return "'%" + escape(val || "") + "'";
+		return "'%" + escape(val || "") + "%'";
 	});
 
     template.helper('m',function(data,index){
@@ -20,7 +27,6 @@ module.exports = function(template){
         }
         return '';
     });
-
 
     template.helper('t',function(val,col){
         return " " +col + " = '" + getFormatDate() + "' ";
@@ -113,8 +119,6 @@ module.exports = function(template){
 
 		if(typeof val == "undefined"){
 			val = new Date();
-            console.log(val)
-            console.log(val.getTime())
 		}
 		if(typeof format == "undefined" || format == "datetime"){
 			format = "yyyy-MM-dd HH:mm:ss";
@@ -123,36 +127,9 @@ module.exports = function(template){
 			format = "yyyy-MM-dd";
 		}
 
-	    var result = getFormatDate(val,format);
+	    var result = dateutil.format(val,format);
 		return "'" + (result || "") + "'";
 	});
-
-	function getTwo(n){
-		return n<10 ? "0"+n : n;
-	}
-
-    function getFormatDate(d,pattern){
-        var val = d || new Date();
-        pattern = pattern || 'yyyy-MM-dd HH:mm:ss';
-        return pattern.replace(/(yyyy)|(MM)|(dd)|(HH)|(mm)|(ss)/g,function(match){
-            switch(match){
-                case 'yyyy':
-                    return val.getFullYear();
-                case 'MM':
-                    return getTwo(val.getMonth() + 1);
-                case 'dd':
-                    return getTwo(val.getDate());
-                case 'HH':
-                    return getTwo(val.getHours());
-                case 'mm':
-                    return getTwo(val.getMinutes());
-                case 'ss':
-                    return getTwo(val.getSeconds());
-                default:
-                    return '';
-            }
-        });
-    }
 
     function escape(val){
         val = val + '';

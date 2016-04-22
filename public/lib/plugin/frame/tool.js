@@ -87,22 +87,24 @@ define(['jquery'],function($){
 
 				var winPosition = Tool.getElementPosition(container);
 
-				var winX = mousePosition.x - winPosition.x1;
-				var winY = mousePosition.y - winPosition.y1;
-
-
+				var gapX = mousePosition.x - winPosition.x1;
+				var gapY = mousePosition.y - winPosition.y1;
 				document.onmousemove = function(event){
-					Tool.fnMove(event,container,winX,winY);
+					Tool.fnMove(event,container,gapX,gapY);
 				}
 				document.onmouseup = function(event){
 					document.onmousemove = null;
 				}
 			});
 		},
-	    fnMove:function (event,container,winX,winY){
+	    fnMove:function (event,container,gapX,gapY){
 			var mousePosition = this.getMousePosition(event);
-			var posX = mousePosition.x - winX;
-			var posY = mousePosition.y - winY;
+			var posX = mousePosition.x - gapX;
+			var posY = mousePosition.y - gapY;
+            console.log(mousePosition);
+            console.log(posX);
+            console.log(posY);
+            console.error("xxxxx");
 			container.css({
 				"left" : posX,
 				"top" : posY

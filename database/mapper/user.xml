@@ -173,6 +173,6 @@
         where
             {{id | eq:'id'}}
             and
-            {{pid || eq:'pid'}}
+            {{pid | eq:'pid'}}
     </select>
 </sql>

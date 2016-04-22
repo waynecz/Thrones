@@ -104,7 +104,6 @@ var dateutil = {
             var second = parseInt(dateStr.slice(17,19));
             var date = new Date();
             var time = Date.UTC(year, month-1, day, hour, minute, second);
-            console.log(time);
             date.setTime(time + date.getTimezoneOffset() * 60 * 1000);
             return date;
         }
@@ -125,9 +124,6 @@ var dateutil = {
             t1 = new Date();
         }
         t2 = this.parse(t2);
-
-        console.log(t1);
-        console.log(t2);
         return Math.floor(t2.getTime() - t1.getTime());
     }
 }

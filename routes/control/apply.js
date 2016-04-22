@@ -24,7 +24,11 @@ exports.check = function(req,res){
     //获取状态,默认是当前,如果指定状态,则以最新为准
     console.log(req.body)
     var state = req.body.state;
+<<<<<<< HEAD
+    if(state != '0' || state != '1' || state != '-'){
+=======
     if(state != '0' && state != '1' && state != '-'){
+>>>>>>> 237e80cdd33c3173dde1a5f79f7f720d62d4874f
         return ajax.failure(res,'非法请求');
     }
     var curState = req.body.curState;

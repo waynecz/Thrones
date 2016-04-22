@@ -29,7 +29,7 @@ exports.check = function(req,res){
     var curState = req.body.curState;
     var applyId = req.body.apply_id;
 
-    req.moodels.apply.get({'id':applyId})
+    req.models.apply.get({'id':applyId})
         .then(function(data){
             if(data == null){
                 return ajax.failure(res,'非法请求,申请不存在');
@@ -67,7 +67,7 @@ exports.check = function(req,res){
                 return ajax.failure(res,'您没权限操作');
             }
         });
-    
+
 }
 
 function leaderCheck(req,res){
@@ -75,7 +75,7 @@ function leaderCheck(req,res){
     req.body.apply_state = state;
     if(state == '-') {
         //不做状态变更
-        return req.models.comment.add(req, body, res);
+        return req.models.comment.add(req.body, res);
     }
     if(state == 0){
         req.body.state = -1;
@@ -83,19 +83,19 @@ function leaderCheck(req,res){
 
     //修改状态
     Promise.all([
-        req.models.apply.leaderReview(req,body),
-        req.models.comment.add(req,body)
+        req.models.apply.leaderReview(req.body),
+        req.models.comment.add(req.body)
     ]).then(function(){
         ajax.success(res,"审核成功");
     });
 }
 
-function safeCheck(req){
+function safeCheck(req,res){
     var state = req.body.state;
     req.body.apply_state = state;
     if(state == '-') {
         //不做状态变更
-        return req.models.comment.add(req, body, res);
+        return req.models.comment.add(req.body, res);
     }
     if(state == 0){
         req.body.state = -2;
@@ -106,21 +106,21 @@ function safeCheck(req){
 
     //修改状态
     Promise.all([
-        req.models.apply.safeReview(req,body),
-        req.models.comment.add(req,body)
+        req.models.apply.safeReview(req.body),
+        req.models.comment.add(req.body)
     ]).then(function(){
         ajax.success(res,"审核成功");
     });
 
 }
 
-function opCheck(req){
+function opCheck(req,res){
 
     var state = req.body.state;
     req.body.apply_state = state;
     if(state == '-') {
         //不做状态变更
-        return req.models.comment.add(req, body, res);
+        return req.models.comment.add(req.body, res);
     }
     if(state == 0){
         req.body.state = -3;
@@ -131,8 +131,8 @@ function opCheck(req){
 
     //修改状态
     Promise.all([
-        req.models.apply.finalReview(req,body),
-        req.models.comment.add(req,body)
+        req.models.apply.finalReview(req.body),
+        req.models.comment.add(req.body)
     ]).then(function(){
         ajax.success(res,"审核成功");
     });

@@ -119,7 +119,7 @@ module.exports = function(template){
 		if(typeof format == "undefined" || format == "datetime"){
 			format = "yyyy-MM-dd HH:mm:ss";
 		}
-		else if(formate == "date"){
+		else if(format == "date"){
 			format = "yyyy-MM-dd";
 		}
 

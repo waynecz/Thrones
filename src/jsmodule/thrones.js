@@ -248,9 +248,9 @@ window.template = require('../../node_modules/art-template/dist/template');
         },
         generateMap          : function () {
             var map = {
-                '0' : '未审批',
-                '1' : '领导已审批',
-                '2' : '安全已审批',
+                '0' : '待审核',
+                '1' : '领导通过',
+                '2' : '安全通过',
                 '3' : '全部通过',
                 '-1': '领导拒绝',
                 '-2': '安全拒绝',
@@ -294,7 +294,8 @@ window.template = require('../../node_modules/art-template/dist/template');
                 remark      = textarea.val() && textarea.val().trim(),
                 commentWrap = sourceBtn.parents('.comment-wraper'),
                 operation   = sourceBtn.attr('data-operation'),
-                url         = '/data/comment/add';
+                url         = '/data/comment/add',
+                sucMsg      = '';
             if (!remark && operation == 'doComment') {
                 $.msg.pop('空评论不能提交啊', 'warning');
                 return false;
@@ -305,8 +306,8 @@ window.template = require('../../node_modules/art-template/dist/template');
             postData['state']    = '-';
             if (operation != 'doComment') {
                 postData['curState'] = sourceBtn.attr('data-state') - 0;
-                postData['state']        = sourceBtn.attr('data-tarstate') - 0;
-                url                      = '/applycheck';
+                postData['state']    = sourceBtn.attr('data-tarstate') - 0;
+                url                  = '/applycheck';
             }
 
             $.jax({
@@ -316,7 +317,7 @@ window.template = require('../../node_modules/art-template/dist/template');
                 button: $('.doComment')
             }).done(function (res) {
                 textarea.val('');
-                $.msg.pop('评论成功', 'success');
+                $.msg.pop(sucMsg, 'success');
                 var newComment       = {};
                 newComment.remark    = remark;
                 newComment.user_name = $('#user').attr('data-user');

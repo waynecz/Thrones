@@ -22,7 +22,7 @@ exports.check = function(req,res){
     //检查权限
     //获取状态,默认是当前,如果指定状态,则以最新为准
     var state = req.body.state;
-    if(state != 0 || state != 1 || state != '-'){
+    if(state != '0' || state != '1' || state != '-'){
         return ajax.failure(res,'非法请求');
     }
     var curState = req.body.curState;

@@ -12,8 +12,14 @@
 		animation: LISTIN .35s .3s cubic-bezier(0.14, 0.71, 0.58, 1) forwards;
 	}
 }
-.pull {
-	
+.remove {
+	animation: REMOVE .7s ease-out forwards;
+}
+.will-cg-tf {
+	will-change: transform, height;
+}
+.will-cg-mg {
+	will-change: margin;
 }
 
 @keyframes MODALIN {
@@ -79,6 +85,27 @@
 	100% {
 		left: 100%;
 		right: -90%;
+	}
+}
+@keyframes REMOVE {
+	0% {
+		transform: translate3d(0, 0%,0) scale(1,1);
+		opacity: 1;
+	}
+	20% {
+		transform: translate3d(0, 0%,0) scale(1,1.02);
+		opacity: .8;
+	}
+	40% {
+		transform: translate3d(0, 0%,0) scale(1,.6);
+		opacity: .6;
+	}
+	100% {
+		transform: translate3d(300%, 0%,0) scale(1,.6);
+		opacity: 0;
+		height: 0;
+		margin: 0;
+		padding: 0;
 	}
 }
   

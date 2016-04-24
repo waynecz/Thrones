@@ -46,7 +46,7 @@ exports.check = function(req,res){
             if(role == 'R01'){
                 //判断用户是否该申请人的领导
                 req.models.user.isLeader({
-                    'user_id' : data.user_id,
+                    'id' : data.user_id,
                     'pid' : loginUser.id
                 }).then(function(total){
                     if(total == 0){
@@ -56,11 +56,11 @@ exports.check = function(req,res){
                     leaderCheck(req,res);
                 });
             }
-            if(role == 'R02'){
+            else if(role == 'R02'){
                 req.body.sid = loginUser.id;
                 safeCheck(req,res);
             }
-            else if(role == 'RO3'){
+            else if(role == 'R03'){
                 req.body.oid = loginUser.id;
                 opCheck(req,res);
             }

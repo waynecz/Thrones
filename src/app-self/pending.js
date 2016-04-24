@@ -42,6 +42,18 @@ $(function () {
         .on('click', '[data-operation=doResolve], [data-operation=doReject]', function (e) {
             e = e || window.event;
             e.stopPropagation();
-            $.doCommentOrCheck($(this));
+            $.doCommentOrCheck($(this)).done(function (tarApply ) {
+                var height = tarApply.height;
+                tarApply.css('height', height + 'px');
+                var obj = tarApply.get(0);
+                obj.classList.add('will-cg-tf');
+                obj.addEventListener('animationend', function () {
+                    obj.parentNode.removeChild(obj);
+                }, false);
+                setTimeout(function () {
+                    obj.classList.add('remove');
+                }, 3000);
+
+            });
         })
 });

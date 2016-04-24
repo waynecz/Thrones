@@ -326,11 +326,11 @@ window.template = require('../../node_modules/art-template/dist/template');
                 postData['curState'] = sourceBtn.attr('data-state') - 0;
                 postData['state']    = sourceBtn.attr('data-tarstate') - 0;
                 url                  = '/applycheck';
-                sucMsg               = '审核成功!';
+                sucMsg               = '审核成功, 三秒后移除该条申请';
             } else {
                 postData['apply_state'] = '-';
             }
-
+            var dfd = $.Deferred();
             $.jax({
                 url   : url,
                 data  : postData,
@@ -343,13 +343,17 @@ window.template = require('../../node_modules/art-template/dist/template');
                 newComment.remark      = remark;
                 newComment.user_name   = $('#user').attr('data-user');
                 newComment.time        = new Date().format('yyyy-MM-dd hh:mm:ss');
-                newComment.apply_state = postData['curState'] || postData['apply_state'] || '';
+                newComment['apply_state'] = postData['curState'] || postData['apply_state'] || '';
                 var rst                = $.render('commentTemplate', newComment);
                 var $rst               = $(rst);
                 textarea.after($rst);
                 $.calCommentDisplayTime();
                 commentWrap.siblings('.data-detail').find('.remarksCount i').text(commentWrap.find('.comment-detail').length);
-            })
+                if (operation != 'doComment') {
+                    dfd.resolve(sourceBtn.parents('.data-content'));
+                }
+            });
+            return dfd.promise();
         },
         calCommentDisplayTime: function () {
             var timeEles = $('.data-content.show-comment .comment-wraper .time', '#contentWrap');

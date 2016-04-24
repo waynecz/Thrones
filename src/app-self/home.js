@@ -30,9 +30,9 @@ $(function () {
                 })
             }
         },
-        getR01List: function () {
-            $.getList({
-                url: '/data/apply/pageQuery'
+        getMyList: function () {
+            $.getList({url: '/data/apply/pageQuery'}, {
+                user_id: $('#user').attr('data-id')
             });
         },
         doApplyAdd: function () {
@@ -84,7 +84,7 @@ $(function () {
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
     action.getType();
-    action.getR01List();
+    action.getMyList();
     // 提交申请
     $('#modal')
         .on('click', '#doAddApply', function (e) {

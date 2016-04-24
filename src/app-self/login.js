@@ -72,5 +72,15 @@ $(function () {
             } else {
                 Wayne.switchSign(me, '#' + operation)
             }
+        });
+    $('#add')
+        .on('keydown', 'input', function (e) {
+            e = e || window.event;
+            if (e.keyCode == 13)  $('#dosSignUp').trigger('click');
+        });
+    $('#login')
+        .on('keydown', 'input', function (e) {
+            e = e || window.event;
+            if (e.keyCode == 13)  $('#dosSignIn').trigger('click');
         })
 });

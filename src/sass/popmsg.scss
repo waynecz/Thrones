@@ -6,6 +6,10 @@
 	z-index: 10000;
 	display: block;
 	max-width: 86%;
+	@media screen and (max-width: 777px) {
+		top: .4rem;
+		right: .4rem;
+	}
 }
 
 .pop-msg {

@@ -1,7 +1,7 @@
 权限管理系统（学习用）
 ===================
 
-这次学到的 webpack、artTemplate、flex布局
+实践了 webpack、artTemplate、flex布局
 
 上几张屌
 

@@ -7,4 +7,4 @@
 
 ![](http://waynecz.github.io/css/images/postimg/thrones/thrones-1.png)
 ![](http://waynecz.github.io/css/images/postimg/thrones/thrones-2.png)
-![](http://waynecz.github.io/css/images/postimg/thrones/thrones-2.png)
+![](http://waynecz.github.io/css/images/postimg/thrones/thrones-3.png)
